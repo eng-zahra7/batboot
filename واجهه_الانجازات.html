@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>إنجازاتي - بطبوط</title>
+</head>
+<body bgcolor="#FFFEF8" text="#1B2A5C" link="#1B2A5C" vlink="#1B2A5C" alink="#1E88E5">
+
+<!--
+  دليل البيانات المتغيرة (تُستبدل لاحقًا من قاعدة البيانات):
+  - الاسم: student_name
+  - النجوم: total_stars
+  - المستوى: level (الرقم داخل الشارة الذهبية)
+  - النقاط: current_points / next_level_points + عرض progress_filled و progress_empty
+  - كل إنجاز (1 إلى 3): achievement_id_N, achievement_name_N, achievement_description_N, achievement_date_N
+  - كل شارة (1 إلى 5): badge_id_N, badge_name_N, badge_unlocked_N (1 = مفتوحة، 0 = مقفلة)
+  - الشارة المفتوحة تستخدم خلفية #FFF6D6 وحدًا #FFC107 وأيقونة الكتاب الزرقاء (الخانة 1)،
+    والمقفلة تستخدم خلفية #F4F5F8 وحدًا #E3E6EC وأيقونة القفل (الخانة 2). عند فتح شارة
+    انسخ كتلة الخانة 1 مكان كتلة الخانة المقفلة وغيّر الرقم في المعرّفات.
+-->
+
+<!-- معرّف الطالب (يُستبدل لاحقًا ببيانات قاعدة البيانات) -->
+<span id="student_id" title="1"></span>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center">
+<tr>
+<td align="center" valign="top">
+
+
+<!-- شريط التنقل -->
+<header>
+<nav>
+<table width="100%" bgcolor="#FFFFFF" cellspacing="0" cellpadding="8" dir="rtl">
+<tr>
+
+<td width="22%" align="right" valign="middle">
+    <table cellspacing="0" cellpadding="0">
+        <tr>
+            <td valign="middle">
+                <img src="rec/Glossy Kawaii Chick Head Sticker.png"
+                     width="50" alt="بطبوط">
+            </td>
+
+            <td width="12"></td>
+
+            <td valign="middle">
+                <font size="5" color="#1B2A5C">
+                    <b>بطبوط</b>
+                </font>
+            </td>
+        </tr>
+    </table>
+</td>
+
+<!-- الرئيسية (غير مضغوطة) -->
+<td width="26%" align="center" valign="middle">
+<a href="واجهه_الرئيسيه.html">
+<svg viewBox="0 0 64 64" width="44" height="44">
+<rect x="14" y="30" width="36" height="26" rx="3" fill="#1B2A5C"/>
+<path d="M6 32 L32 8 L58 32 Z" fill="#1B2A5C" stroke="#1B2A5C" stroke-width="4" stroke-linejoin="round"/>
+<rect x="43" y="12" width="6" height="12" fill="#1B2A5C"/>
+<rect x="27" y="38" width="10" height="18" rx="2" fill="#FFFFFF"/>
+</svg><br>
+<font size="4" color="#1B2A5C">الرئيسية</font>
+</a>
+</td>
+
+<!-- الإنجازات (مضغوطة / الصفحة الحالية) -->
+<td width="26%" align="center" valign="top" bgcolor="#EAF4FF">
+<table width="100%" cellspacing="0" cellpadding="0">
+<tr>
+<td align="center" valign="middle" height="90">
+<a href="واجهه_الانجازات.html">
+<svg viewBox="0 0 64 64" width="44" height="44">
+<path d="M16 10 H48 V26 Q48 40 32 42 Q16 40 16 26 Z" fill="#1E88E5"/>
+<path d="M16 14 H8 Q8 28 18 30" fill="none" stroke="#1E88E5" stroke-width="4" stroke-linecap="round"/>
+<path d="M48 14 H56 Q56 28 46 30" fill="none" stroke="#1E88E5" stroke-width="4" stroke-linecap="round"/>
+<rect x="29" y="42" width="6" height="8" fill="#1E88E5"/>
+<rect x="20" y="50" width="24" height="7" rx="2" fill="#1565C0"/>
+<path d="M32 15 L34.5 21 L41 21.5 L36 25.5 L37.8 32 L32 28.5 L26.2 32 L28 25.5 L23 21.5 L29.5 21 Z" fill="#FFFFFF"/>
+</svg><br>
+<font size="4" color="#1E88E5"><b>الإنجازات</b></font>
+</a>
+</td>
+</tr>
+<tr>
+<td height="4" bgcolor="#1E88E5"></td>
+</tr>
+</table>
+</td>
+
+<!-- الملف الشخصي (غير مضغوط) -->
+<td width="26%" align="center" valign="middle">
+<a href="واجهه_الملف_الشخصي.html">
+<svg viewBox="0 0 64 64" width="44" height="44">
+<circle cx="32" cy="20" r="12" fill="#1B2A5C"/>
+<path d="M8 58 Q8 36 32 36 Q56 36 56 58 Z" fill="#1B2A5C"/>
+</svg><br>
+<font size="4" color="#1B2A5C">الملف الشخصي</font>
+</a>
+</td>
+
+</tr>
+</table>
+</nav>
+</header>
+
+<main>
+<table width="100%" border="0" cellspacing="0" cellpadding="16" dir="rtl">
+<tr>
+<td>
+<!-- ======================= القسم الرئيسي ======================= -->
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr>
+  <!-- النص والإحصائيات (يمين) -->
+  <td valign="middle" align="center" width="62%">
+
+    <table width="100%" border="0" cellpadding="4" cellspacing="0">
+      <tr><td align="center"><font size="7" color="#1B2A5C"><b>أحسنت يا <span id="student_name">بطل</span>!</b></font></td></tr>
+      <tr><td align="center"><font size="4" color="#1B2A5C">استمر في التعلم وحصد المزيد من النجوم</font></td></tr>
+      <tr><td height="12"></td></tr>
+    </table>
+
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <!-- بطاقة المستوى الحالي (يمين) -->
+      <td width="56%" valign="top">
+        <table width="100%" border="1" bordercolor="#E3E6EC" cellpadding="12" cellspacing="0" bgcolor="#FFFFFF">
+          <tr>
+            <td width="70" align="center" valign="middle">
+              <svg width="60" height="64" viewBox="0 0 60 64" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="30,3 54,16 54,48 30,61 6,48 6,16" fill="#FFC107" stroke="#F5A300" stroke-width="3" stroke-linejoin="round"/>
+                <polygon points="30,10 48,20 48,44 30,54 12,44 12,20" fill="#FFD54F" stroke="#FFFFFF" stroke-width="2"/>
+                <text id="level" x="30" y="40" text-anchor="middle" font-size="26" font-weight="bold" fill="#FFFFFF" stroke="#E08A00" stroke-width="0.8" font-family="Tahoma, Arial, sans-serif">3</text>
+              </svg>
+            </td>
+            <td valign="middle" align="right">
+              <font size="3" color="#1B2A5C"><b>المستوى الحالي</b></font><br>
+              <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                <tr><td height="8"></td></tr>
+                <tr>
+                  <td>
+                    <!-- شريط التقدم: النسبة = current_points ÷ next_level_points × 100
+                         عند التغيير: عدّل width في الخلية الزرقاء (progress_filled) إلى النسبة، وفي الرمادية (progress_empty) إلى 100 ناقص النسبة.
+                         مثال حالي: 120 من 200 = 60% و 40% -->
+                    <table id="progress_bar" width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#E3E6EC">
+                      <tr>
+                        <td id="progress_filled" width="60%" height="10" bgcolor="#1E88E5"></td>
+                        <td id="progress_empty" width="40%" height="10" bgcolor="#E3E6EC"></td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr><td height="6"></td></tr>
+                <tr><td align="left"><font size="2" color="#1B2A5C"><span id="current_points">120</span> / <span id="next_level_points">200</span></font></td></tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </td>
+
+      <td width="12"></td>
+
+      <!-- بطاقة إجمالي النجوم (يسار) -->
+      <td width="44%" valign="top">
+        <table width="100%" border="1" bordercolor="#E3E6EC" cellpadding="12" cellspacing="0" bgcolor="#FFFFFF">
+          <tr>
+            <td width="60" align="center" valign="middle">
+              <svg width="48" height="48" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="20,2 25,14 38,15 28,24 31,37 20,30 9,37 12,24 2,15 15,14" fill="#FFC107" stroke="#F5A300" stroke-width="2" stroke-linejoin="round"/>
+              </svg>
+            </td>
+            <td valign="middle" align="center">
+              <font size="6" color="#1B2A5C"><b><span id="total_stars">120</span></b></font><br>
+              <font size="3" color="#1B2A5C">إجمالي النجوم</font>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    </table>
+
+  </td>
+
+  <!-- صورة البطة (يسار) -->
+  <td valign="middle" align="center" width="38%">
+    <img src="rec/Triumphant Chick with Trophy Sticker.png" width="300" height="300" alt="بطة سعيدة تحمل كأسًا ذهبيًا">
+  </td>
+</tr>
+</table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0"><tr><td height="16"></td></tr></table>
+
+<!-- ======================= آخر الإنجازات ======================= -->
+<table width="100%" border="0" cellpadding="4" cellspacing="0">
+  <tr><td align="right"><font size="4" color="#1B2A5C"><b>آخر الإنجازات</b></font></td></tr>
+</table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr>
+
+  <!-- الإنجاز الأول -->
+  <td width="32%" valign="top">
+    <table id="achievement_1" width="100%" border="1" bordercolor="#E3E6EC" cellpadding="14" cellspacing="0" bgcolor="#FFFFFF">
+      <tr><td align="center">
+        <span id="achievement_id_1" title="1"></span>
+        <svg width="72" height="72" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="36,4 44,25 67,27 49,42 55,65 36,53 17,65 23,42 5,27 28,25" fill="#FFC107" stroke="#F5A300" stroke-width="3" stroke-linejoin="round"/>
+        </svg><br>
+        <font size="4" color="#1B2A5C"><b><span id="achievement_name_1">أول درس</span></b></font><br>
+        <font size="2" color="#1B2A5C"><span id="achievement_description_1">أكملت أول درس</span></font><br>
+        <table border="0" cellpadding="0" cellspacing="0"><tr><td height="6"></td></tr></table>
+        <font size="2" color="#6B7385"><span id="achievement_date_1">20 مارس 2024</span></font>
+      </td></tr>
+    </table>
+  </td>
+
+  <td width="2%"></td>
+
+  <!-- الإنجاز الثاني -->
+  <td width="32%" valign="top">
+    <table id="achievement_2" width="100%" border="1" bordercolor="#E3E6EC" cellpadding="14" cellspacing="0" bgcolor="#FFFFFF">
+      <tr><td align="center">
+        <span id="achievement_id_2" title="2"></span>
+        <svg width="72" height="72" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
+          <path d="M36 4 C38 16 54 22 54 42 C54 56 46 66 36 66 C26 66 18 56 18 44 C18 36 22 32 26 28 C26 34 29 37 32 38 C30 26 32 14 36 4 Z" fill="#FF7043" stroke="#E64A19" stroke-width="2.5" stroke-linejoin="round"/>
+          <path d="M36 34 C38 42 46 44 46 52 C46 59 41 63 36 63 C31 63 26 59 26 53 C26 47 32 44 36 34 Z" fill="#FFC107"/>
+        </svg><br>
+        <font size="4" color="#1B2A5C"><b><span id="achievement_name_2">متعلم نشيط</span></b></font><br>
+        <font size="2" color="#1B2A5C"><span id="achievement_description_2">تعلمت دروسًا متتالية</span></font><br>
+        <table border="0" cellpadding="0" cellspacing="0"><tr><td height="6"></td></tr></table>
+        <font size="2" color="#6B7385"><span id="achievement_date_2">8 مارس 2024</span></font>
+      </td></tr>
+    </table>
+  </td>
+
+  <td width="2%"></td>
+
+  <!-- الإنجاز الثالث -->
+  <td width="32%" valign="top">
+    <table id="achievement_3" width="100%" border="1" bordercolor="#E3E6EC" cellpadding="14" cellspacing="0" bgcolor="#FFFFFF">
+      <tr><td align="center">
+        <span id="achievement_id_3" title="3"></span>
+        <svg width="72" height="72" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="36,3 62,18 62,54 36,69 10,54 10,18" fill="#7E57C2" stroke="#5E35B1" stroke-width="3" stroke-linejoin="round"/>
+          <polygon points="36,11 55,22 55,50 36,61 17,50 17,22" fill="#9575CD" stroke="#FFFFFF" stroke-width="2"/>
+          <polygon points="36,20 38,27 45,28 39,32 41,39 36,35 31,39 33,32 27,28 34,27" fill="#FFFFFF"/>
+          <polygon points="24,40 25.2,43.5 29,44 26,46 27,49.5 24,47.5 21,49.5 22,46 19,44 22.8,43.5" fill="#FFFFFF"/>
+          <polygon points="48,40 49.2,43.5 53,44 50,46 51,49.5 48,47.5 45,49.5 46,46 43,44 46.8,43.5" fill="#FFFFFF"/>
+        </svg><br>
+        <font size="4" color="#1B2A5C"><b><span id="achievement_name_3">نجم الرياضيات</span></b></font><br>
+        <font size="2" color="#1B2A5C"><span id="achievement_description_3">أكملت 5 دروس</span></font><br>
+        <table border="0" cellpadding="0" cellspacing="0"><tr><td height="6"></td></tr></table>
+        <font size="2" color="#6B7385"><span id="achievement_date_3">20 مارس 2024</span></font>
+      </td></tr>
+    </table>
+  </td>
+
+</tr>
+</table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0"><tr><td height="16"></td></tr></table>
+
+<!-- ======================= شاراتي ======================= -->
+<table width="100%" border="0" cellpadding="4" cellspacing="0">
+  <tr><td align="right"><font size="4" color="#1B2A5C"><b>شاراتي</b></font></td></tr>
+</table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr>
+
+  <!-- الشارة 1: مفتوحة -->
+  <td width="19%" valign="top">
+    <table id="badge_1" width="100%" border="1" bordercolor="#FFC107" cellpadding="12" cellspacing="0" bgcolor="#FFF6D6">
+      <tr><td align="center">
+        <span id="badge_id_1" title="1"></span>
+        <span id="badge_name_1" title="شارة القارئ"></span>
+        <span id="badge_unlocked_1" title="1"></span>
+        <svg width="84" height="84" viewBox="0 0 84 84" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="42,4 70,18 70,56 42,80 14,56 14,18" fill="#FFC107" stroke="#F5A300" stroke-width="3" stroke-linejoin="round"/>
+          <circle cx="42" cy="40" r="25" fill="#1E88E5" stroke="#FFFFFF" stroke-width="3"/>
+          <path d="M42 30 Q33 26 25 29 V51 Q33 48 42 52 Q51 48 59 51 V29 Q51 26 42 30 Z" fill="#FFFFFF" stroke="#1B2A5C" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M42 30 V52" stroke="#1B2A5C" stroke-width="2"/>
+        </svg>
+      </td></tr>
+    </table>
+  </td>
+
+  <td width="1%"></td>
+
+  <!-- الشارة 2: مقفلة -->
+  <td width="19%" valign="top">
+    <table id="badge_2" width="100%" border="1" bordercolor="#E3E6EC" cellpadding="12" cellspacing="0" bgcolor="#F4F5F8">
+      <tr><td align="center">
+        <span id="badge_id_2" title="2"></span>
+        <span id="badge_name_2" title=""></span>
+        <span id="badge_unlocked_2" title="0"></span>
+        <svg width="84" height="84" viewBox="0 0 84 84" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="42,4 70,18 70,56 42,80 14,56 14,18" fill="#E3E6EC" stroke="#C5CAD6" stroke-width="3" stroke-linejoin="round"/>
+          <path d="M33 38 V32 Q33 22 42 22 Q51 22 51 32 V38" fill="none" stroke="#5B6477" stroke-width="4" stroke-linecap="round"/>
+          <rect x="28" y="38" width="28" height="22" fill="#6B7385" stroke="#5B6477" stroke-width="2" stroke-linejoin="round"/>
+          <circle cx="42" cy="48" r="3" fill="#E3E6EC"/>
+          <rect x="40.8" y="48" width="2.4" height="7" fill="#E3E6EC"/>
+        </svg>
+      </td></tr>
+    </table>
+  </td>
+
+  <td width="1%"></td>
+
+  <!-- الشارة 3: مقفلة -->
+  <td width="19%" valign="top">
+    <table id="badge_3" width="100%" border="1" bordercolor="#E3E6EC" cellpadding="12" cellspacing="0" bgcolor="#F4F5F8">
+      <tr><td align="center">
+        <span id="badge_id_3" title="3"></span>
+        <span id="badge_name_3" title=""></span>
+        <span id="badge_unlocked_3" title="0"></span>
+        <svg width="84" height="84" viewBox="0 0 84 84" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="42,4 70,18 70,56 42,80 14,56 14,18" fill="#E3E6EC" stroke="#C5CAD6" stroke-width="3" stroke-linejoin="round"/>
+          <path d="M33 38 V32 Q33 22 42 22 Q51 22 51 32 V38" fill="none" stroke="#5B6477" stroke-width="4" stroke-linecap="round"/>
+          <rect x="28" y="38" width="28" height="22" fill="#6B7385" stroke="#5B6477" stroke-width="2" stroke-linejoin="round"/>
+          <circle cx="42" cy="48" r="3" fill="#E3E6EC"/>
+          <rect x="40.8" y="48" width="2.4" height="7" fill="#E3E6EC"/>
+        </svg>
+      </td></tr>
+    </table>
+  </td>
+
+  <td width="1%"></td>
+
+  <!-- الشارة 4: مقفلة -->
+  <td width="19%" valign="top">
+    <table id="badge_4" width="100%" border="1" bordercolor="#E3E6EC" cellpadding="12" cellspacing="0" bgcolor="#F4F5F8">
+      <tr><td align="center">
+        <span id="badge_id_4" title="4"></span>
+        <span id="badge_name_4" title=""></span>
+        <span id="badge_unlocked_4" title="0"></span>
+        <svg width="84" height="84" viewBox="0 0 84 84" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="42,4 70,18 70,56 42,80 14,56 14,18" fill="#E3E6EC" stroke="#C5CAD6" stroke-width="3" stroke-linejoin="round"/>
+          <path d="M33 38 V32 Q33 22 42 22 Q51 22 51 32 V38" fill="none" stroke="#5B6477" stroke-width="4" stroke-linecap="round"/>
+          <rect x="28" y="38" width="28" height="22" fill="#6B7385" stroke="#5B6477" stroke-width="2" stroke-linejoin="round"/>
+          <circle cx="42" cy="48" r="3" fill="#E3E6EC"/>
+          <rect x="40.8" y="48" width="2.4" height="7" fill="#E3E6EC"/>
+        </svg>
+      </td></tr>
+    </table>
+  </td>
+
+  <td width="1%"></td>
+
+  <!-- الشارة 5: مقفلة -->
+  <td width="19%" valign="top">
+    <table id="badge_5" width="100%" border="1" bordercolor="#E3E6EC" cellpadding="12" cellspacing="0" bgcolor="#F4F5F8">
+      <tr><td align="center">
+        <span id="badge_id_5" title="5"></span>
+        <span id="badge_name_5" title=""></span>
+        <span id="badge_unlocked_5" title="0"></span>
+        <svg width="84" height="84" viewBox="0 0 84 84" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="42,4 70,18 70,56 42,80 14,56 14,18" fill="#E3E6EC" stroke="#C5CAD6" stroke-width="3" stroke-linejoin="round"/>
+          <path d="M33 38 V32 Q33 22 42 22 Q51 22 51 32 V38" fill="none" stroke="#5B6477" stroke-width="4" stroke-linecap="round"/>
+          <rect x="28" y="38" width="28" height="22" fill="#6B7385" stroke="#5B6477" stroke-width="2" stroke-linejoin="round"/>
+          <circle cx="42" cy="48" r="3" fill="#E3E6EC"/>
+          <rect x="40.8" y="48" width="2.4" height="7" fill="#E3E6EC"/>
+        </svg>
+      </td></tr>
+    </table>
+  </td>
+
+</tr>
+</table>
+
+</td>
+</tr>
+</table>
