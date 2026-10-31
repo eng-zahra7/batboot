@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="بطبوط - تطبيق تعليمي تفاعلي للأطفال لتعلم العربية والإنجليزية والرياضيات">
+    <title>بطبوط | تسجيل بيانات الطفل</title>
+    <!-- مرحلة CSS: سيتم ربط ملف التنسيق هنا -->
+    <!-- <link rel="stylesheet" href="css/style.css"> -->
+</head>
+<body>
+
+    <!-- ===== الترويسة: الشعار + مؤشر خطوات التسجيل ===== -->
+    <header class="site-header">
+        <a href="index.html" class="logo" aria-label="الصفحة الرئيسية لبطبوط">
+            <img src="images/batbout-logo.png" alt="" width="48" height="48">
+            <span class="logo-text">بطبوط</span>
+        </a>
+
+        <nav class="steps" aria-label="خطوات التسجيل">
+            <ol>
+                <li class="step active" aria-current="step"><span class="visually-hidden">الخطوة 1: بيانات الطفل</span></li>
+                <li class="step"><span class="visually-hidden">الخطوة 2</span></li>
+                <li class="step"><span class="visually-hidden">الخطوة 3</span></li>
+            </ol>
+        </nav>
+    </header>
+
+    <!-- ===== المحتوى الرئيسي ===== -->
+    <main class="register-page">
+
+        <!-- صورة الشخصية (بطبوط) -->
+        <figure class="mascot">
+            <img src="images/batbout-wave.png" alt="بطبوط يلوّح بيده ويحمل حقيبته المدرسية" width="320" height="400">
+        </figure>
+
+        <!-- قسم النموذج -->
+        <section class="register-box" aria-labelledby="welcome-title">
+            <h1 id="welcome-title">أهلاً بك في بطبوط!</h1>
+            <p class="subtitle">لنبدأ رحلتنا التعليمية معاً</p>
+
+            <form id="register-form" class="register-form" action="register.php" method="post">
+
+                <!-- عدد الأطفال المراد تسجيلهم -->
+                <div class="form-group">
+                    <label for="children-count">كم طفلاً تريد أن تسجّل؟</label>
+                    <select id="children-count" name="children_count" required>
+                        <option value="1" selected>طفل واحد</option>
+                        <option value="2">طفلان</option>
+                        <option value="3">3 أطفال</option>
+                        <option value="4">4 أطفال</option>
+                    </select>
+                </div>
+
+                <!-- بيانات الطفل الأول
+                     في مرحلة JavaScript سيتم نسخ هذا الجزء تلقائياً حسب عدد الأطفال المختار -->
+                <fieldset class="child-card" id="child-1">
+                    <legend>الطفل 1</legend>
+
+                    <!-- اسم الطفل -->
+                    <div class="form-group input-icon">
+                        <label for="child-name-1" class="visually-hidden">اسم الطفل</label>
+                        <input type="text" id="child-name-1" name="children[0][name]"
+                               placeholder="اسم الطفل" minlength="2" maxlength="30"
+                               autocomplete="off" required>
+                        <span class="icon" aria-hidden="true">👤</span>
+                    </div>
+
+                    <!-- تاريخ الميلاد -->
+                    <div class="form-group input-icon">
+                        <label for="child-birth-1">تاريخ الميلاد</label>
+                        <input type="date" id="child-birth-1" name="children[0][birthdate]"
+                               min="2014-01-01" max="2024-12-31" required>
+                        <span class="icon" aria-hidden="true">📅</span>
+                    </div>
+
+                    <!-- الجنس -->
+                    <div class="form-group choice-group" role="radiogroup" aria-labelledby="gender-title-1">
+                        <span id="gender-title-1" class="visually-hidden">الجنس</span>
+                        <label class="choice">
+                            <input type="radio" name="children[0][gender]" value="girl" required>
+                            <span>بنت</span>
+                        </label>
+                        <label class="choice">
+                            <input type="radio" name="children[0][gender]" value="boy">
+                            <span>ولد</span>
+                        </label>
+                    </div>
+
+                    <!-- اللغة المفضلة -->
+                    <div class="form-group choice-group" role="radiogroup" aria-labelledby="lang-title-1">
+                        <p id="lang-title-1" class="group-title">اختر لغتك المفضلة</p>
+                        <label class="choice">
+                            <input type="radio" name="children[0][language]" value="en" required>
+                            <span lang="en" dir="ltr">English</span>
+                        </label>
+                        <label class="choice">
+                            <input type="radio" name="children[0][language]" value="ar">
+                            <span>العربية</span>
+                        </label>
+                    </div>
+                </fieldset>
+
+                <!-- زر التالي -->
+                <button type="submit" class="btn-next">
+                    التالي
+                    <span aria-hidden="true">&larr;</span>
+                </button>
+
+            </form>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 بطبوط - تعلّم والعب</p>
+    </footer>
+
+    <!-- مرحلة JavaScript: سيتم ربط ملف السكربت هنا -->
+    <!-- <script src="js/register.js"></script> -->
+</body>
+</html>
