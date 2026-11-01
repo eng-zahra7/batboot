@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="بطبوط - تطبيق تعليمي تفاعلي للأطفال لتعلم العربية والإنجليزية والرياضيات">
+    <title>بطبوط | بيانات ولي الأمر</title>
+    <!-- مرحلة CSS: سيتم ربط ملف التنسيق هنا -->
+    <!-- <link rel="stylesheet" href="css/style.css"> -->
+</head>
+<body>
+
+    <!-- ===== الترويسة: الشعار + مؤشر خطوات التسجيل ===== -->
+    <header class="site-header">
+        <link rel="stylesheet" href="style.css">
+        <a href="index.html" class="logo" aria-label="الصفحة الرئيسية لبطبوط">
+            <img src="rec/Glossy Duckling Blue Badge.png" alt="" width="48" height="48">
+            <span class="logo-text">بطبوط</span>
+        </a>
+
+        <nav class="steps" aria-label="خطوات التسجيل">
+            <ol>
+                <li class="step active" aria-current="step"><span class="visually-hidden">الخطوة 1: بيانات ولي الأمر</span></li>
+                <li class="step"><span class="visually-hidden">الخطوة 2: بيانات الطفل</span></li>
+                <li class="step"><span class="visually-hidden">الخطوة 3</span></li>
+            </ol>
+        </nav>
+    </header>
+
+    <!-- ===== المحتوى الرئيسي ===== -->
+    <main class="register-page">
+
+        <!-- صورة الشخصية (بطبوط) -->
+        <figure class="mascot">
+            <img src="rec/Cheerful Backpack Duck Waving.png" alt="بطبوط يلوّح بيده ويرحّب بولي الأمر" width="320" height="400">
+        </figure>
+
+        <!-- قسم النموذج -->
+        <section class="register-box" aria-labelledby="parent-title">
+            <h1 id="parent-title">مرحباً بك في بطبوط!</h1>
+            <p class="subtitle">قبل أن نبدأ، نحتاج بعض المعلومات عن ولي الأمر</p>
+
+            <form id="parent-form" class="register-form" action="parent.php" method="post">
+
+                <!-- اسم ولي الأمر -->
+                <div class="form-group input-icon">
+                    <label for="parent-name" class="visually-hidden">اسم ولي الأمر</label>
+                    <input type="text" id="parent-name" name="parent_name"
+                           placeholder="اسم ولي الأمر" minlength="3" maxlength="50"
+                           autocomplete="name" required>
+                    <span class="icon" aria-hidden="true">👤</span>
+                </div>
+
+                <!-- رقم الجوال -->
+                <div class="form-group input-icon">
+                    <label for="parent-phone" class="visually-hidden">رقم الجوال</label>
+                    <input type="tel" id="parent-phone" name="parent_phone"
+                           placeholder="رقم الجوال (05xxxxxxxx)" pattern="05[0-9]{8}"
+                           inputmode="numeric" maxlength="10" dir="rtl"
+                           autocomplete="tel" required
+                           title="أدخل رقم جوال من 10 أرقام يبدأ بـ 05">
+                    <span class="icon" aria-hidden="true">📱</span>
+                </div>
+
+                <!-- البريد الإلكتروني -->
+                <div class="form-group input-icon">
+                    <label for="parent-email" class="visually-hidden">البريد الإلكتروني</label>
+                    <input type="email" id="parent-email" name="parent_email"
+                           placeholder="البريد الإلكتروني" maxlength="100" dir="rtl"
+                           autocomplete="email" required>
+                    <span class="icon" aria-hidden="true">✉️</span>
+                </div>
+
+                <!-- صلة القرابة -->
+                <fieldset class="form-group choice-group relation-group">
+                    <legend class="group-title">صلة القرابة بالطفل</legend>
+
+                    <label class="choice">
+                        <input type="radio" name="relation" value="mother" required>
+                        <span>أم</span>
+                    </label>
+                    <label class="choice">
+                        <input type="radio" name="relation" value="father">
+                        <span>أب</span>
+                    </label>
+                    <label class="choice">
+                        <input type="radio" name="relation" value="sister">
+                        <span>أخت</span>
+                    </label>
+                    <label class="choice">
+                        <input type="radio" name="relation" value="brother">
+                        <span>أخ</span>
+                    </label>
+                    <label class="choice">
+                        <input type="radio" name="relation" value="other" id="relation-other">
+                        <span>أخرى</span>
+                    </label>
+
+                    <!-- يظهر هذا الحقل عند اختيار "أخرى"
+                         (في مرحلة JavaScript سيُخفى افتراضياً ويظهر عند الحاجة) -->
+                    <div class="form-group other-relation">
+                        <label for="relation-other-text">حدّد صلة القرابة</label>
+                        <input type="text" id="relation-other-text" name="relation_other"
+                               placeholder="مثال: جدة، خال، عمة" maxlength="30">
+                    </div>
+                </fieldset>
+
+                <!-- زر التالي -->
+                <button type="submit" class="btn-next">
+                    التالي
+                    <span aria-hidden="true">&larr;</span>
+                </button>
+
+            </form>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 بطبوط - تعلّم والعب</p>
+    </footer>
+
+    <!-- مرحلة JavaScript: سيتم ربط ملف السكربت هنا -->
+    <!-- <script src="js/parent.js"></script> -->
+</body>
+</html>

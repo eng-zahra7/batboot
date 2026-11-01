@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="بطبوط - تطبيق تعليمي تفاعلي للأطفال لتعلم العربية والإنجليزية والرياضيات">
+    <title>بطبوط | تأكيد التسجيل</title>
+    <!-- خط Baloo Bhaijaan 2: خط دائري مرح يدعم العربية والإنجليزية -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;700;800&display=swap">
+    <link rel="stylesheet" href="style2.css">
+</head>
+<body>
+
+    <!-- ===== الترويسة: الشعار + مؤشر خطوات التسجيل ===== -->
+    <header class="site-header">
+        <a href="index.html" class="logo" aria-label="الصفحة الرئيسية لبطبوط">
+            <img src="rec/Cheerful Backpack Duck Waving.png" alt="" width="48" height="48">
+            <span class="logo-text">بطبوط</span>
+        </a>
+
+        <nav class="steps" aria-label="خطوات التسجيل">
+            <ol>
+                <li class="step done"><span class="visually-hidden">الخطوة 1: بيانات ولي الأمر (مكتملة)</span></li>
+                <li class="step done"><span class="visually-hidden">الخطوة 2: بيانات الطفل (مكتملة)</span></li>
+                <li class="step active" aria-current="step"><span class="visually-hidden">الخطوة 3: تأكيد التسجيل</span></li>
+            </ol>
+        </nav>
+    </header>
+
+    <!-- ===== المحتوى الرئيسي ===== -->
+    <main class="confirm-page">
+
+        <!-- صورة الشخصية (بطبوط) -->
+        <figure class="mascot">
+            <img src="rec/Cheerful Backpack Duck Waving.png" alt="بطبوط يراجع البيانات معك" width="320" height="400">
+        </figure>
+
+        <section class="confirm-box" aria-labelledby="confirm-title">
+            <h1 id="confirm-title">تأكد من بياناتك</h1>
+            <p class="subtitle">راجع المعلومات التالية قبل إتمام التسجيل</p>
+
+            <!-- ملاحظة: البيانات هنا أمثلة ثابتة لمرحلة HTML،
+                 وفي مرحلة PHP ستُعرض البيانات الحقيقية من الجلسة (Session) -->
+
+            <!-- ===== بيانات ولي الأمر: جدول من عمودين (العنوان | القيمة) ===== -->
+            <section class="summary-card parent-summary" aria-labelledby="parent-summary-title">
+                <div class="card-header">
+                    <h2 id="parent-summary-title">
+                        <span aria-hidden="true">👨‍👩‍👧</span> بيانات ولي الأمر
+                    </h2>
+                    <a href="register-parent.html" class="edit-link">
+                        <span aria-hidden="true">✎</span> تعديل
+                    </a>
+                </div>
+
+                <table class="info-table">
+                    <tbody>
+                        <tr>
+                            <th scope="row">الاسم</th>
+                            <td>سارة أحمد</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">رقم الجوال</th>
+                            <td><span dir="ltr">0551234567</span></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">البريد الإلكتروني</th>
+                            <td><span dir="ltr">sara@example.com</span></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">صلة القرابة</th>
+                            <td>أم</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- ===== بيانات الأطفال: جدول، كل صف = طفل ===== -->
+            <section class="summary-card children-summary" aria-labelledby="children-summary-title">
+                <div class="card-header">
+                    <h2 id="children-summary-title">
+                        <span aria-hidden="true">🧒</span> بيانات الأطفال
+                        <span class="count-badge">2</span>
+                    </h2>
+                    <a href="register-childe.html" class="edit-link">
+                        <span aria-hidden="true">✎</span> تعديل
+                    </a>
+                </div>
+
+                <div class="table-wrap">
+                    <table class="children-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">الاسم</th>
+                                <th scope="col">تاريخ الميلاد</th>
+                                <th scope="col">الجنس</th>
+                                <th scope="col">اللغة المفضلة</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- في مرحلة PHP سيتكرر هذا الصف بحلقة foreach لكل طفل
+                                 data-label يُستخدم في CSS لعرض العنوان داخل الخلية على الجوال -->
+                            <tr>
+                                <td data-label="#">1</td>
+                                <td data-label="الاسم">ليان</td>
+                                <td data-label="تاريخ الميلاد"><time datetime="2019-03-15">15 / 03 / 2019</time></td>
+                                <td data-label="الجنس"><span class="tag tag-girl">بنت</span></td>
+                                <td data-label="اللغة المفضلة">العربية</td>
+                            </tr>
+                            <tr>
+                                <td data-label="#">2</td>
+                                <td data-label="الاسم">يوسف</td>
+                                <td data-label="تاريخ الميلاد"><time datetime="2021-08-02">02 / 08 / 2021</time></td>
+                                <td data-label="الجنس"><span class="tag tag-boy">ولد</span></td>
+                                <td data-label="اللغة المفضلة"><span lang="en" dir="ltr">English</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- ===== أزرار التأكيد والتعديل ===== -->
+            <form id="confirm-form" class="confirm-actions" action="confirm.php" method="post">
+                <button type="submit" name="action" value="confirm" class="btn-next btn-confirm">
+                    <span aria-hidden="true">✔</span> تأكيد التسجيل
+                </button>
+                <a href="register-childe.html" class="btn-edit">
+                    <span aria-hidden="true">✎</span> تعديل البيانات
+                </a>
+            </form>
+
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 بطبوط - تعلّم والعب</p>
+    </footer>
+
+    <!-- مرحلة JavaScript: سيتم ربط ملف السكربت هنا -->
+    <!-- <script src="js/confirm.js"></script> -->
+</body>
+</html>
