@@ -1,0 +1,389 @@
+/* =========================================================
+   بطبوط - صفحة الملف الشخصي
+   تعتمد على main-style.css (الترويسة والمتغيرات والبطاقات).
+   كل القواعد مقيّدة بـ body.profile-page أو بكلاسات خاصة بالصفحة.
+   ========================================================= */
+
+.profile-page {
+    --navy: #1b2a5c;
+    --cream: #fffef8;
+    --track: #e3e6ec;
+    background: var(--cream);
+    color: var(--navy);
+}
+
+.svg-sprite {
+    position: absolute;
+    pointer-events: none;
+}
+
+.profile-page ul,
+.profile-page dl,
+.profile-page dd {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* الترويسة ثابتة أعلى الصفحة أثناء التمرير */
+.profile-page .site-header {
+    position: sticky;
+    top: 0.5rem;
+    z-index: 50;
+}
+
+/* ---------- الحاوية ---------- */
+.profile-main {
+    flex: 1;
+    display: grid;
+    gap: 1.6rem;
+    width: min(1100px, 92%);
+    margin: 1.5rem auto 2rem;
+}
+
+.profile-page .dash-card {
+    border: 2px solid #eef0f5;
+    box-shadow: 0 6px 18px rgba(27, 42, 92, 0.07);
+}
+
+/* ---------- بطاقة الطفل + النجوم ---------- */
+.profile-top {
+    display: grid;
+    grid-template-columns: 1.7fr 1fr;
+    gap: 1.2rem;
+}
+
+.profile-card {
+    gap: 2rem;
+    padding: 1.4rem 2rem;
+}
+
+.profile-avatar {
+    width: 150px;
+    height: 150px;
+    flex-shrink: 0;
+    padding: 6px;
+    border: 4px solid #6fb6ff;
+    border-radius: 50%;
+    background: #dff0ff;
+    object-fit: cover;
+}
+
+.profile-name {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 2.2rem;
+    font-weight: 800;
+    line-height: 1.3;
+    color: var(--navy);
+}
+
+.name-edit {
+    display: inline-flex;
+    color: var(--blue);
+}
+
+.profile-level {
+    margin-bottom: 0.3rem;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--navy);
+}
+
+.level-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.level-row .progress-bar {
+    flex: 1 1 120px;
+    min-width: 0;
+    margin-top: 0;
+}
+
+.level-numbers {
+    direction: ltr;
+    unicode-bidi: isolate;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.profile-page .progress-bar {
+    direction: ltr;
+    height: 14px;
+    background: var(--track);
+}
+
+.profile-page .progress-bar::-webkit-progress-bar {
+    background: var(--track);
+}
+
+.progress-green::-webkit-progress-value {
+    background: linear-gradient(to left, #8fd99a, #55bf6a);
+}
+
+.progress-green::-moz-progress-bar {
+    background: linear-gradient(to left, #8fd99a, #55bf6a);
+}
+
+/* بطاقة النجوم والأيام المتتالية */
+.stats-card {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 0.4rem 1.4rem;
+}
+
+.stat-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.8rem 0;
+}
+
+.stat-row + .stat-row {
+    border-top: 2px solid #eef0f5;
+}
+
+.stat-icon {
+    flex-shrink: 0;
+}
+
+.icon-star {
+    color: var(--yellow);
+    filter: drop-shadow(0 2px 0 var(--yellow-dark));
+}
+
+.icon-flame {
+    color: #ff5a1f;
+}
+
+.stat-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.3;
+}
+
+.stat-text strong {
+    font-size: 2rem;
+    font-weight: 800;
+}
+
+.stat-text span {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-soft);
+}
+
+/* ---------- عناوين الأقسام ---------- */
+.profile-section {
+    display: grid;
+    gap: 0.8rem;
+}
+
+.section-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.section-title {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--navy);
+}
+
+.view-all {
+    font-weight: 700;
+    color: var(--blue);
+}
+
+/* ---------- كورساتي المسجلة ---------- */
+.course-list {
+    display: grid;
+    gap: 0.8rem;
+}
+
+.course-card {
+    gap: 1.5rem;
+    padding: 0.5rem 1.2rem 0.5rem 1.2rem;
+    border-radius: var(--radius-md);
+}
+
+.course-icon {
+    width: 76px;
+    height: 76px;
+    margin-inline-start: -0.7rem;
+    font-size: 2.2rem;
+    font-weight: 800;
+    border-radius: var(--radius-md);
+}
+
+.course-pink  { background: #ffdfe9; color: #e8467c; }
+.course-blue  { background: #dcecff; color: #2f8cf0; }
+.course-green { background: #dcf5e3; color: #2fb36b; }
+
+.course-name {
+    flex: 0 0 22%;
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--navy);
+}
+
+.course-card .progress-bar {
+    flex: 1;
+    width: auto;
+    margin-top: 0;
+}
+
+.course-percent {
+    direction: ltr;
+    min-width: 3rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+.course-card .subject-btn {
+    width: 56px;
+    height: 56px;
+    margin: 0;
+    color: var(--blue);
+    background: #eaf3ff;
+    border: 2px solid #b9d7f8;
+    box-shadow: none;
+}
+
+/* ---------- معلومات الطفل ---------- */
+.info-wrap {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.2rem;
+}
+
+.profile-page .info-card {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.4rem 2rem;
+    align-items: start;
+    padding: 1.2rem 1.8rem;
+    border-radius: var(--radius-md);
+}
+
+.info-item {
+    display: flex;
+    gap: 0.8rem;
+    font-size: 1.1rem;
+}
+
+.info-item dt {
+    flex: 0 0 8rem;
+    font-weight: 700;
+    color: var(--text-soft);
+}
+
+.info-item dd {
+    font-weight: 800;
+    color: var(--navy);
+}
+
+.profile-page .btn-edit {
+    flex-shrink: 0;
+    padding: 1rem 2.2rem;
+    font-size: 1.3rem;
+    color: var(--blue);
+    background: #eaf3ff;
+    border: 2px solid #b9d7f8;
+    border-radius: var(--radius-md);
+    white-space: nowrap;
+}
+
+/* منع تمدد عناصر الشبكة خارج الشاشة */
+.profile-main,
+.profile-main > *,
+.profile-top > *,
+.course-list > li {
+    min-width: 0;
+}
+
+/* ---------- الجوال ---------- */
+@media (max-width: 800px) {
+    .profile-top {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-card {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1.2rem;
+        text-align: center;
+    }
+
+    .profile-name,
+    .level-row {
+        justify-content: center;
+    }
+
+    .profile-avatar {
+        width: 120px;
+        height: 120px;
+    }
+
+    .course-card {
+        flex-wrap: wrap;
+        gap: 0.6rem 1rem;
+        padding: 0.8rem 1rem;
+    }
+
+    .course-icon {
+        margin-inline-start: 0;
+        width: 60px;
+        height: 60px;
+    }
+
+    .course-name {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .course-card .progress-bar {
+        flex: 1 1 100%;
+        order: 3;
+    }
+
+    .course-percent {
+        order: 4;
+        flex: 1;
+        text-align: start;
+    }
+
+    .course-card .subject-btn {
+        order: 5;
+    }
+
+    .profile-summary {
+        width: 100%;
+        flex: none;
+    }
+
+    .course-card .subject-btn {
+        width: 46px;
+        height: 46px;
+    }
+
+    .info-wrap {
+        flex-direction: column;
+    }
+
+    .profile-page .info-card {
+        grid-template-columns: 1fr;
+        width: 100%;
+    }
+
+    .profile-page .btn-edit {
+        width: 100%;
+        justify-content: center;
+    }
+}

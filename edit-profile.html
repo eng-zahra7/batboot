@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="تعديل الملف الشخصي للطفل في بطبوط">
+    <title>بطبوط | تعديل الملف الشخصي</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;700;800&display=swap">
+    <link rel="stylesheet" href="main-style.css">
+    <link rel="stylesheet" href="edit-profile.css?v=1">
+</head>
+<body class="edit-profile-page">
+
+    <!-- مجموعة الأيقونات (SVG) -->
+    <svg class="svg-sprite" width="0" height="0" aria-hidden="true" focusable="false">
+        <defs>
+            <symbol id="i-user" viewBox="0 0 24 24"><g fill="currentColor"><circle cx="12" cy="7.5" r="4.5"/><path d="M3.5 21a8.5 8.5 0 0 1 17 0z"/></g></symbol>
+            <symbol id="i-user-line" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></g></symbol>
+            <symbol id="i-trophy" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10v5a5 5 0 0 1-10 0z"/><path d="M7 5H3v2a4 4 0 0 0 4 4M17 5h4v2a4 4 0 0 1-4 4M12 13v4M8 21h8M10 17h4v4h-4z"/></g></symbol>
+            <symbol id="i-logout" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h4M15 8l4 4-4 4M19 12H9"/></g></symbol>
+            <symbol id="i-trash" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/></g></symbol>
+            <symbol id="i-camera" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></g></symbol>
+            <symbol id="i-calendar" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M8 3v4M16 3v4"/></g></symbol>
+            <symbol id="i-globe" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></g></symbol>
+            <symbol id="i-cap" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3 2.5 9 2.5 12 0v-5"/></g></symbol>
+            <symbol id="i-chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+        </defs>
+    </svg>
+
+    <!-- ===== الترويسة: الشعار + القائمة + البحث والحساب ===== -->
+    <header class="site-header">
+        <a href="main-page.html" class="logo" aria-label="الصفحة الرئيسية لبطبوط">
+            <img src="rec/Glossy Kawaii Chick Head Sticker.png" alt="" width="48" height="48">
+            <span class="logo-text">بطبوط</span>
+        </a>
+
+        <nav class="main-nav" aria-label="القائمة الرئيسية">
+            <ul>
+                <li><a href="main-page.html">الرئيسية</a></li>
+                <li><a href="achievements.html">إنجازاتي</a></li>
+            </ul>
+        </nav>
+
+        <div class="header-actions">
+            <button type="button" class="icon-btn" aria-label="بحث">
+                <span aria-hidden="true">🔍</span>
+            </button>
+            <a href="profile.html" class="avatar" aria-label="حسابي" aria-current="page">
+                <span aria-hidden="true">🧒</span>
+            </a>
+        </div>
+    </header>
+
+    <!--
+        القيم داخل الحقول أدناه بيانات توضيحية مؤقتة لعرض التصميم فقط.
+        لاحقًا يملؤها PHP من سجل الطفل (child_id) عبر value="" و selected و src.
+    -->
+    <main class="edit-main">
+
+        <!-- ===== القائمة الجانبية ===== -->
+        <aside class="side-card" aria-label="قائمة الحساب">
+            <div class="side-profile">
+                <img src="rec/Glossy Duckling Blue Badge.png" alt="صورة الطفل" class="side-avatar" id="side_profile_image" width="130" height="130">
+                <p class="side-name" id="side_child_name">أحمد</p>
+                <p class="side-level">المستوى <span id="side_academic_level">3</span></p>
+            </div>
+
+            <nav class="side-nav" aria-label="خيارات الحساب">
+                <ul>
+                    <li><a href="edit-profile.html" class="side-link active" aria-current="page"><svg width="26" height="26" aria-hidden="true"><use href="#i-user"/></svg>معلوماتي</a></li>
+                    <li><a href="achievements.html" class="side-link"><svg width="26" height="26" aria-hidden="true"><use href="#i-trophy"/></svg>إنجازاتي</a></li>
+                    <li><a href="logout.php" class="side-link"><svg width="26" height="26" aria-hidden="true"><use href="#i-logout"/></svg>تسجيل الخروج</a></li>
+                    <li>
+                        <!-- حذف الحساب: نموذج POST مستقل ليرتبط لاحقًا بملف PHP -->
+                        <form method="post" action="delete-child.php" class="delete-form">
+                            <input type="hidden" name="child_id" value="">
+                            <button type="submit" class="side-link side-danger"><svg width="26" height="26" aria-hidden="true"><use href="#i-trash"/></svg>حذف الحساب</button>
+                        </form>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- ===== بطاقة تعديل المعلومات ===== -->
+        <section class="edit-card" aria-labelledby="edit-title">
+
+            <form class="edit-form" id="edit_profile_form" method="post" action="update-profile.php" enctype="multipart/form-data">
+                <!--
+                    مسار الحفظ المستقبلي (يُنفَّذ في update-profile.php وليس هنا):
+                    1) التحقق من البيانات ثم تنفيذ تحديث قاعدة البيانات.
+                    2) نجاح التحديث فقط: header("Location: profile.html"); exit;
+                       وتقرأ profile.html بيانات الطفل المحدّثة من قاعدة البيانات.
+                    3) فشل التحقق أو التحديث: لا تحويل. تُعرض هذه الصفحة نفسها مع
+                       إزالة سمة hidden من رسالة الخطأ أدناه وكتابة نصها.
+                    حاليًا لا يوجد معالج PHP، فالضغط على «حفظ التغييرات» لا يحفظ شيئًا.
+                -->
+                <input type="hidden" name="child_id" id="child_id" value="">
+
+                <header class="edit-head">
+                    <h1 id="edit-title">تعديل المعلومات الشخصية</h1>
+                    <p class="subtitle">قم بتحديث معلوماتك الشخصية هنا</p>
+                </header>
+
+                <!-- رسالة فشل الحفظ: مخفية افتراضيًا، ويُظهرها PHP عند الفشل فقط -->
+                <div class="form-message form-message-error" id="form_message" role="alert" hidden>
+                    لم ينجح حفظ التغييرات. تحقق من البيانات وحاول مرة أخرى.
+                </div>
+
+                <!-- الصورة الشخصية -->
+                <div class="photo-row">
+                    <div class="photo-box">
+                        <img src="rec/Glossy Duckling Blue Badge.png" alt="الصورة الشخصية الحالية" class="photo-preview" id="profile_image_preview" width="130" height="130">
+                        <span class="photo-badge" aria-hidden="true"><svg width="18" height="18"><use href="#i-camera"/></svg></span>
+                    </div>
+                    <div class="photo-actions">
+                        <span class="field-label">الصورة الشخصية</span>
+                        <label class="photo-btn" for="profile_image">
+                            <svg width="24" height="24" aria-hidden="true"><use href="#i-camera"/></svg>
+                            تغيير الصورة
+                        </label>
+                        <input type="file" class="visually-hidden" id="profile_image" name="profile_image" accept="image/png,image/jpeg,image/webp">
+                    </div>
+                </div>
+
+                <!-- الاسم الكامل -->
+                <div class="form-group field-full">
+                    <label for="child_name" class="field-label">الاسم الكامل</label>
+                    <div class="field-wrap">
+                        <svg class="field-icon" width="22" height="22" aria-hidden="true"><use href="#i-user-line"/></svg>
+                        <input type="text" id="child_name" name="child_name" value="أحمد" placeholder="اسم الطفل" required maxlength="60" autocomplete="off">
+                    </div>
+                </div>
+
+                <!-- الجنس -->
+                <div class="form-group">
+                    <label for="gender" class="field-label">الجنس</label>
+                    <div class="field-wrap">
+                        <svg class="field-chevron" width="20" height="20" aria-hidden="true"><use href="#i-chevron"/></svg>
+                        <select id="gender" name="gender" required>
+                            <option value="male" selected>ولد</option>
+                            <option value="female">بنت</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- تاريخ الميلاد -->
+                <div class="form-group">
+                    <label for="birth_date" class="field-label">تاريخ الميلاد</label>
+                    <div class="field-wrap">
+                        <svg class="field-icon" width="22" height="22" aria-hidden="true"><use href="#i-calendar"/></svg>
+                        <input type="date" id="birth_date" name="birth_date" value="2018-05-20" required>
+                    </div>
+                </div>
+
+                <!-- المستوى الدراسي -->
+                <div class="form-group">
+                    <label for="academic_level" class="field-label">المستوى الدراسي</label>
+                    <div class="field-wrap">
+                        <svg class="field-icon" width="22" height="22" aria-hidden="true"><use href="#i-cap"/></svg>
+                        <svg class="field-chevron" width="20" height="20" aria-hidden="true"><use href="#i-chevron"/></svg>
+                        <select id="academic_level" name="academic_level" required>
+                            <option value="1">المستوى 1</option>
+                            <option value="2">المستوى 2</option>
+                            <option value="3" selected>المستوى 3</option>
+                            <option value="4">المستوى 4</option>
+                            <option value="5">المستوى 5</option>
+                            <option value="6">المستوى 6</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- اللغة المفضلة -->
+                <div class="form-group">
+                    <label for="preferred_language" class="field-label">اللغة المفضلة</label>
+                    <div class="field-wrap">
+                        <svg class="field-icon" width="22" height="22" aria-hidden="true"><use href="#i-globe"/></svg>
+                        <svg class="field-chevron" width="20" height="20" aria-hidden="true"><use href="#i-chevron"/></svg>
+                        <select id="preferred_language" name="preferred_language" required>
+                            <option value="ar" selected>العربية</option>
+                            <option value="en" lang="en">English</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- الأزرار -->
+                <div class="form-actions">
+                    <button type="submit" class="btn-save">حفظ التغييرات</button>
+                    <!-- إلغاء: رابط مباشر إلى الملف الشخصي دون إرسال النموذج أو حفظ شيء -->
+                    <a href="profile.html" class="btn-edit btn-cancel">إلغاء</a>
+                </div>
+            </form>
+
+            <figure class="edit-mascot">
+                <img src="rec/Cheerful Duckling Sticker with Pencil.png" alt="بطبوط يحمل قلمًا ويرتدي حقيبته الزرقاء" width="320" height="400">
+            </figure>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 بطبوط - تعلّم والعب</p>
+    </footer>
+
+</body>
+</html>

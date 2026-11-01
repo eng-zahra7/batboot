@@ -1,0 +1,248 @@
+/* =========================================================
+   بطبوط - صفحة الرياضيات
+   تعتمد على main-style.css (الترويسة والمتغيرات و.subject-btn و.subtitle).
+   كل القواعد مقيّدة بـ body.math-page أو بكلاسات خاصة بالصفحة.
+   ========================================================= */
+
+.math-page {
+    --navy: #1b2a5c;
+    background:
+        url("rec/Cheerful_Cartoon_Meadow_Landscape.png") center bottom / cover no-repeat fixed,
+        linear-gradient(to bottom, transparent 85%, var(--grass) 100%),
+        linear-gradient(to bottom, var(--sky-top), var(--sky-bottom) 60%);
+    color: var(--navy);
+}
+
+.svg-sprite {
+    position: absolute;
+    pointer-events: none;
+}
+
+.math-page ul,
+.math-page p {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* الترويسة ثابتة أعلى الصفحة */
+.math-page .site-header {
+    position: sticky;
+    top: 0.5rem;
+    z-index: 50;
+}
+
+/* ---------- البطاقة الرئيسية ---------- */
+.math-main {
+    flex: 1;
+    width: min(1150px, 94%);
+    margin: 1.5rem auto 2rem;
+}
+
+.math-card {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 330px;
+    grid-template-areas:
+        "head head"
+        "lessons mascot";
+    gap: 1rem 1.5rem;
+    padding: 1.6rem 2rem 2rem;
+    background: #fffdf8;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+}
+
+.math-card > * {
+    min-width: 0;
+}
+
+/* زر الرجوع أعلى يسار البطاقة */
+.back-btn {
+    position: absolute;
+    top: 1.4rem;
+    inset-inline-end: 1.6rem;
+    z-index: 2;
+    width: 54px;
+    height: 54px;
+    margin: 0;
+    color: var(--navy);
+    background: #e3f0ff;
+    border: 2px solid #b9d7f8;
+    box-shadow: none;
+}
+
+/* ---------- العنوان ---------- */
+.math-head {
+    grid-area: head;
+    text-align: center;
+}
+
+.math-title {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    min-width: min(480px, 90%);
+    justify-content: center;
+    padding: 0.5rem 2rem 0.5rem 5rem;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 800;
+    line-height: 1.3;
+    color: #fff;
+    background: linear-gradient(to bottom, #2b8cf7, #1767d6);
+    border-radius: var(--radius-pill);
+    box-shadow: 0 5px 0 #1055ad;
+}
+
+.math-title-icon {
+    position: absolute;
+    top: 50%;
+    inset-inline-start: auto;
+    inset-inline-end: 1rem;
+    translate: 0 -50%;
+}
+
+.math-head .subtitle {
+    margin: 1rem 0 0;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--navy);
+}
+
+/* ---------- بطاقات الدروس ---------- */
+.lesson-grid {
+    grid-area: lessons;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.4rem;
+    align-self: center;
+}
+
+.lesson-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    aspect-ratio: 1 / 1.05;
+    padding: 1rem;
+    text-align: center;
+    text-decoration: none;
+    color: var(--navy);
+    border: 4px solid;
+    border-radius: 40px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.lesson-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 24px rgba(27, 42, 92, 0.15);
+}
+
+.lesson-name {
+    font-size: clamp(1.4rem, 2.6vw, 2.2rem);
+    font-weight: 800;
+    line-height: 1.2;
+    color: var(--navy);
+}
+
+.lesson-icon {
+    flex-shrink: 0;
+    max-width: 100%;
+}
+
+.lesson-numbers     { background: #e8f8d8; border-color: #b4e48a; }
+.lesson-addition    { background: #d9edfd; border-color: #8fc6f3; }
+.lesson-subtraction { background: #fde0ec; border-color: #f2a6c6; }
+
+/* الأرقام الملونة 1 2 3 */
+.digits {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.1rem;
+    height: 108px;
+    font-size: clamp(2.6rem, 5vw, 4.2rem);
+    font-weight: 800;
+    line-height: 1;
+    direction: ltr;
+    text-shadow: 0 3px 0 #fff, 0 0 0 #fff;
+}
+
+.digits .d1 { color: #ef4b4b; transform: rotate(-8deg); }
+.digits .d2 { color: #2f8cf0; transform: translateY(-10px); }
+.digits .d3 { color: #ffb400; transform: rotate(8deg); }
+
+/* ---------- بطبوط ---------- */
+.math-mascot {
+    grid-area: mascot;
+    align-self: end;
+    justify-self: center;
+    margin: 0;
+}
+
+.math-mascot img {
+    display: block;
+    width: 100%;
+    max-width: 330px;
+    height: auto;
+}
+
+/* ---------- الجوال ---------- */
+@media (max-width: 900px) {
+    .math-card {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "head"
+            "lessons"
+            "mascot";
+        padding: 1.2rem;
+    }
+
+    .back-btn {
+        top: 0.8rem;
+        inset-inline-end: 0.8rem;
+        width: 46px;
+        height: 46px;
+    }
+
+    .math-title {
+        padding: 0.4rem 1.2rem 0.4rem 4.2rem;
+        margin-top: 2.6rem;
+    }
+
+    .math-mascot img {
+        max-width: 220px;
+    }
+}
+
+@media (max-width: 560px) {
+    .lesson-grid {
+        grid-template-columns: 1fr;
+        gap: 0.9rem;
+    }
+
+    .lesson-card {
+        flex-direction: row;
+        justify-content: flex-start;
+        gap: 1.2rem;
+        aspect-ratio: auto;
+        padding: 0.8rem 1.4rem;
+        border-radius: 28px;
+    }
+
+    .lesson-card .lesson-icon {
+        width: 90px;
+        height: 76px;
+    }
+
+    .digits {
+        height: 76px;
+        font-size: 2.6rem;
+    }
+
+    .lesson-name {
+        font-size: 1.6rem;
+    }
+}

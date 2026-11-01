@@ -1,0 +1,368 @@
+/* =========================================================
+   بطبوط - صفحة الإنجازات
+   يعتمد على main-style.css (المتغيرات والترويسة والقائمة).
+   كل القواعد الجديدة مقيّدة بـ body.achievements-page
+   أو بكلاسات خاصة بهذه الصفحة حتى لا تتأثر بقية الصفحات.
+   ========================================================= */
+
+.achievements-page {
+    --cream: #fffef8;
+    --navy: #1b2a5c;
+    --gold: #ffc107;
+    --locked: #c9ced8;
+    background: var(--cream);
+    color: var(--navy);
+}
+
+.svg-sprite {
+    position: absolute;
+    pointer-events: none;
+}
+
+.achievements-page .home-page {
+    margin-top: 1rem;
+}
+
+/* ---------- الميدالية (شكل نجمة مستديرة الحواف) ---------- */
+.medal {
+    position: relative;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 76px;
+    height: 76px;
+    --medal: var(--gold);
+    --rim: #ffb300;
+}
+
+.medal {
+    background: var(--rim);
+    clip-path: polygon(50.0% 0.0%, 61.6% 6.5%, 75.0% 6.7%, 81.8% 18.2%, 93.3% 25.0%, 93.5% 38.4%, 100.0% 50.0%, 93.5% 61.6%, 93.3% 75.0%, 81.8% 81.8%, 75.0% 93.3%, 61.6% 93.5%, 50.0% 100.0%, 38.4% 93.5%, 25.0% 93.3%, 18.2% 81.8%, 6.7% 75.0%, 6.5% 61.6%, 0.0% 50.0%, 6.5% 38.4%, 6.7% 25.0%, 18.2% 18.2%, 25.0% 6.7%, 38.4% 6.5%);
+}
+
+.medal::before {
+    content: "";
+    position: absolute;
+    inset: 8%;
+    background: var(--medal);
+    clip-path: polygon(50.0% 0.0%, 61.6% 6.5%, 75.0% 6.7%, 81.8% 18.2%, 93.3% 25.0%, 93.5% 38.4%, 100.0% 50.0%, 93.5% 61.6%, 93.3% 75.0%, 81.8% 81.8%, 75.0% 93.3%, 61.6% 93.5%, 50.0% 100.0%, 38.4% 93.5%, 25.0% 93.3%, 18.2% 81.8%, 6.7% 75.0%, 6.5% 61.6%, 0.0% 50.0%, 6.5% 38.4%, 6.7% 25.0%, 18.2% 18.2%, 25.0% 6.7%, 38.4% 6.5%);
+}
+
+.medal-gold   { --medal: #ffc727; }
+.medal-orange { --medal: #ff8a1f; }
+.medal-purple { --medal: #6a4fd8; }
+.medal-blue   { --medal: #1e88e5; }
+
+.medal-icon,
+.lock-icon,
+.medal-text {
+    position: relative;
+    z-index: 1;
+}
+
+.medal-icon {
+    width: 34px;
+    height: 34px;
+    color: #fff;
+}
+
+.medal-small .medal-icon {
+    width: 32px;
+    height: 32px;
+}
+
+.medal-text {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #fff;
+    text-shadow: 0 2px 0 rgba(0, 0, 0, 0.2);
+}
+
+.medal.is-locked {
+    --medal: var(--locked);
+    --rim: #aeb4c0;
+}
+
+.lock-icon {
+    width: 30px;
+    height: 30px;
+    color: var(--navy);
+}
+
+/* ---------- الواجهة الترحيبية ---------- */
+.ach-hero {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.25fr 1fr;
+    grid-template-areas: "content mascot";
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.5rem 1.5rem;
+    background: linear-gradient(to bottom, #fffdf4, var(--cream));
+}
+
+.ach-hero .mascot {
+    grid-area: mascot;
+}
+
+.ach-hero .mascot img {
+    width: min(100%, 340px);
+    animation: none;
+}
+
+.ach-hero-content {
+    grid-area: content;
+}
+
+.ach-hero h1 {
+    font-size: clamp(2rem, 4.5vw, 3rem);
+    font-weight: 800;
+    line-height: 1.2;
+    text-align: center;
+    color: var(--navy);
+}
+
+.ach-hero .subtitle {
+    margin-bottom: 1.2rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-align: center;
+    color: var(--navy);
+}
+
+/* ---------- بطاقتا المستوى والنجوم ---------- */
+.ach-stats {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 1rem;
+}
+
+.stat-card {
+    padding: 1.1rem 1.2rem;
+    border: 2px solid #eef0f5;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 6px 18px rgba(27, 42, 92, 0.07);
+}
+
+.stat-card h2 {
+    font-size: 1.05rem;
+    color: var(--navy);
+}
+
+.medal-level {
+    width: 74px;
+    height: 74px;
+}
+
+#level-card {
+    flex-wrap: wrap;
+}
+
+#level-card .dash-text {
+    min-width: 120px;
+}
+
+.level-numbers {
+    width: 100%;
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-align: end;
+    color: var(--navy);
+}
+
+.achievements-page .progress-bar {
+    height: 14px;
+    margin-top: 0.3rem;
+}
+
+#stars-card {
+    justify-content: center;
+    gap: 1.2rem;
+    text-align: center;
+}
+
+.big-star {
+    width: 64px;
+    height: 64px;
+    flex-shrink: 0;
+    color: var(--yellow);
+    filter: drop-shadow(0 3px 0 var(--yellow-dark));
+}
+
+.stars-text {
+    flex: 0 1 auto;
+}
+
+.stars-count {
+    display: block;
+    font-size: 2.4rem;
+    font-weight: 800;
+    line-height: 1.1;
+    color: var(--navy);
+}
+
+.stars-text p {
+    color: var(--navy);
+    font-weight: 700;
+}
+
+/* ---------- عناوين الأقسام ---------- */
+.ach-section {
+    margin-top: 1.5rem;
+    padding-inline: 1rem;
+}
+
+.section-title {
+    margin-bottom: 0.8rem;
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--navy);
+}
+
+/* ---------- آخر الإنجازات ---------- */
+.latest-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.2rem;
+}
+
+.latest-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+    padding: 1.2rem 1rem 1rem;
+    text-align: center;
+    background: var(--card);
+    border: 2px solid #eef0f5;
+    border-radius: 40px 40px 22px 22px;
+    box-shadow: 0 6px 18px rgba(27, 42, 92, 0.07);
+}
+
+.latest-card h3 {
+    margin-top: 0.4rem;
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--navy);
+}
+
+.latest-desc {
+    font-size: 0.95rem;
+    color: var(--text-soft);
+}
+
+.latest-date {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--navy);
+}
+
+.flame-icon {
+    display: grid;
+    place-items: center;
+    width: 76px;
+    height: 76px;
+}
+
+.flame-icon svg {
+    width: 56px;
+    height: 56px;
+    color: #ff5a1f;
+    filter: drop-shadow(0 3px 6px rgba(255, 138, 31, 0.5));
+}
+
+/* حالة عدم وجود إنجازات (حساب جديد) */
+.empty-state {
+    padding: 2rem 1rem;
+    text-align: center;
+    background: var(--card);
+    border: 2px dashed var(--border);
+    border-radius: var(--radius-lg);
+}
+
+.empty-state h3 {
+    font-size: 1.4rem;
+    font-weight: 800;
+}
+
+.empty-state p {
+    color: var(--text-soft);
+}
+
+/* ---------- شاراتي ---------- */
+.badges-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.badge-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 1rem 0.5rem 0.8rem;
+    text-align: center;
+    background: var(--card);
+    border: 2px solid #eef0f5;
+    border-radius: var(--radius-md);
+    box-shadow: 0 4px 12px rgba(27, 42, 92, 0.05);
+}
+
+/* الشارة المكتسبة: خلفية ذهبية فاتحة */
+.badge-card.is-earned {
+    background: #fff6d8;
+    border-color: #ffe9a3;
+}
+
+.medal-badge {
+    width: 84px;
+    height: 84px;
+}
+
+.badge-name {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--navy);
+}
+
+.badge-card[data-earned="false"] .badge-name {
+    color: var(--text-soft);
+}
+
+/* ---------- الجوال ---------- */
+@media (max-width: 900px) {
+    .ach-hero {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "mascot"
+            "content";
+        padding-inline: 0.5rem;
+    }
+
+    .ach-hero .mascot img {
+        width: 200px;
+    }
+
+    .latest-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .badges-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 520px) {
+    .ach-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .ach-section {
+        padding-inline: 0;
+    }
+}
