@@ -1,0 +1,439 @@
+/* =========================================================
+   بطبوط - صفحة تعديل الملف الشخصي
+   تعتمد على main-style.css (الترويسة والمتغيرات والأزرار).
+   كل القواعد مقيّدة بـ body.edit-profile-page أو بكلاسات خاصة بالصفحة.
+   ========================================================= */
+
+.edit-profile-page {
+    --navy: #1b2a5c;
+    --field-bg: #fffdf6;
+    --field-border: #e2e5ec;
+    /* صورة المرج إن وُجدت، وإلا تظهر السماء والعشب من main-style.css */
+    background:
+        url("rec/Cheerful_Cartoon_Meadow_Landscape.png") center bottom / cover no-repeat fixed,
+        linear-gradient(to bottom, transparent 85%, var(--grass) 100%),
+        linear-gradient(to bottom, var(--sky-top), var(--sky-bottom) 60%);
+    color: var(--navy);
+}
+
+.svg-sprite {
+    position: absolute;
+    pointer-events: none;
+}
+
+.edit-profile-page ul,
+.edit-profile-page p {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* الترويسة ثابتة أعلى الصفحة */
+.edit-profile-page .site-header {
+    position: sticky;
+    top: 0.5rem;
+    z-index: 50;
+}
+
+/* ---------- التخطيط العام ---------- */
+.edit-main {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 270px;
+    grid-template-areas: "card side";
+    align-items: start;
+    gap: 1.2rem;
+    width: min(1180px, 94%);
+    margin: 1.5rem auto 2rem;
+}
+
+.edit-main > * {
+    min-width: 0;
+}
+
+/* ---------- القائمة الجانبية ---------- */
+.side-card {
+    grid-area: side;
+    padding: 1.4rem 1rem;
+    background: #fffdf6;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+}
+
+.side-profile {
+    text-align: center;
+}
+
+.side-avatar {
+    width: 130px;
+    height: 130px;
+    padding: 5px;
+    border-radius: 50%;
+    background: #bfe3fb;
+    object-fit: cover;
+}
+
+.side-name {
+    margin-top: 0.4rem;
+    font-size: 1.6rem;
+    font-weight: 800;
+}
+
+.side-level {
+    font-size: 0.9rem;
+    color: var(--text-soft);
+}
+
+.side-nav ul {
+    display: grid;
+    gap: 0.4rem;
+    margin-top: 1.2rem;
+}
+
+.side-link {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    width: 100%;
+    padding: 0.7rem 1rem;
+    font: inherit;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--navy);
+    text-align: start;
+    text-decoration: none;
+    background: none;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.side-link:hover {
+    background: #eef6ff;
+}
+
+.side-link.active {
+    color: var(--blue);
+    background: #dcecff;
+}
+
+.side-danger {
+    color: var(--error);
+}
+
+.side-danger:hover {
+    background: #ffecec;
+}
+
+.delete-form {
+    margin: 0;
+}
+
+/* ---------- بطاقة التعديل ---------- */
+.edit-card {
+    grid-area: card;
+    position: relative;
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    grid-template-areas: "mascot form";
+    gap: 1rem;
+    padding: 1.6rem 1.8rem;
+    background: #fffbf0;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+}
+
+.edit-mascot {
+    grid-area: mascot;
+    align-self: end;
+    margin: 0 0 -0.5rem;
+}
+
+.edit-mascot img {
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+}
+
+.edit-form {
+    grid-area: form;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem 1.2rem;
+}
+
+.edit-head {
+    grid-column: 1 / -1;
+    text-align: center;
+}
+
+.edit-head h1 {
+    font-size: clamp(1.7rem, 3.2vw, 2.3rem);
+    font-weight: 800;
+    line-height: 1.3;
+}
+
+.edit-head .subtitle {
+    margin: 0;
+    font-size: 1rem;
+}
+
+/* ---------- رسالة نتيجة الحفظ ---------- */
+.form-message {
+    grid-column: 1 / -1;
+    padding: 0.8rem 1.2rem;
+    font-weight: 700;
+    text-align: center;
+    border-radius: var(--radius-md);
+}
+
+.form-message[hidden] {
+    display: none;
+}
+
+.form-message-error {
+    color: #b3262b;
+    background: #ffecec;
+    border: 2px solid #f5b5b7;
+}
+
+/* ---------- الصورة الشخصية ---------- */
+.photo-row {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.photo-box {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.photo-preview {
+    display: block;
+    width: 130px;
+    height: 130px;
+    padding: 5px;
+    border-radius: 50%;
+    background: #bfe3fb;
+    object-fit: cover;
+}
+
+.photo-badge {
+    position: absolute;
+    bottom: 4px;
+    inset-inline-end: 4px;
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    color: #fff;
+    background: var(--blue);
+    border: 3px solid #fffbf0;
+    border-radius: 50%;
+}
+
+.photo-actions {
+    display: grid;
+    gap: 0.5rem;
+    justify-items: start;
+}
+
+.photo-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.6rem 1.6rem;
+    font-weight: 700;
+    color: var(--blue);
+    background: #dcecff;
+    border: 2px solid #b9d7f8;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+}
+
+.photo-actions:focus-within .photo-btn {
+    outline: 3px solid var(--blue);
+    outline-offset: 3px;
+}
+
+/* ---------- الحقول ---------- */
+.edit-profile-page .form-group {
+    gap: 0.3rem;
+}
+
+.field-full {
+    grid-column: 1 / -1;
+}
+
+.edit-profile-page .field-label {
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--navy);
+}
+
+.field-wrap {
+    position: relative;
+}
+
+.field-wrap input,
+.field-wrap select {
+    display: block;
+    width: 100%;
+    height: 52px;
+    padding: 0 3rem;
+    font: inherit;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-soft);
+    background: var(--field-bg);
+    border: 2px solid var(--field-border);
+    border-radius: var(--radius-md);
+    appearance: none;
+}
+
+.field-wrap input[type="date"] {
+    padding-inline: 3rem 0.8rem;
+}
+
+.field-wrap input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    cursor: pointer;
+}
+
+.field-icon,
+.field-chevron {
+    position: absolute;
+    top: 50%;
+    translate: 0 -50%;
+    color: #4a5675;
+    pointer-events: none;
+}
+
+.field-icon {
+    inset-inline-start: 1rem;
+}
+
+.field-chevron {
+    inset-inline-end: 1rem;
+}
+
+.field-wrap input:focus,
+.field-wrap select:focus {
+    outline: none;
+    border-color: var(--blue);
+    box-shadow: 0 0 0 4px rgba(47, 140, 240, 0.2);
+}
+
+/* ---------- الأزرار ---------- */
+.form-actions {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 1rem;
+    margin-top: 0.4rem;
+}
+
+.btn-save,
+.edit-profile-page .btn-cancel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 58px;
+    padding: 0 1.5rem;
+    font: inherit;
+    font-size: 1.2rem;
+    font-weight: 800;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+}
+
+.btn-save {
+    color: #fff;
+    background: #1f7bf5;
+    border: none;
+    box-shadow: 0 4px 0 #1559b5;
+    transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.btn-save:active {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 #1559b5;
+}
+
+.edit-profile-page .btn-cancel {
+    color: var(--blue);
+    background: #dcecff;
+    border: none;
+}
+
+/* ---------- الجوال ---------- */
+@media (max-width: 960px) {
+    .edit-main {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "side"
+            "card";
+    }
+
+    .side-profile {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        text-align: start;
+    }
+
+    .side-avatar {
+        width: 80px;
+        height: 80px;
+    }
+
+    .side-nav ul {
+        grid-template-columns: 1fr 1fr;
+        margin-top: 0.8rem;
+    }
+
+    .side-link {
+        font-size: 1rem;
+        padding: 0.6rem 0.7rem;
+    }
+
+    .edit-card {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "form"
+            "mascot";
+        padding: 1.2rem;
+    }
+
+    .edit-mascot {
+        justify-self: center;
+        width: 200px;
+        margin-bottom: 0;
+    }
+}
+
+@media (max-width: 560px) {
+    .edit-form {
+        grid-template-columns: 1fr;
+    }
+
+    .photo-row {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .photo-actions {
+        justify-items: center;
+    }
+
+    .form-actions {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="بطبوط - درس الأرقام من 1 إلى 10 للأطفال">
+    <title>بطبوط | الرياضيات - الأرقام</title>
+    <!-- نفس خط الصفحة الرئيسية -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;700;800&display=swap">
+    <!-- التنسيق المشترك أولاً ثم تنسيق درس الأرقام -->
+    <link rel="stylesheet" href="main-style.css">
+    <link rel="stylesheet" href="numbers.css">
+</head>
+<body class="numbers-body">
+
+    <!-- ===== خلفية المشهد: سماء وغيوم وأشجار وعشب (زخرفية فقط) ===== -->
+    <div class="scenery" aria-hidden="true">
+        <span class="cloud scene-cloud scene-cloud-a"></span>
+        <span class="cloud scene-cloud scene-cloud-b"></span>
+        <span class="cloud scene-cloud scene-cloud-c"></span>
+        <span class="tree tree-start"></span>
+        <span class="tree tree-end"></span>
+        <span class="hill hill-back"></span>
+        <span class="hill hill-front"></span>
+        <span class="flower flower-1"></span>
+        <span class="flower flower-2"></span>
+        <span class="flower flower-3"></span>
+    </div>
+
+    <!-- ===== الرموز المشتركة (SVG) تُستخدم عبر <use> ===== -->
+    <svg class="svg-sprite" aria-hidden="true" focusable="false">
+        <!-- تفاحة -->
+        <symbol id="i-apple" viewBox="0 0 100 112">
+            <path d="M50 30C38 19 11 25 11 57c0 27 18 49 33 49 4 0 5-3 6-3s2 3 6 3c15 0 33-22 33-49 0-32-27-38-39-27z" fill="#e8302f"/>
+            <path d="M50 30C38 19 11 25 11 57c0 27 18 49 33 49 4 0 5-3 6-3V30z" fill="#f2453f"/>
+            <ellipse cx="29" cy="50" rx="7" ry="13" fill="#fff" opacity=".35" transform="rotate(18 29 50)"/>
+            <path d="M50 30c0-9 2-17 7-24" fill="none" stroke="#7a4a22" stroke-width="5" stroke-linecap="round"/>
+            <path d="M54 18C60 5 78 2 90 9 83 22 65 26 54 18z" fill="#4cb944"/>
+            <path d="M58 17c8-5 17-6 24-4" fill="none" stroke="#2f9a35" stroke-width="2" stroke-linecap="round"/>
+        </symbol>
+        <!-- آلة حاسبة ملونة -->
+        <symbol id="i-calc" viewBox="0 0 64 64">
+            <g stroke="#fff" stroke-width="3">
+                <rect x="4" y="4" width="26" height="26" rx="7" fill="#2f8cf0"/>
+                <rect x="34" y="4" width="26" height="26" rx="7" fill="#ffb81f"/>
+                <rect x="4" y="34" width="26" height="26" rx="7" fill="#ee3e44"/>
+                <rect x="34" y="34" width="26" height="26" rx="7" fill="#4aa8ee"/>
+            </g>
+            <g stroke="#fff" stroke-width="4" stroke-linecap="round">
+                <path d="M17 11v12M11 17h12"/>
+                <path d="M41 17h12"/>
+                <path d="M17 41v12M11 47h12"/>
+                <path d="M41 47h12"/>
+            </g>
+        </symbol>
+        <!-- مكبر الصوت -->
+        <symbol id="i-speaker" viewBox="0 0 48 48">
+            <path d="M8 19h8l10-8v26l-10-8H8z" fill="currentColor"/>
+            <path d="M32 17c3 4 3 10 0 14M37 12c6 7 6 17 0 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+        </symbol>
+        <!-- نجمة -->
+        <symbol id="i-star" viewBox="0 0 48 48">
+            <path d="M24 3l6.3 13.2 14.4 1.9-10.6 10 2.7 14.3L24 35.2 11.2 42.4l2.7-14.3L3.3 18.1l14.4-1.9z" fill="currentColor" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
+        </symbol>
+        <!-- قفل -->
+        <symbol id="i-lock" viewBox="0 0 48 48">
+            <rect x="9" y="21" width="30" height="22" rx="6" fill="currentColor"/>
+            <path d="M15 21v-6a9 9 0 0 1 18 0v6" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+        </symbol>
+        <!-- كأس -->
+        <symbol id="i-trophy" viewBox="0 0 48 48">
+            <path d="M14 6h20v12a10 10 0 0 1-20 0z" fill="currentColor"/>
+            <path d="M14 10H7c0 8 3 12 8 13M34 10h7c0 8-3 12-8 13" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+            <path d="M24 28v8M16 42h16" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+        </symbol>
+        <!-- علامة صح -->
+        <symbol id="i-check" viewBox="0 0 48 48">
+            <path d="M12 25l8 8 16-18" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+        </symbol>
+        <!-- إعادة المحاولة -->
+        <symbol id="i-retry" viewBox="0 0 48 48">
+            <path d="M38 24a14 14 0 1 1-4.5-10.3" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+            <path d="M36 5v10H26" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+        </symbol>
+    </svg>
+
+    <!-- ===== الترويسة: الشعار + القائمة + البحث والحساب ===== -->
+    <header class="site-header">
+        <a href="main-page.html" class="logo" aria-label="الصفحة الرئيسية لبطبوط">
+            <img src="rec/Glossy Kawaii Chick Head Sticker.png" alt="" width="48" height="48">
+            <span class="logo-text">بطبوط</span>
+        </a>
+
+        <nav class="main-nav" aria-label="القائمة الرئيسية">
+            <ul>
+                <li><a href="main-page.html" class="active" aria-current="page">الرئيسية</a></li>
+                <li><a href="achievements.html">إنجازاتي</a></li>
+            </ul>
+        </nav>
+
+        <div class="header-actions">
+            <button type="button" class="icon-btn" aria-label="بحث">
+                <span aria-hidden="true">🔍</span>
+            </button>
+            <a href="profile.html" class="avatar" aria-label="حسابي">
+                <span aria-hidden="true">🧒</span>
+            </a>
+        </div>
+    </header>
+
+    <!--
+        data-* هنا هي نقاط الربط المستقبلية مع PHP وقاعدة البيانات.
+        القيم الحالية تمثل حساباً جديداً: لا تقدّم ولا نجوم ولا دروس مكتملة.
+        child_id و lesson_id يُملآن من الجلسة عند الربط، ولا توجد بيانات حقيقية مكتوبة داخل الصفحة.
+    -->
+    <main class="numbers-page"
+          data-child-id=""
+          data-lesson-id="numbers"
+          data-number-id="1"
+          data-current-stage="1"
+          data-completed-stages=""
+          data-is-completed="false"
+          data-stars-earned="0"
+          data-completion-date="">
+
+        <!-- ===== بطاقة الدرس الرئيسية ===== -->
+        <section class="lesson-card" aria-labelledby="lesson-title">
+
+            <a href="math.html" class="back-btn" aria-label="العودة إلى الرياضيات">
+                <span aria-hidden="true">&larr;</span>
+            </a>
+
+            <div class="lesson-head">
+                <h1 id="lesson-title" class="subject-title">
+                    <span>الرياضيات</span>
+                    <svg class="subject-icon" width="44" height="44"><use href="#i-calc"/></svg>
+                </h1>
+                <p class="lesson-badge">الرقم <span class="lesson-badge-num">1</span></p>
+            </div>
+
+            <!-- مؤشر المراحل الأربع: المرحلة الحالية مميزة والبقية بانتظار الإكمال بالترتيب -->
+            <nav class="stage-tracker" aria-label="مراحل الدرس">
+                <ol>
+                    <li class="stage-item is-current" data-stage="1" aria-current="step">
+                        <span class="stage-dot">1</span>
+                        <span class="stage-label">تعرّف على الرقم</span>
+                    </li>
+                    <li class="stage-item" data-stage="2">
+                        <span class="stage-dot">2</span>
+                        <span class="stage-label">شاهد طريقة الكتابة</span>
+                    </li>
+                    <li class="stage-item" data-stage="3">
+                        <span class="stage-dot">3</span>
+                        <span class="stage-label">جرّب بنفسك</span>
+                    </li>
+                    <li class="stage-item" data-stage="4">
+                        <span class="stage-dot">4</span>
+                        <span class="stage-label">تحقق من الإجابة</span>
+                    </li>
+                </ol>
+            </nav>
+
+            <div class="lesson-body">
+
+                <!-- المرحلة الأولى: تعرّف على الرقم -->
+                <div class="lesson-main" data-stage="1">
+                    <p class="mascot-bubble">مرحبًا يا بطل! هذا هو الرقم واحد</p>
+
+                    <div class="lesson-panels">
+                        <section class="number-panel" aria-label="الرقم واحد">
+                            <button type="button" class="speak-btn" aria-label="استمع إلى نطق الرقم" data-audio-src="">
+                                <svg width="30" height="30" aria-hidden="true"><use href="#i-speaker"/></svg>
+                            </button>
+                            <span class="big-number">1</span>
+                            <span class="number-name">واحد</span>
+                        </section>
+
+                        <section class="count-panel" aria-labelledby="count-question">
+                            <h2 id="count-question" class="count-question">كم تفاحة في الصورة؟</h2>
+                            <div class="apple-row" role="img" aria-label="تفاحة واحدة">
+                                <svg class="apple" width="120" height="134"><use href="#i-apple"/></svg>
+                            </div>
+                            <p class="count-answer" aria-label="الإجابة: 1">1</p>
+                        </section>
+                    </div>
+
+                    <!-- التنقل بين المراحل: السابق مقفل في أول مرحلة -->
+                    <div class="lesson-nav">
+                        <button type="button" class="nav-btn" aria-label="المرحلة السابقة" disabled>
+                            <span aria-hidden="true">&rarr;</span>
+                        </button>
+                        <ol class="stage-dots" aria-label="المرحلة 1 من 4">
+                            <li class="is-current" aria-current="step"></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ol>
+                        <button type="button" class="nav-btn" aria-label="المرحلة التالية">
+                            <span aria-hidden="true">&larr;</span>
+                        </button>
+                    </div>
+                </div>
+
+                <figure class="mascot">
+                    <img src="rec/Cheerful Duckling Sticker with Pencil.png" alt="بطبوط يشجّعك على تعلّم الرقم" width="320" height="400">
+                </figure>
+            </div>
+        </section>
+
+        <!-- ===== رحلة الأرقام: حالة الحساب الجديد (الرقم 1 مفتوح والباقي مقفل) ===== -->
+        <section class="number-path" aria-labelledby="path-title">
+            <div class="path-head">
+                <h2 id="path-title">رحلة الأرقام</h2>
+                <p class="path-stars">
+                    <svg width="26" height="26" aria-hidden="true"><use href="#i-star"/></svg>
+                    <strong>0</strong> نجمة
+                </p>
+            </div>
+
+            <div class="path-progress">
+                <progress class="progress-bar" value="0" max="100" aria-label="تقدّمك في درس الأرقام">0%</progress>
+                <p><strong>0%</strong> من الدرس</p>
+            </div>
+
+            <ol class="number-grid">
+                <li class="number-node is-current" data-number-id="1" aria-current="step">
+                    <span class="node-num">1</span>
+                    <span class="node-name">واحد</span>
+                </li>
+                <li class="number-node is-locked" data-number-id="2" aria-disabled="true">
+                    <span class="node-num">2</span>
+                    <span class="node-name">اثنان</span>
+                    <svg class="node-lock" width="20" height="20" aria-hidden="true"><use href="#i-lock"/></svg>
+                    <span class="visually-hidden">مقفل</span>
+                </li>
+                <li class="number-node is-locked" data-number-id="3" aria-disabled="true">
+                    <span class="node-num">3</span>
+                    <span class="node-name">ثلاثة</span>
+                    <svg class="node-lock" width="20" height="20" aria-hidden="true"><use href="#i-lock"/></svg>
+                    <span class="visually-hidden">مقفل</span>
+                </li>
+                <li class="number-node is-locked" data-number-id="4" aria-disabled="true">
+                    <span class="node-num">4</span>
+                    <span class="node-name">أربعة</span>
+                    <svg class="node-lock" width="20" height="20" aria-hidden="true"><use href="#i-lock"/></svg>
+                    <span class="visually-hidden">مقفل</span>
+                </li>
+                <li class="number-node is-locked" data-number-id="5" aria-disabled="true">
+                    <span class="node-num">5</span>
+                    <span class="node-name">خمسة</span>
+                    <svg class="node-lock" width="20" height="20" aria-hidden="true"><use href="#i-lock"/></svg>
+                    <span class="visually-hidden">مقفل</span>
+                </li>
+                <li class="number-node is-locked" data-number-id="6" aria-disabled="true">
+                    <span class="node-num">6</span>
+                    <span class="node-name">ستة</span>
+                    <svg class="node-lock" width="20" height="20" aria-hidden="true"><use href="#i-lock"/></svg>
+                    <span class="visually-hidden">مقفل</span>
+                </li>
+                <li class="number-node is-locked" data-number-id="7" aria-disabled="true">
+                    <span class="node-num">7</span>
+                    <span class="node-name">سبعة</span>
+                    <svg class="node-lock" width="20" height="20" aria-hidden="true"><use href="#i-lock"/></svg>
+                    <span class="visually-hidden">مقفل</span>
+                </li>
+                <li class="number-node is-locked" data-number-id="8" aria-disabled="true">
+                    <span class="node-num">8</span>
+                    <span class="node-name">ثمانية</span>
+                    <svg class="node-lock" width="20" height="20" aria-hidden="true"><use href="#i-lock"/></svg>
+                    <span class="visually-hidden">مقفل</span>
+                </li>
+                <li class="number-node is-locked" data-number-id="9" aria-disabled="true">
+                    <span class="node-num">9</span>
+                    <span class="node-name">تسعة</span>
+                    <svg class="node-lock" width="20" height="20" aria-hidden="true"><use href="#i-lock"/></svg>
+                    <span class="visually-hidden">مقفل</span>
+                </li>
+                <li class="number-node is-locked" data-number-id="10" aria-disabled="true">
+                    <span class="node-num">10</span>
+                    <span class="node-name">عشرة</span>
+                    <svg class="node-lock" width="20" height="20" aria-hidden="true"><use href="#i-lock"/></svg>
+                    <span class="visually-hidden">مقفل</span>
+                </li>
+            </ol>
+
+            <p class="award is-locked">
+                <svg width="28" height="28" aria-hidden="true"><use href="#i-trophy"/></svg>
+                <span><strong>بطل الأرقام</strong> يُفتح عند إكمال الأرقام من 1 إلى 10</span>
+            </p>
+        </section>
+
+        <!-- ===== معاينة تصميمية للمراحل 2 و3 و4 (غير مفعّلة بعد) ===== -->
+        <section class="stage-previews" aria-labelledby="previews-title">
+            <h2 id="previews-title">ما ينتظرك في الرقم 1</h2>
+            <p class="previews-note">معاينة للتصميم فقط، والأزرار ستعمل في المرحلة التالية من التطوير.</p>
+
+            <div class="preview-grid">
+
+                <!-- المرحلة الثانية: شاهد طريقة الكتابة -->
+                <article class="preview-card" data-stage="2" aria-labelledby="stage2-title">
+                    <header class="preview-head">
+                        <span class="stage-dot">2</span>
+                        <h3 id="stage2-title">شاهد طريقة الكتابة</h3>
+                    </header>
+                    <p class="preview-lead">شاهد كيف نكتب الرقم!</p>
+
+                    <div class="trace-box">
+                        <svg class="trace-svg" viewBox="0 0 200 230" role="img" aria-label="الرقم 1 بخط متقطع مع سهمين ونقطتي بداية ونهاية">
+                            <defs>
+                                <marker id="trace-arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                                    <path d="M0 0L10 5L0 10z" fill="#f5a700"/>
+                                </marker>
+                            </defs>
+                            <!-- الرقم بخط متقطع -->
+                            <path class="trace-dots" d="M56 84L108 44V188"/>
+                            <!-- أسهم الاتجاه -->
+                            <path class="trace-dir" d="M48 58L76 37" marker-end="url(#trace-arrow)"/>
+                            <path class="trace-dir" d="M138 80V150" marker-end="url(#trace-arrow)"/>
+                            <!-- البداية والنهاية -->
+                            <circle cx="56" cy="84" r="12" fill="#2fb36b" stroke="#fff" stroke-width="3"/>
+                            <circle cx="108" cy="188" r="12" fill="#e5484d" stroke="#fff" stroke-width="3"/>
+                            <text class="trace-tag" x="30" y="118" text-anchor="middle">ابدأ</text>
+                            <text class="trace-tag" x="108" y="222" text-anchor="middle">انتهِ</text>
+                        </svg>
+                    </div>
+
+                    <a href="#" class="btn-next" aria-disabled="true">ابدأ التتبع</a>
+                </article>
+
+                <!-- المرحلة الثالثة: جرّب بنفسك -->
+                <article class="preview-card" data-stage="3" aria-labelledby="stage3-title">
+                    <header class="preview-head">
+                        <span class="stage-dot">3</span>
+                        <h3 id="stage3-title">جرّب بنفسك</h3>
+                    </header>
+                    <p class="preview-lead">حاول كتابة الرقم بنفسك</p>
+
+                    <div class="draw-pad" role="img" aria-label="مساحة فارغة لكتابة الرقم"></div>
+
+                    <div class="preview-actions">
+                        <button type="button" class="btn-edit">مسح المحاولة</button>
+                        <button type="button" class="btn-next btn-confirm">تحقق من إجابتي</button>
+                    </div>
+                </article>
+
+                <!-- المرحلة الرابعة: تحقق من الإجابة (حالتان توضيحيتان) -->
+                <article class="preview-card preview-wide" data-stage="4" aria-labelledby="stage4-title">
+                    <header class="preview-head">
+                        <span class="stage-dot">4</span>
+                        <h3 id="stage4-title">تحقق من الإجابة</h3>
+                    </header>
+
+                    <div class="result-grid">
+                        <div class="result-card is-success">
+                            <span class="sample-tag">مثال: إجابة صحيحة</span>
+                            <span class="result-icon" aria-hidden="true">
+                                <svg width="52" height="52"><use href="#i-check"/></svg>
+                            </span>
+                            <p class="result-title">أحسنت يا بطل!</p>
+                            <p class="result-stars">
+                                <svg width="46" height="46" aria-hidden="true"><use href="#i-star"/></svg>
+                                <span>نجمة جديدة</span>
+                            </p>
+                            <button type="button" class="btn-next">الرقم التالي <span aria-hidden="true">&larr;</span></button>
+                        </div>
+
+                        <div class="result-card is-retry">
+                            <span class="sample-tag">مثال: تحتاج محاولة أخرى</span>
+                            <span class="result-icon" aria-hidden="true">
+                                <svg width="46" height="46"><use href="#i-retry"/></svg>
+                            </span>
+                            <p class="result-title">محاولة رائعة! جرّب مرة أخرى</p>
+                            <p class="result-hint">ابدأ من النقطة الخضراء وانزل للأسفل</p>
+                            <button type="button" class="btn-edit">العودة للمحاولة</button>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 بطبوط - تعلّم والعب</p>
+    </footer>
+
+</body>
+</html>

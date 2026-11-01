@@ -1,0 +1,1062 @@
+/* =========================================================
+   بطبوط - صفحة الطرح (subtraction.css)
+   ملف مستقل: يعتمد فقط على main-style.css (المتغيرات + الترويسة + الأزرار)
+   نفس تصميم addition.css تمامًا، وكل القواعد مقيّدة بـ body.subtraction-body
+   أو بكلاسات خاصة بهذه الصفحة. الإضافات الخاصة بالطرح في القسم 14.
+   ========================================================= */
+
+/* ---------- 1) متغيرات الصفحة ---------- */
+.subtraction-body {
+    --navy: #1b2a5c;
+    --ice: #d8ecfb;
+    --ice-border: #bfe0f8;
+    --panel-line: #cfe8fb;
+    --gold: #ffc727;
+    --cube-a: #2f8cf0;
+    --cube-b: #ff8a1f;
+    --card-radius: 44px;
+}
+
+.svg-sprite {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+/* ---------- 2) الخلفية: سماء + غيوم + أشجار + عشب ---------- */
+.scenery {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.scene-cloud { opacity: 0.95; }
+.scene-cloud-a { top: 110px; inset-inline-start: 2%;  transform: scale(1.5); }
+.scene-cloud-b { top: 170px; inset-inline-start: 44%; transform: scale(0.9); }
+.scene-cloud-c { top: 120px; inset-inline-end: 3%;    transform: scale(1.2); }
+
+.tree {
+    position: absolute;
+    bottom: 0;
+    width: clamp(110px, 17vw, 240px);
+    height: 62vh;
+    background:
+        radial-gradient(circle at 50% 18%, #7ccf55 0 24%, transparent 25%),
+        radial-gradient(circle at 24% 36%, #6bc24a 0 22%, transparent 23%),
+        radial-gradient(circle at 78% 40%, #86d65e 0 24%, transparent 25%),
+        radial-gradient(circle at 50% 58%, #5fb840 0 30%, transparent 31%),
+        linear-gradient(to bottom, transparent 70%, #5fb840 70%);
+    opacity: 0.9;
+}
+
+.tree-start { inset-inline-start: -5%; }
+.tree-end   { inset-inline-end: -5%; transform: scaleX(-1); }
+
+.hill {
+    position: absolute;
+    width: 130%;
+    left: -15%;
+    border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+}
+
+.hill-back  { bottom: -6vh;  height: 30vh; background: linear-gradient(#b4e48c, #9ad46f); }
+.hill-front { bottom: -14vh; height: 30vh; left: -35%; background: linear-gradient(#8fd163, #7cc24e); }
+
+.flower {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 -14px 0 -1px #fff, 0 14px 0 -1px #fff, -14px 0 0 -1px #fff, 14px 0 0 -1px #fff;
+}
+
+.flower-1 { bottom: 5vh; inset-inline-start: 4%; }
+.flower-2 { bottom: 9vh; inset-inline-end: 5%; }
+.flower-3 { bottom: 3vh; inset-inline-end: 12%; transform: scale(0.8); }
+
+/* ---------- 3) الترويسة ثابتة بدون تغيير تصميمها ---------- */
+.subtraction-body .site-header {
+    position: sticky;
+    top: 0.5rem;
+    z-index: 100;
+}
+
+/* ---------- 4) الصفحة ---------- */
+.subtraction-page {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: min(1100px, 92%);
+    margin: 1.5rem auto 2rem;
+}
+
+/* ---------- 5) بطاقة الدرس الكبيرة ---------- */
+.lesson-card {
+    position: relative;
+    isolation: isolate;
+    padding: 1.2rem 1.8rem 1.6rem;
+    background: var(--card);
+    border: 3px solid rgba(255, 255, 255, 0.8);
+    border-radius: var(--card-radius);
+    box-shadow: 0 14px 40px rgba(47, 140, 240, 0.2);
+}
+
+.lesson-top {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    grid-template-areas: "level title side";
+    align-items: start;
+    gap: 1rem;
+}
+
+.level-badge {
+    grid-area: level;
+    justify-self: start;
+    padding: 0.5rem 0.6rem 0.4rem;
+    text-align: center;
+    background: #eaf5fe;
+    border-radius: 26px;
+    border: 2px solid var(--panel-line);
+}
+
+.level-badge p { margin: 0; line-height: 1.35; }
+
+.level-badge-main {
+    padding: 0 1.8rem;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #fff;
+    background: var(--navy);
+    border-radius: var(--radius-pill);
+}
+
+.level-badge-sub {
+    margin-top: 0.15rem !important;
+    font-weight: 800;
+    color: var(--navy);
+}
+
+.level-badge-q {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text-soft);
+}
+
+.lesson-head {
+    grid-area: title;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.subject-title {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 0;
+    padding: 0.3rem 2.4rem 0.4rem 1.6rem;
+    font-size: clamp(1.6rem, 4vw, 2.1rem);
+    font-weight: 800;
+    line-height: 1.3;
+    color: #fff;
+    background: linear-gradient(to bottom, #2f8cf0, #1a6fd1);
+    border-radius: 999px;
+    box-shadow: 0 5px 0 #1658a8, 0 10px 18px rgba(26, 111, 209, 0.3);
+}
+
+.subject-icon {
+    flex-shrink: 0;
+    margin-block: -0.6rem;
+    filter: drop-shadow(0 3px 4px rgba(0, 0, 0, 0.2));
+    transform: rotate(-6deg);
+}
+
+.topic-pill {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0 1.8rem;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--navy);
+    background: var(--ice);
+    border-bottom: 4px solid #9ccbf0;
+    border-radius: var(--radius-pill);
+}
+
+.topic-minus {
+    padding: 6px;
+    color: #fff;
+    background: var(--blue);
+    border-radius: 50%;
+}
+
+.lesson-hint {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-soft);
+    text-align: center;
+}
+
+.lesson-side {
+    grid-area: side;
+    justify-self: end;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+}
+
+.back-btn {
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    font-size: 1.7rem;
+    font-weight: 800;
+    color: var(--blue);
+    text-decoration: none;
+    background: var(--ice);
+    border-radius: 50%;
+    transition: transform 0.15s, background 0.2s;
+}
+
+.back-btn:hover {
+    background: var(--ice-border);
+    transform: scale(1.06);
+}
+
+.level-track-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.level-track-text {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--navy);
+}
+
+.level-track {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.level-track li {
+    position: relative;
+    width: 18px;
+    height: 18px;
+    background: var(--ice-border);
+    border-radius: 50%;
+}
+
+.level-track li + li { margin-inline-start: 14px; }
+
+.level-track li + li::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    inset-inline-end: 100%;
+    width: 14px;
+    height: 5px;
+    transform: translateY(-50%);
+    background: var(--ice-border);
+}
+
+.level-track li.is-current {
+    width: 24px;
+    height: 24px;
+    background: var(--blue);
+}
+
+/* ---------- 6) جسم الدرس ---------- */
+.lesson-body {
+    display: grid;
+    grid-template-columns: 2.7fr 1fr;
+    grid-template-areas: "lesson mascot";
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.lesson-main {
+    grid-area: lesson;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    min-width: 0;
+}
+
+.subtraction-page .mascot {
+    grid-area: mascot;
+    align-self: end;
+    margin-inline-start: -0.5rem;
+}
+
+.subtraction-page .mascot img {
+    width: 100%;
+    max-width: 290px;
+    height: auto;
+}
+
+.question-panel {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.2rem;
+    padding: 2.4rem 1.6rem 1.4rem;
+    background: #fbfdff;
+    border: 3px solid var(--panel-line);
+    border-radius: 36px;
+}
+
+.question-title {
+    position: absolute;
+    top: -1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.15rem 2.6rem;
+    font-size: 1.6rem;
+    font-weight: 800;
+    white-space: nowrap;
+    color: var(--navy);
+    background: var(--ice);
+    border-radius: var(--radius-pill);
+}
+
+.equation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(0.5rem, 2vw, 1.2rem);
+    width: 100%;
+}
+
+.eq-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    min-width: 130px;
+    min-height: 130px;
+    padding: 0.6rem;
+    background: var(--card);
+    border: 3px solid var(--panel-line);
+    border-radius: 28px;
+}
+
+.apple {
+    flex-shrink: 0;
+    filter: drop-shadow(0 4px 3px rgba(150, 30, 30, 0.2));
+}
+
+.eq-op {
+    display: grid;
+    place-items: center;
+    width: 56px;
+    height: 56px;
+    font-size: 2.6rem;
+    font-weight: 800;
+    line-height: 1;
+    color: #0f4c9a;
+    background: var(--ice);
+    border-radius: 16px;
+}
+
+.eq-equals {
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1;
+    color: #0f4c9a;
+}
+
+.answer-box {
+    position: relative;
+    width: 150px;
+    height: 120px;
+    background: var(--card);
+    border: 4px solid var(--blue);
+    border-radius: 28px;
+}
+
+.answer-box::before {
+    content: "";
+    position: absolute;
+    top: 28%;
+    left: 22%;
+    width: 4px;
+    height: 44%;
+    background: #8cc8f4;
+    border-radius: 2px;
+}
+
+.answer-options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: clamp(0.6rem, 2vw, 1.4rem);
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+.answer-option {
+    position: relative;
+    cursor: pointer;
+}
+
+.answer-option input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.answer-option span {
+    display: grid;
+    place-items: center;
+    min-width: 96px;
+    height: 68px;
+    padding: 0 1rem;
+    font-size: 2.3rem;
+    font-weight: 800;
+    color: var(--navy);
+    background: var(--ice);
+    border: 3px solid var(--ice-border);
+    border-bottom-width: 6px;
+    border-radius: 24px;
+    transition: transform 0.12s, background 0.2s, border-color 0.2s;
+}
+
+.answer-option:hover span { transform: translateY(-2px); }
+
+.answer-option input:checked + span {
+    color: #fff;
+    background: var(--blue);
+    border-color: #1a6fd1;
+}
+
+.answer-option input:focus-visible + span {
+    outline: 3px solid var(--yellow-dark);
+    outline-offset: 3px;
+}
+
+.lesson-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+}
+
+.mascot-bubble {
+    position: relative;
+    flex: 1;
+    padding: 0.4rem 1.4rem;
+    font-size: 1.1rem;
+    font-weight: 800;
+    line-height: 1.5;
+    color: var(--navy);
+    background: #fff6d6;
+    border: 3px solid #ffd75e;
+    border-radius: 28px;
+}
+
+.mascot-bubble::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    inset-inline-end: -9px;
+    width: 14px;
+    height: 14px;
+    background: #fff6d6;
+    border-top: 3px solid #ffd75e;
+    border-inline-end: 3px solid #ffd75e;
+    transform: translateY(-50%) rotate(45deg);
+}
+
+.subtraction-page .check-btn {
+    display: inline-flex;
+    flex-shrink: 0;
+    margin-top: 0;
+    padding: 0.7rem 1.8rem;
+    font-size: 1.25rem;
+    white-space: nowrap;
+}
+
+/* ---------- 7) أقسام أسفل البطاقة ---------- */
+.levels-section,
+.feedback-section {
+    padding: 1.4rem 1.8rem 1.6rem;
+    background: var(--card);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+}
+
+.levels-section h2,
+.feedback-section h2 {
+    font-size: 1.5rem;
+    font-weight: 800;
+}
+
+.path-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.path-stars {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.1rem 1rem;
+    font-weight: 700;
+    color: var(--text-soft);
+    background: #f3f6fa;
+    border-radius: var(--radius-pill);
+}
+
+.path-stars svg { color: #cdd6e3; }
+.path-stars strong { font-size: 1.3rem; color: var(--navy); }
+
+.path-progress {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 0.6rem 0 0.4rem;
+}
+
+.path-progress .progress-bar { flex: 1; margin-top: 0; }
+.path-progress p { flex-shrink: 0; color: var(--text-soft); }
+.path-progress strong { color: var(--blue); }
+
+.levels-note {
+    margin-bottom: 1.1rem;
+    color: var(--text-soft);
+}
+
+/* ---------- 8) بطاقات المستويات ---------- */
+.levels-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+}
+
+.lvl-wide { grid-column: 1 / -1; }
+
+.level-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    padding: 1.1rem 1.2rem 1.2rem;
+    background: #fbfdff;
+    border: 3px solid var(--panel-line);
+    border-radius: 28px;
+}
+
+.level-card.is-current {
+    background: #fffbea;
+    border-color: var(--yellow);
+    box-shadow: 0 0 0 4px rgba(255, 199, 39, 0.3);
+}
+
+.level-card.is-locked .demo-wrap,
+.level-card.is-locked .exercise-list {
+    opacity: 0.55;
+}
+
+.lvl-head {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.lvl-num {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--text);
+    background: var(--card);
+    border: 3px solid var(--border);
+    border-radius: 50%;
+}
+
+.is-current .lvl-num {
+    background: var(--yellow);
+    border-color: var(--yellow-dark);
+}
+
+.lvl-titles { flex: 1; min-width: 0; }
+
+.lvl-titles h3 {
+    font-size: 1.2rem;
+    font-weight: 800;
+    line-height: 1.3;
+}
+
+.lvl-diff {
+    font-size: 0.9rem;
+    color: var(--text-soft);
+}
+
+.lvl-lock { color: #9aa5bd; }
+
+.lvl-state {
+    flex-shrink: 0;
+    padding: 0 0.8rem;
+    font-size: 0.85rem;
+    font-weight: 800;
+    border-radius: var(--radius-pill);
+}
+
+.state-now    { color: var(--text); background: var(--yellow); }
+.state-locked { color: #7a869f; background: #e8edf4; }
+
+.exercise-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.exercise-list li {
+    padding: 0 1rem;
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--navy);
+    background: var(--ice);
+    border-radius: var(--radius-pill);
+}
+
+.demo-wrap {
+    display: grid;
+    place-items: center;
+    min-height: 120px;
+    padding: 0.8rem;
+    background: var(--card);
+    border: 3px solid var(--panel-line);
+    border-radius: 22px;
+}
+
+.coach-line {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-weight: 700;
+    color: var(--navy);
+}
+
+.coach-avatar { flex-shrink: 0; width: 32px; height: 32px; }
+
+.lvl-foot {
+    padding: 0.1rem 1rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-align: center;
+    color: #7a869f;
+    background: #eef2f8;
+    border-radius: var(--radius-pill);
+}
+
+.lvl-foot.foot-open { color: #8a5a00; background: #fff0c2; }
+
+/* ---------- 9) الوسائل التعليمية المصغّرة ---------- */
+.demo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    width: 100%;
+}
+
+.demo-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.2rem;
+    min-width: 76px;
+    min-height: 72px;
+    padding: 0.3rem 0.5rem;
+    background: #f7fbff;
+    border: 2px solid var(--panel-line);
+    border-radius: 18px;
+}
+
+.apple-s { filter: drop-shadow(0 3px 2px rgba(150, 30, 30, 0.2)); }
+
+.demo-op {
+    font-size: 1.7rem;
+    font-weight: 800;
+    color: #0f4c9a;
+}
+
+.cube-row,
+.hand-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+}
+
+.demo-cubes { flex-direction: column; gap: 0.8rem; }
+
+.cube {
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    border-radius: 7px;
+    box-shadow: inset 0 -4px 0 rgba(0, 0, 0, 0.18);
+}
+
+.cube-a { background: var(--cube-a); }
+.cube-b { background: var(--cube-b); }
+
+.hand {
+    position: relative;
+    display: inline-flex;
+    align-items: flex-end;
+    gap: 4px;
+    padding: 0 6px 12px;
+}
+
+.hand::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    height: 22px;
+    background: #ffd9a8;
+    border-radius: 12px 12px 18px 18px;
+}
+
+.finger {
+    position: relative;
+    z-index: 1;
+    width: 13px;
+    height: 44px;
+    background: #ffd9a8;
+    border: 2px solid #f0b46a;
+    border-radius: 8px;
+}
+
+.finger.is-down {
+    height: 20px;
+    opacity: 0.45;
+}
+
+.demo-mental { min-height: 90px; }
+
+.mental-eq {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--navy);
+}
+
+.mental-q {
+    display: inline-block;
+    min-width: 64px;
+    padding: 0 0.6rem;
+    text-align: center;
+    color: var(--blue);
+    border: 3px dashed var(--blue);
+    border-radius: 18px;
+}
+
+.demo-line { display: block; }
+
+.line-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.nl-base {
+    fill: none;
+    stroke: #8cc8f4;
+    stroke-width: 5;
+    stroke-linecap: round;
+}
+
+.nl-tick { stroke: #8cc8f4; stroke-width: 3; stroke-linecap: round; }
+
+.nl-num {
+    font-family: var(--font);
+    font-size: 13px;
+    font-weight: 700;
+    fill: var(--text-soft);
+}
+
+.nl-key { font-size: 16px; font-weight: 800; fill: var(--navy); }
+
+.nl-jump {
+    fill: none;
+    stroke: var(--orange);
+    stroke-width: 3.5;
+    stroke-linecap: round;
+}
+
+.nl-label {
+    font-family: var(--font);
+    font-size: 16px;
+    font-weight: 800;
+    fill: var(--navy);
+}
+
+.demo-place { gap: clamp(0.4rem, 2vw, 1.2rem); }
+
+.place-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.place-group b {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--navy);
+}
+
+.place-blocks {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 4px;
+    min-width: 70px;
+    padding: 0.4rem;
+    background: #f7fbff;
+    border: 2px solid var(--panel-line);
+    border-radius: 16px;
+}
+
+.place-blocks .cube {
+    width: 14px;
+    height: 14px;
+    border-radius: 4px;
+    background: var(--cube-b);
+}
+
+.rod {
+    width: 16px;
+    height: 80px;
+    border-radius: 5px;
+    background:
+        repeating-linear-gradient(to bottom, transparent 0 7px, rgba(255, 255, 255, 0.7) 7px 8px),
+        var(--cube-a);
+    box-shadow: inset 0 -4px 0 rgba(0, 0, 0, 0.18);
+}
+
+.place-note {
+    width: 100%;
+    margin-top: 0.4rem;
+    font-weight: 700;
+    text-align: center;
+    color: var(--navy);
+}
+
+/* ---------- 10) نماذج رسائل النتيجة ---------- */
+.feedback-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.2rem;
+}
+
+.result-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 1rem 1.3rem;
+    text-align: center;
+    border-radius: 26px;
+}
+
+.result-card.is-success { background: #e9f9ef; border: 3px solid #9be0b8; }
+.result-card.is-retry   { background: #fff4e0; border: 3px solid #ffd79a; }
+.result-card.is-level   { background: #fff6d6; border: 3px solid #ffd75e; }
+
+.sample-tag {
+    padding: 0 0.9rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-soft);
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: var(--radius-pill);
+}
+
+.result-icon {
+    display: grid;
+    place-items: center;
+    width: 76px;
+    height: 76px;
+    color: #fff;
+    border-radius: 50%;
+}
+
+.is-success .result-icon { background: var(--green);  box-shadow: 0 5px 0 #22884f; }
+.is-retry .result-icon   { background: var(--orange); box-shadow: 0 5px 0 #d46a0a; }
+.is-level .result-icon   { background: var(--yellow-dark); box-shadow: 0 5px 0 #c98200; }
+
+.result-title {
+    font-size: 1.4rem;
+    font-weight: 800;
+    line-height: 1.3;
+    color: var(--navy);
+}
+
+.result-hint { color: var(--text-soft); }
+
+.result-stars {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-weight: 700;
+    color: var(--navy);
+}
+
+.result-stars svg {
+    color: var(--gold);
+    filter: drop-shadow(0 3px 0 var(--yellow-dark));
+}
+
+/* ---------- 11) الجوال والشاشات الصغيرة ---------- */
+@media (max-width: 900px) {
+    .subtraction-body .site-header { position: static; }
+
+    .lesson-card {
+        padding: 1rem 1rem 1.3rem;
+        --card-radius: 34px;
+    }
+
+    .lesson-top {
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+            "title title"
+            "level side";
+        align-items: center;
+    }
+
+    .lesson-body {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "lesson"
+            "mascot";
+    }
+
+    .subtraction-page .mascot { margin: 0; }
+    .subtraction-page .mascot img { width: 170px; }
+
+    .levels-grid,
+    .feedback-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 640px) {
+    .eq-box { min-width: 84px; min-height: 90px; }
+    .eq-box .apple { width: 44px; height: 49px; }
+    .eq-op { width: 40px; height: 40px; font-size: 1.9rem; }
+    .eq-equals { font-size: 2.2rem; }
+    .answer-box { width: 90px; height: 90px; }
+    .answer-option span { min-width: 56px; height: 56px; font-size: 1.8rem; }
+    .question-title { font-size: 1.2rem; padding-inline: 1.4rem; }
+
+    .lesson-actions { flex-direction: column; align-items: stretch; }
+    .mascot-bubble::after { display: none; }
+
+    .levels-section,
+    .feedback-section { padding: 1.1rem 1rem 1.3rem; }
+
+    .lvl-head { flex-wrap: wrap; }
+    .path-progress { flex-direction: column; align-items: stretch; gap: 0.3rem; }
+}
+
+/* ---------- 12) أرقام ومعادلات تُقرأ من اليسار لليمين داخل نص عربي ---------- */
+.ltr-eq {
+    display: inline-block;
+    direction: ltr;
+    unicode-bidi: isolate;
+}
+
+/* ---------- 13) تحسينات الجوال الصغير ---------- */
+.level-track-text { white-space: nowrap; }
+
+@media (max-width: 640px) {
+    .level-track li { width: 14px; height: 14px; }
+    .level-track li.is-current { width: 20px; height: 20px; }
+    .level-track li + li { margin-inline-start: 8px; }
+    .level-track li + li::before { width: 8px; }
+    .level-track-text { font-size: 1.1rem; }
+    .level-badge-main { padding-inline: 1rem; font-size: 1.1rem; }
+
+    .lvl-titles { flex: 1 1 150px; }
+    .lvl-lock { display: none; }
+    .lvl-titles h3 { font-size: 1.05rem; }
+}
+
+/* ---------- 14) خاص بالطرح: العناصر "المأخوذة" (المطروحة) ---------- */
+/* صندوق العناصر التي نأخذها: حدود متقطعة + علامة × حمراء */
+.eq-box-out,
+.demo-box-out {
+    border-style: dashed;
+    border-color: #f2b3b5;
+    background: #fff7f7;
+}
+
+.eq-box-out::after,
+.demo-box-out::after {
+    content: "\2715";
+    position: absolute;
+    top: 6px;
+    inset-inline-end: 10px;
+    font-size: 1.3rem;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--error);
+}
+
+.demo-box-out { position: relative; }
+.demo-box-out::after { top: 3px; inset-inline-end: 6px; font-size: 1rem; }
+
+/* التفاحة المأخوذة تظهر باهتة */
+.apple.is-removed,
+.apple-s.is-out {
+    opacity: 0.45;
+    filter: grayscale(0.5);
+}
+
+/* المكعب المأخوذ: باهت بحدود متقطعة */
+.cube.cube-out {
+    opacity: 0.35;
+    box-shadow: none;
+    outline: 2px dashed var(--error);
+    outline-offset: -2px;
+}
+
+@media (max-width: 640px) {
+    .eq-box-out::after { top: 3px; inset-inline-end: 6px; font-size: 1rem; }
+}

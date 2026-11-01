@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="إنجازات وشارات الطفل في بطبوط">
+    <title>بطبوط | الإنجازات</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;700;800&display=swap">
+    <link rel="stylesheet" href="main-style.css">
+    <link rel="stylesheet" href="achievements.css?v=3">
+</head>
+<body class="achievements-page">
+
+    <!-- مجموعة الأيقونات (SVG) تُستخدم عبر <use> -->
+    <svg class="svg-sprite" width="0" height="0" aria-hidden="true" focusable="false">
+        <defs>
+            <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2l3 6.6 7.2.7-5.4 4.8 1.6 7.1L12 17.3l-6.4 3.9 1.6-7.1-5.4-4.8L9 8.6z" fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+            <symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 2c1 4 6 6 6 12a6 6 0 0 1-12 0c0-3 2-4 3-6 1 2 2 2 2 2 0-3 0-5 1-8z" fill="currentColor"/></symbol>
+            <symbol id="i-book" viewBox="0 0 24 24"><path d="M3 5h7a2 2 0 0 1 2 2v13a2 2 0 0 0-2-2H3zM21 5h-7a2 2 0 0 0-2 2v13a2 2 0 0 1 2-2h7z" fill="currentColor"/></symbol>
+            <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" fill="none"/></symbol>
+            <symbol id="i-lock" viewBox="0 0 24 24"><path d="M7 10V7a5 5 0 0 1 10 0v3h1a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1zm2 0h6V7a3 3 0 0 0-6 0z" fill="currentColor"/></symbol>
+        </defs>
+    </svg>
+
+    <!-- ===== الترويسة: الشعار + القائمة + البحث والحساب ===== -->
+    <header class="site-header">
+        <a href="main-page.html" class="logo" aria-label="الصفحة الرئيسية لبطبوط">
+            <img src="rec/Glossy Kawaii Chick Head Sticker.png" alt="" width="48" height="48">
+            <span class="logo-text">بطبوط</span>
+        </a>
+
+        <nav class="main-nav" aria-label="القائمة الرئيسية">
+            <ul>
+                <li><a href="main-page.html">الرئيسية</a></li>
+                <li><a href="achievements.html" class="active" aria-current="page">إنجازاتي</a></li>
+            </ul>
+        </nav>
+
+        <div class="header-actions">
+            <button type="button" class="icon-btn" aria-label="بحث">
+                <span aria-hidden="true">🔍</span>
+            </button>
+            <a href="profile.html" class="avatar" aria-label="حسابي">
+                <span aria-hidden="true">🧒</span>
+            </a>
+        </div>
+    </header>
+
+    <main class="home-page">
+
+        <!-- ===== الترحيب + النجوم والمستوى ===== -->
+        <section class="ach-hero" aria-labelledby="ach-title">
+            <figure class="mascot">
+                <!-- ضع هنا صورة بطبوط وهو يحمل الكأس الذهبي -->
+                <img src="rec/Triumphant Chick with Trophy Sticker.png" alt="بطبوط يحمل كأسًا ذهبيًا ويرتدي حقيبته الزرقاء" width="320" height="320">
+            </figure>
+
+            <div class="ach-hero-content">
+                <h1 id="ach-title">أحسنت يا بطل!</h1>
+                <p class="subtitle">استمر في التعلم واحصد المزيد من النجوم</p>
+
+                <div class="ach-stats">
+                    <!-- المستوى الحالي: قيم تجريبية (level_current, level_xp, level_xp_max) -->
+                    <article class="dash-card stat-card" id="level-card">
+                        <div class="medal medal-level medal-orange">
+                            <span class="medal-text" id="level-number">3</span>
+                        </div>
+                        <div class="dash-text">
+                            <h2>المستوى الحالي</h2>
+                            <progress class="progress-bar" id="level-progress" value="120" max="200" aria-label="تقدم المستوى">60%</progress>
+                        </div>
+                        <p class="level-numbers"><span id="level-xp">120</span> / <span id="level-xp-max">200</span></p>
+                    </article>
+
+                    <!-- إجمالي النجوم: قيمة تجريبية (total_stars) -->
+                    <article class="dash-card stat-card" id="stars-card">
+                        <svg class="big-star" width="64" height="64" aria-hidden="true"><use href="#i-star"/></svg>
+                        <div class="dash-text stars-text">
+                            <strong class="stars-count" id="total-stars">120</strong>
+                            <p>إجمالي النجوم</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== آخر الإنجازات ===== -->
+        <section class="ach-section" aria-labelledby="latest-title">
+            <h2 id="latest-title" class="section-title">آخر الإنجازات</h2>
+
+            <!-- بيانات تجريبية مؤقتة وليست إنجازات حقيقية. تُولَّد لاحقًا من قاعدة البيانات (آخر 3 إنجازات فقط) -->
+            <div class="latest-grid" id="latest-achievements">
+
+                <article class="latest-card" data-achievement-id="first-lesson">
+                    <div class="medal medal-small medal-gold">
+                        <svg class="medal-icon" width="34" height="34" aria-hidden="true"><use href="#i-star"/></svg>
+                    </div>
+                    <h3>أول درس</h3>
+                    <p class="latest-desc">أكملت أول درس</p>
+                    <time class="latest-date" datetime="2024-03-01">1 مارس 2024</time>
+                </article>
+
+                <article class="latest-card" data-achievement-id="active-learner-3days">
+                    <div class="flame-icon" aria-hidden="true"><svg width="56" height="56"><use href="#i-flame"/></svg></div>
+                    <h3>متعلم نشيط</h3>
+                    <p class="latest-desc">تعلمت 3 أيام متتالية</p>
+                    <time class="latest-date" datetime="2024-03-08">8 مارس 2024</time>
+                </article>
+
+                <article class="latest-card" data-achievement-id="math-star">
+                    <div class="medal medal-small medal-purple">
+                        <svg class="medal-icon" width="34" height="34" aria-hidden="true"><use href="#i-plus"/></svg>
+                    </div>
+                    <h3>نجم الرياضيات</h3>
+                    <p class="latest-desc">أكملت 5 دروس</p>
+                    <time class="latest-date" datetime="2024-03-20">20 مارس 2024</time>
+                </article>
+            </div>
+
+            <!--
+                حالة الحساب الجديد: احذف الشبكة السابقة (latest-grid) واعرض هذه الرسالة بدلها
+                <div class="empty-state">
+                    <h3>رحلتك تبدأ من هنا!</h3>
+                    <p>أكمل أول درس لتحصل على أول إنجاز</p>
+                </div>
+            -->
+        </section>
+
+        <!-- ===== شاراتي ===== -->
+        <section class="ach-section" aria-labelledby="badges-title">
+            <h2 id="badges-title" class="section-title">شاراتي</h2>
+
+            <!--
+                data-earned="true" = مكتسبة (ألوانها الأصلية) / "false" = مقفلة (رمادية مع قفل)
+                في الحساب الجديد تكون جميع الشارات false.
+                الأمثلة الحالية بيانات تجريبية: شارة واحدة فقط مفتوحة.
+            -->
+            <ul class="badges-grid" id="badges">
+
+                <li class="badge-card" data-badge-id="arabic" data-earned="false" data-condition="إكمال جميع دروس العربية">
+                    <div class="medal medal-badge is-locked"><svg class="lock-icon" width="30" height="30" aria-hidden="true"><use href="#i-lock"/></svg></div>
+                    <span class="badge-name">شارة العربية</span>
+                    <span class="visually-hidden">مقفلة: إكمال جميع دروس العربية</span>
+                </li>
+
+                <li class="badge-card" data-badge-id="english" data-earned="false" data-condition="إكمال جميع دروس الإنجليزية">
+                    <div class="medal medal-badge is-locked"><svg class="lock-icon" width="30" height="30" aria-hidden="true"><use href="#i-lock"/></svg></div>
+                    <span class="badge-name">شارة الإنجليزية</span>
+                    <span class="visually-hidden">مقفلة: إكمال جميع دروس الإنجليزية</span>
+                </li>
+
+                <li class="badge-card" data-badge-id="math" data-earned="false" data-condition="إكمال جميع دروس الرياضيات">
+                    <div class="medal medal-badge is-locked"><svg class="lock-icon" width="30" height="30" aria-hidden="true"><use href="#i-lock"/></svg></div>
+                    <span class="badge-name">شارة الرياضيات</span>
+                    <span class="visually-hidden">مقفلة: إكمال جميع دروس الرياضيات</span>
+                </li>
+
+                <li class="badge-card" data-badge-id="all-rounder" data-earned="false" data-condition="إكمال جميع المواد">
+                    <div class="medal medal-badge is-locked"><svg class="lock-icon" width="30" height="30" aria-hidden="true"><use href="#i-lock"/></svg></div>
+                    <span class="badge-name">البطل الشامل</span>
+                    <span class="visually-hidden">مقفلة: إكمال جميع المواد</span>
+                </li>
+
+                <li class="badge-card" data-badge-id="persistent" data-earned="false" data-condition="التعلم 10 أيام متتالية">
+                    <div class="medal medal-badge is-locked"><svg class="lock-icon" width="30" height="30" aria-hidden="true"><use href="#i-lock"/></svg></div>
+                    <span class="badge-name">المثابر</span>
+                    <span class="visually-hidden">مقفلة: التعلم 10 أيام متتالية</span>
+                </li>
+
+                <!-- مثال لشارة مكتسبة (بيانات تجريبية) -->
+                <li class="badge-card is-earned" data-badge-id="first-step" data-earned="true" data-condition="إكمال أول درس">
+                    <div class="medal medal-badge medal-blue">
+                        <svg class="medal-icon" width="34" height="34" aria-hidden="true"><use href="#i-book"/></svg>
+                    </div>
+                    <span class="badge-name">أول خطوة</span>
+                    <span class="visually-hidden">مكتسبة: إكمال أول درس</span>
+                </li>
+
+                <li class="badge-card" data-badge-id="star-collector" data-earned="false" data-condition="الوصول إلى عدد محدد من النجوم">
+                    <div class="medal medal-badge is-locked"><svg class="lock-icon" width="30" height="30" aria-hidden="true"><use href="#i-lock"/></svg></div>
+                    <span class="badge-name">جامع النجوم</span>
+                    <span class="visually-hidden">مقفلة: الوصول إلى عدد محدد من النجوم</span>
+                </li>
+
+                <li class="badge-card" data-badge-id="active-learner" data-earned="false" data-condition="إكمال عدد محدد من الدروس">
+                    <div class="medal medal-badge is-locked"><svg class="lock-icon" width="30" height="30" aria-hidden="true"><use href="#i-lock"/></svg></div>
+                    <span class="badge-name">المتعلم النشيط</span>
+                    <span class="visually-hidden">مقفلة: إكمال عدد محدد من الدروس</span>
+                </li>
+            </ul>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 بطبوط - تعلّم والعب</p>
+    </footer>
+
+</body>
+</html>
