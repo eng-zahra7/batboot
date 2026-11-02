@@ -1,0 +1,739 @@
+/* =========================================================
+   بطبوط - صفحات الحروف العربية (letters.css)
+   ملف مستقل: يعتمد فقط على main-style.css (المتغيرات + الترويسة + الأزرار)
+   كل القواعد مقيّدة بـ body.letters-body أو بكلاسات خاصة بهذه الصفحات.
+   ========================================================= */
+
+/* ---------- 1) متغيرات الصفحة (نفس أسماء addition.css) ---------- */
+.letters-body {
+    --navy: #1b2a5c;
+    --ice: #d8ecfb;
+    --ice-border: #bfe0f8;
+    --panel-line: #cfe8fb;
+    --gold: #ffc727;
+    --card-radius: 44px;
+
+    /* ألوان قسم اللغة العربية (الأخضر كما في الصفحة الرئيسية) */
+    --ar-green: #2fb36b;
+    --ar-green-dark: #22884f;
+    --ar-mint: #e6f7ed;
+    --ar-mint-border: #b8e6cb;
+    --peach: #fff1e6;
+    --peach-border: #ffd9bd;
+    --letter-red: #e5484d;
+}
+
+.letters-body .svg-sprite {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+/* ---------- 2) الخلفية: سماء + غيوم + أشجار + عشب (نفس صفحة الجمع) ---------- */
+.letters-body .scenery {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.letters-body .scene-cloud { opacity: 0.95; }
+.letters-body .scene-cloud-a { top: 110px; inset-inline-start: 2%;  transform: scale(1.5); }
+.letters-body .scene-cloud-b { top: 170px; inset-inline-start: 44%; transform: scale(0.9); }
+.letters-body .scene-cloud-c { top: 120px; inset-inline-end: 3%;    transform: scale(1.2); }
+
+.letters-body .tree {
+    position: absolute;
+    bottom: 0;
+    width: clamp(110px, 17vw, 240px);
+    height: 62vh;
+    background:
+        radial-gradient(circle at 50% 18%, #7ccf55 0 24%, transparent 25%),
+        radial-gradient(circle at 24% 36%, #6bc24a 0 22%, transparent 23%),
+        radial-gradient(circle at 78% 40%, #86d65e 0 24%, transparent 25%),
+        radial-gradient(circle at 50% 58%, #5fb840 0 30%, transparent 31%),
+        linear-gradient(to bottom, transparent 70%, #5fb840 70%);
+    opacity: 0.9;
+}
+
+.letters-body .tree-start { inset-inline-start: -5%; }
+.letters-body .tree-end   { inset-inline-end: -5%; transform: scaleX(-1); }
+
+.letters-body .hill {
+    position: absolute;
+    width: 130%;
+    left: -15%;
+    border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+}
+
+.letters-body .hill-back  { bottom: -6vh;  height: 30vh; background: linear-gradient(#b4e48c, #9ad46f); }
+.letters-body .hill-front { bottom: -14vh; height: 30vh; left: -35%; background: linear-gradient(#8fd163, #7cc24e); }
+
+.letters-body .flower {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 -14px 0 -1px #fff, 0 14px 0 -1px #fff, -14px 0 0 -1px #fff, 14px 0 0 -1px #fff;
+}
+
+.letters-body .flower-1 { bottom: 5vh; inset-inline-start: 4%; }
+.letters-body .flower-2 { bottom: 9vh; inset-inline-end: 5%; }
+.letters-body .flower-3 { bottom: 3vh; inset-inline-end: 12%; transform: scale(0.8); }
+
+/* ---------- 3) الترويسة ثابتة أعلى الصفحة ---------- */
+.letters-body .site-header {
+    position: sticky;
+    top: 0.5rem;
+    z-index: 100;
+}
+
+/* ---------- 4) تخطيط الصفحة: القائمة الجانبية (يمين) + الدرس ---------- */
+.letters-page {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    display: grid;
+    grid-template-columns: 230px minmax(0, 1fr);
+    align-items: start;
+    gap: 1.4rem;
+    width: min(1100px, 92%);
+    margin: 1.5rem auto 2rem;
+}
+
+/* ---------- 5) القائمة الجانبية للحروف ---------- */
+.letters-sidebar {
+    position: sticky;
+    top: 6rem;
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100vh - 7.5rem);
+    overflow: hidden;
+    background: var(--card);
+    border-radius: 32px;
+    box-shadow: 0 14px 40px rgba(47, 140, 240, 0.2);
+}
+
+.sidebar-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem;
+    padding: 0.8rem 1.2rem;
+    background: linear-gradient(to bottom, #3ccf7f, var(--ar-green));
+    box-shadow: 0 4px 0 var(--ar-green-dark);
+}
+
+.sidebar-title {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #fff;
+}
+
+.sidebar-head .coach-avatar {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    padding: 2px;
+    background: #fff4cc;
+    border: 3px solid var(--yellow);
+    border-radius: 12px;
+    object-fit: contain;
+}
+
+/* قائمة الحروف قابلة للتمرير داخل البطاقة */
+.letters-list {
+    flex: 1;
+    margin: 0;
+    padding: 0.9rem 0.7rem;
+    list-style: none;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--ar-mint-border) transparent;
+}
+
+.letter-item {
+    position: relative; /* يحتوي النص المخفي visually-hidden داخل العنصر */
+}
+
+.letter-item > a,
+.letter-item.is-locked {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.35rem 0.6rem;
+    border-radius: var(--radius-md);
+}
+
+.letter-item > a {
+    color: var(--navy);
+    text-decoration: none;
+    transition: background 0.2s;
+}
+
+.letter-item > a:hover {
+    background: var(--ar-mint);
+}
+
+.letter-item + .letter-item {
+    margin-top: 0.25rem;
+}
+
+/* دائرة الرقم (نفس اسم lvl-num في صفحة الجمع) */
+.letter-item .lvl-num {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--navy);
+    background: #eef3f9;
+    border-radius: 50%;
+}
+
+.letter-char {
+    font-size: 1.6rem;
+    font-weight: 800;
+    line-height: 1.3;
+}
+
+/* الحرف الحالي */
+.letter-item.is-current > a {
+    background: var(--ar-mint);
+    box-shadow: inset 0 0 0 2px var(--ar-mint-border);
+}
+
+.letter-item.is-current .lvl-num {
+    color: #fff;
+    background: var(--ar-green);
+    box-shadow: 0 3px 0 var(--ar-green-dark);
+}
+
+/* الحرف المكتمل (للصفحات القادمة) */
+.letter-item.is-done .lvl-num {
+    color: #fff;
+    background: var(--ar-green);
+}
+
+/* الحرف المقفل */
+.letter-item.is-locked {
+    color: #9aa5bd;
+    cursor: not-allowed;
+}
+
+.letter-item.is-locked .lvl-num {
+    background: #f0f3f8;
+}
+
+.letter-item.is-locked .letter-char {
+    opacity: 0.5;
+}
+
+.letter-item .lvl-lock {
+    color: #9aa5bd;
+}
+
+/* ---------- 6) بطاقة الدرس ---------- */
+.letters-page .lesson-card {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    min-width: 0;
+    padding: 1.2rem 1.8rem 1.6rem;
+    background: var(--card);
+    border: 3px solid rgba(255, 255, 255, 0.8);
+    border-radius: var(--card-radius);
+    box-shadow: 0 14px 40px rgba(47, 140, 240, 0.2);
+}
+
+/* الصف العلوي: العنوان (يمين) | التقدم والرجوع (يسار) */
+.letters-page .lesson-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.letter-title {
+    font-size: clamp(1.8rem, 4vw, 2.4rem);
+    font-weight: 800;
+    color: var(--navy);
+}
+
+.letters-page .lesson-side {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.letters-page .level-track-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+/* شريط التقدم بلون أخضر لقسم العربية */
+.letters-page .progress-bar {
+    width: clamp(120px, 20vw, 220px);
+    margin-top: 0;
+}
+
+.letters-page .progress-bar::-webkit-progress-value {
+    background: linear-gradient(to left, #5edc97, var(--ar-green));
+}
+
+.letters-page .progress-bar::-moz-progress-bar {
+    background: linear-gradient(to left, #5edc97, var(--ar-green));
+}
+
+.letters-page .level-track-text {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--text-soft);
+    white-space: nowrap;
+}
+
+.letters-page .back-btn {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 52px;
+    height: 52px;
+    font-size: 1.7rem;
+    font-weight: 800;
+    color: var(--blue);
+    text-decoration: none;
+    background: var(--ice);
+    border-radius: 50%;
+    transition: transform 0.15s, background 0.2s;
+}
+
+.letters-page .back-btn:hover {
+    background: var(--ice-border);
+    transform: scale(1.06);
+}
+
+/* الحرف المُبرز داخل الكلمات والعناوين */
+.letter-hl {
+    color: var(--letter-red);
+}
+
+/* ---------- 7) جسم الدرس: بطاقة الكلمة (يمين) + بطاقة الحرف (يسار) ---------- */
+.letters-page .lesson-body {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 1.2rem;
+}
+
+/* بطاقة الكلمة */
+.word-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    margin: 0;
+    padding: 1.2rem;
+    background: var(--card);
+    border: 3px solid var(--panel-line);
+    border-radius: 32px;
+}
+
+.word-img {
+    max-width: 100%;
+    height: auto;
+    filter: drop-shadow(0 6px 6px rgba(27, 42, 92, 0.12));
+    animation: word-bounce 2.6s ease-in-out infinite;
+}
+
+@keyframes word-bounce {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-6px); }
+}
+
+.word-text {
+    font-size: 2.6rem;
+    font-weight: 800;
+    line-height: 1.2;
+    color: var(--navy);
+}
+
+/* بطاقة الحرف */
+.letter-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1.2rem;
+    background: var(--peach);
+    border: 3px solid var(--peach-border);
+    border-radius: 32px;
+}
+
+.letter-display {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.6rem;
+}
+
+.letter-big {
+    font-size: clamp(6rem, 14vw, 9rem);
+    font-weight: 800;
+    line-height: 1.25;
+    color: var(--navy);
+    text-shadow: 0 6px 0 rgba(27, 42, 92, 0.08);
+}
+
+/* زر الصوت الأزرق */
+.sound-btn {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 80px;
+    height: 80px;
+    color: #fff;
+    background: var(--blue);
+    border: none;
+    border-radius: 50%;
+    box-shadow: 0 5px 0 #1a6fd1, 0 10px 18px rgba(47, 140, 240, 0.35);
+    cursor: pointer;
+    transition: transform 0.12s, box-shadow 0.12s;
+}
+
+.sound-btn:hover {
+    transform: scale(1.06);
+}
+
+.sound-btn:active {
+    transform: translateY(4px);
+    box-shadow: 0 1px 0 #1a6fd1;
+}
+
+/* أزرار الحركات */
+.harakat-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.8rem;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.haraka-btn {
+    width: 100%;
+    padding: 0.5rem 0;
+    font: inherit;
+    font-size: 2.4rem;
+    font-weight: 800;
+    line-height: 1.4;
+    color: var(--navy);
+    background: var(--card);
+    border: 3px solid var(--peach-border);
+    border-bottom-width: 6px;
+    border-radius: 22px;
+    cursor: pointer;
+    transition: transform 0.12s, border-color 0.2s;
+}
+
+.haraka-btn:hover {
+    transform: translateY(-2px);
+    border-color: var(--orange);
+}
+
+.haraka-btn:active {
+    transform: translateY(2px);
+    border-bottom-width: 3px;
+}
+
+/* سطر بطبوط */
+.letters-page .coach-line {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    align-self: center;
+    padding: 0.3rem 1.2rem 0.3rem 0.6rem;
+    font-weight: 800;
+    color: var(--navy);
+    background: #fff6d6;
+    border: 3px solid #ffd75e;
+    border-radius: var(--radius-pill);
+}
+
+.letters-page .coach-avatar {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+}
+
+/* ---------- 8) السؤال واختيار الصور ---------- */
+.letters-page .question-panel {
+    position: relative;
+    margin-top: 1rem;
+    padding: 2.4rem 1.4rem 1.4rem;
+    background: #fbfdff;
+    border: 3px solid var(--panel-line);
+    border-radius: 36px;
+}
+
+.letters-page .question-title {
+    position: absolute;
+    top: -1.4rem;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.15rem 2.2rem;
+    font-size: 1.45rem;
+    font-weight: 800;
+    white-space: nowrap;
+    color: var(--navy);
+    background: var(--ice);
+    border-radius: var(--radius-pill);
+}
+
+.picture-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(0.6rem, 2vw, 1.2rem);
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+/* بطاقة الصورة: المربع كله قابل للضغط */
+.picture-option {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 1rem 0.6rem 0.8rem;
+    background: var(--card);
+    border: 3px solid var(--panel-line);
+    border-bottom-width: 6px;
+    border-radius: 28px;
+    cursor: pointer;
+    transition: transform 0.15s, border-color 0.2s, background 0.2s;
+}
+
+.picture-option:hover {
+    transform: translateY(-3px);
+    border-color: var(--ice-border);
+}
+
+/* زر الاختيار مخفي بصرياً لكنه يبقى قابلاً للوصول */
+.picture-option input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.option-img {
+    max-width: 100%;
+    height: auto;
+}
+
+.option-word {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--navy);
+}
+
+/* علامة الصح الخضراء أعلى البطاقة */
+.option-check {
+    position: absolute;
+    top: -14px;
+    inset-inline-start: -10px;
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    color: #fff;
+    background: var(--ar-green);
+    border: 3px solid #fff;
+    border-radius: 50%;
+    box-shadow: 0 3px 8px rgba(34, 136, 79, 0.35);
+    transform: scale(0);
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* الصورة المختارة */
+.picture-option:has(input:checked) {
+    background: #f2fbf6;
+    border-color: var(--ar-green);
+}
+
+.picture-option:has(input:checked) .option-check {
+    transform: scale(1);
+}
+
+.picture-option:has(input:focus-visible) {
+    outline: 3px solid var(--yellow-dark);
+    outline-offset: 3px;
+}
+
+/* ---------- 9) أزرار التنقل: التالي (يمين) والسابق (يسار) ---------- */
+.letters-page .lesson-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 0.4rem;
+}
+
+.letters-page .check-btn {
+    display: inline-flex;
+    margin-top: 0;
+    min-width: 200px;
+    padding: 0.75rem 2rem;
+}
+
+.letters-page .btn-prev {
+    min-width: 160px;
+    font-family: inherit;
+    cursor: pointer;
+    background: #eef2f7;
+}
+
+/* السابق معطّل في الحرف الأول */
+.letters-page .btn-prev:disabled {
+    color: #a9b3c6;
+    cursor: not-allowed;
+    opacity: 0.7;
+    transform: none;
+    border-color: var(--border);
+}
+
+/* أرقام تُقرأ من اليسار لليمين داخل نص عربي */
+.letters-page .ltr-eq {
+    display: inline-block;
+    direction: ltr;
+    unicode-bidi: isolate;
+}
+
+/* ---------- 10) الشاشات المتوسطة والجوال ---------- */
+@media (max-width: 900px) {
+    .letters-body .site-header { position: static; }
+
+    .letters-page {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    /* القائمة الجانبية تصبح شريطاً أفقياً قابلاً للتمرير */
+    .letters-sidebar {
+        position: static;
+        min-width: 0;
+        max-height: none;
+        border-radius: 26px;
+    }
+
+    .sidebar-head {
+        padding: 0.5rem 1rem;
+    }
+
+    .letters-list {
+        display: flex;
+        gap: 0.4rem;
+        padding: 0.7rem;
+        overflow-x: auto;
+        overflow-y: hidden;
+    }
+
+    .letter-item + .letter-item {
+        margin-top: 0;
+    }
+
+    .letter-item > a,
+    .letter-item.is-locked {
+        flex-direction: column;
+        gap: 0.35rem;
+        padding: 0.4rem 0.5rem;
+    }
+
+    .letter-char {
+        font-size: 1.3rem;
+    }
+
+    .letters-page .lesson-card {
+        padding: 1rem 1rem 1.3rem;
+        --card-radius: 34px;
+    }
+}
+
+@media (max-width: 640px) {
+    .letters-page .lesson-body {
+        grid-template-columns: 1fr;
+    }
+
+    /* بطاقة الحرف أولاً على الجوال */
+    .letter-panel {
+        order: -1;
+    }
+
+    .word-img {
+        width: 120px;
+    }
+
+    .word-text {
+        font-size: 2rem;
+    }
+
+    .sound-btn {
+        width: 64px;
+        height: 64px;
+    }
+
+    .haraka-btn {
+        font-size: 2rem;
+    }
+
+    .letters-page .question-title {
+        font-size: 1.1rem;
+        padding-inline: 1.2rem;
+    }
+
+    .option-img {
+        width: 60px;
+    }
+
+    .option-word {
+        font-size: 1.2rem;
+    }
+
+    .letters-page .lesson-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .letters-page .check-btn,
+    .letters-page .btn-prev {
+        min-width: 0;
+        justify-content: center;
+    }
+
+    .letters-page .coach-line {
+        font-size: 0.95rem;
+        border-radius: 22px;
+    }
+}
+
+/* احترام إعداد تقليل الحركة */
+@media (prefers-reduced-motion: reduce) {
+    .word-img {
+        animation: none;
+    }
+}

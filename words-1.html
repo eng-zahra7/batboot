@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="بطبوط - تعلّم كلمات الحيوانات مع بطبوط: النطق والتهجئة">
+    <title>بطبوط | اللغة العربية - الكلمات: الحيوانات</title>
+    <!-- نفس خط الصفحة الرئيسية -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;700;800&display=swap">
+    <!-- التنسيق المشترك، ثم قالب صفحات الدروس (الحروف)، ثم إضافات الكلمات -->
+    <link rel="stylesheet" href="main-style.css">
+    <link rel="stylesheet" href="letters.css">
+    <!-- إضافات خاصة بدرس الكلمات فقط -->
+    <link rel="stylesheet" href="words.css">
+</head>
+<body class="letters-body words-body">
+
+    <!-- ===== خلفية المشهد (زخرفية فقط) ===== -->
+    <div class="scenery" aria-hidden="true">
+        <span class="cloud scene-cloud scene-cloud-a"></span>
+        <span class="cloud scene-cloud scene-cloud-b"></span>
+        <span class="cloud scene-cloud scene-cloud-c"></span>
+        <span class="tree tree-start"></span>
+        <span class="tree tree-end"></span>
+        <span class="hill hill-back"></span>
+        <span class="hill hill-front"></span>
+        <span class="flower flower-1"></span>
+        <span class="flower flower-2"></span>
+        <span class="flower flower-3"></span>
+    </div>
+
+    <!-- ===== الرموز المشتركة (SVG) ===== -->
+    <svg class="svg-sprite" width="0" height="0" aria-hidden="true" focusable="false">
+        <symbol id="i-apple" viewBox="0 0 100 112">
+            <path d="M50 30C38 19 11 25 11 57c0 27 18 49 33 49 4 0 5-3 6-3s2 3 6 3c15 0 33-22 33-49 0-32-27-38-39-27z" fill="#e8302f"/>
+            <path d="M50 30C38 19 11 25 11 57c0 27 18 49 33 49 4 0 5-3 6-3V30z" fill="#f2453f"/>
+            <ellipse cx="29" cy="50" rx="7" ry="13" fill="#fff" opacity=".35" transform="rotate(18 29 50)"/>
+            <path d="M50 30c0-9 2-17 7-24" fill="none" stroke="#7a4a22" stroke-width="5" stroke-linecap="round"/>
+            <path d="M54 18C60 5 78 2 90 9 83 22 65 26 54 18z" fill="#4cb944"/>
+        </symbol>
+        <symbol id="i-moon" viewBox="0 0 100 100">
+            <path d="M62 8a44 44 0 1 0 30 70A38 38 0 0 1 62 8z" fill="#b9c6e4"/>
+            <path d="M62 8a44 44 0 0 0-30 76 38 38 0 0 1 30-76z" fill="#cfd9f0"/>
+            <circle cx="38" cy="40" r="5" fill="#a6b4d6"/>
+            <circle cx="30" cy="62" r="3.5" fill="#a6b4d6"/>
+        </symbol>
+        <symbol id="i-rabbit" viewBox="0 0 100 110">
+            <!-- الأذنان -->
+            <ellipse cx="36" cy="26" rx="9" ry="24" fill="#eef1f7" stroke="#c9d1e3" stroke-width="2.5" transform="rotate(-10 36 26)"/>
+            <ellipse cx="36" cy="27" rx="4" ry="16" fill="#ffc0d4" transform="rotate(-10 36 27)"/>
+            <ellipse cx="64" cy="26" rx="9" ry="24" fill="#eef1f7" stroke="#c9d1e3" stroke-width="2.5" transform="rotate(10 64 26)"/>
+            <ellipse cx="64" cy="27" rx="4" ry="16" fill="#ffc0d4" transform="rotate(10 64 27)"/>
+            <!-- الجسم والرأس -->
+            <ellipse cx="50" cy="90" rx="26" ry="18" fill="#f6f8fc" stroke="#c9d1e3" stroke-width="2.5"/>
+            <circle cx="50" cy="62" r="24" fill="#f6f8fc" stroke="#c9d1e3" stroke-width="2.5"/>
+            <!-- الوجه -->
+            <circle cx="41" cy="59" r="3.6" fill="#1f2a4d"/>
+            <circle cx="59" cy="59" r="3.6" fill="#1f2a4d"/>
+            <circle cx="42" cy="58" r="1.2" fill="#fff"/>
+            <circle cx="60" cy="58" r="1.2" fill="#fff"/>
+            <path d="M46 67l4 3 4-3z" fill="#ff7aa2"/>
+            <path d="M50 70v3M46 74q4 3 8 0" fill="none" stroke="#1f2a4d" stroke-width="1.8" stroke-linecap="round"/>
+            <circle cx="35" cy="69" r="4" fill="#ffc0d4" opacity=".7"/>
+            <circle cx="65" cy="69" r="4" fill="#ffc0d4" opacity=".7"/>
+        </symbol>
+        <symbol id="i-speaker" viewBox="0 0 48 48">
+            <path d="M8 18h8l11-9v30l-11-9H8z" fill="currentColor"/>
+            <path d="M32 17a9 9 0 0 1 0 14M36 11a17 17 0 0 1 0 26" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+        </symbol>
+        <symbol id="i-check" viewBox="0 0 48 48">
+            <path d="M12 25l8 8 16-18" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+        </symbol>
+        <symbol id="i-lock" viewBox="0 0 48 48">
+            <rect x="9" y="21" width="30" height="22" rx="6" fill="currentColor"/>
+            <path d="M15 21v-6a9 9 0 0 1 18 0v6" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+        </symbol>
+    </svg>
+
+    <!-- ===== الترويسة: الشعار + القائمة + البحث والحساب ===== -->
+    <header class="site-header">
+        <a href="main-page.html" class="logo" aria-label="الصفحة الرئيسية لبطبوط">
+            <img src="rec/Glossy Kawaii Chick Head Sticker.png" alt="" width="48" height="48">
+            <span class="logo-text">بطبوط</span>
+        </a>
+
+        <nav class="main-nav" aria-label="القائمة الرئيسية">
+            <ul>
+                <li><a href="main-page.html">الرئيسية</a></li>
+                <li><a href="achievements.html">إنجازاتي</a></li>
+            </ul>
+        </nav>
+
+        <div class="header-actions">
+            <button type="button" class="icon-btn" aria-label="بحث">
+                <span aria-hidden="true">🔍</span>
+            </button>
+            <a href="profile.html" class="avatar" aria-label="حسابي">
+                <span aria-hidden="true">🧒</span>
+            </a>
+        </div>
+    </header>
+
+    <!--
+        data-* = نقاط الربط المستقبلية مع PHP وقاعدة البيانات (كلها فارغة الآن).
+        level_id = رقم المستوى (الموضوع)، word_id = الكلمة الحالية داخل المستوى.
+        لا توجد إجابات صحيحة ولا تقدّم محفوظ داخل الصفحة.
+    -->
+    <main class="letters-page words-page"
+          data-child-id=""
+          data-subject-id="arabic-words"
+          data-level-id="1"
+          data-word-id="1"
+          data-word="أرنب"
+          data-question-id="w1-1"
+          data-question-type="missing-letter"
+          data-selected-answer=""
+          data-is-correct=""
+          data-is-completed="false"
+          data-stars-earned="0"
+          data-completion-date="">
+
+        <!-- ===== القائمة الجانبية: مستويات الكلمات (حساب جديد: الحيوانات فقط مفتوح) ===== -->
+        <aside class="letters-sidebar" aria-labelledby="sidebar-title">
+            <header class="sidebar-head">
+                <h2 id="sidebar-title" class="sidebar-title">الكلمات</h2>
+                <img class="coach-avatar" src="rec/Glossy Kawaii Chick Head Sticker.png" alt="" width="44" height="44">
+            </header>
+
+            <ol class="letters-list" id="arabic_words_levels">
+                <!-- المستوى الحالي -->
+                <li class="letter-item is-current" data-level-id="1" data-state="current">
+                    <a href="words-1.html" aria-current="page">
+                        <span class="lvl-num">1</span>
+                        <span class="letter-char topic-name">الحيوانات</span>
+                    </a>
+                </li>
+
+                <!-- المستويات المقفلة -->
+                <li class="letter-item is-locked" data-level-id="2" data-state="locked" aria-disabled="true"><span class="lvl-num"><svg class="lvl-lock" width="18" height="18" aria-hidden="true"><use href="#i-lock"/></svg></span><span class="letter-char topic-name">الفواكه</span><span class="visually-hidden">(مقفل)</span></li>
+                <li class="letter-item is-locked" data-level-id="3" data-state="locked" aria-disabled="true"><span class="lvl-num"><svg class="lvl-lock" width="18" height="18" aria-hidden="true"><use href="#i-lock"/></svg></span><span class="letter-char topic-name">الألوان</span><span class="visually-hidden">(مقفل)</span></li>
+                <li class="letter-item is-locked" data-level-id="4" data-state="locked" aria-disabled="true"><span class="lvl-num"><svg class="lvl-lock" width="18" height="18" aria-hidden="true"><use href="#i-lock"/></svg></span><span class="letter-char topic-name">العائلة</span><span class="visually-hidden">(مقفل)</span></li>
+                <li class="letter-item is-locked" data-level-id="5" data-state="locked" aria-disabled="true"><span class="lvl-num"><svg class="lvl-lock" width="18" height="18" aria-hidden="true"><use href="#i-lock"/></svg></span><span class="letter-char topic-name">البيت</span><span class="visually-hidden">(مقفل)</span></li>
+                <li class="letter-item is-locked" data-level-id="6" data-state="locked" aria-disabled="true"><span class="lvl-num"><svg class="lvl-lock" width="18" height="18" aria-hidden="true"><use href="#i-lock"/></svg></span><span class="letter-char topic-name">المدرسة</span><span class="visually-hidden">(مقفل)</span></li>
+                <li class="letter-item is-locked" data-level-id="7" data-state="locked" aria-disabled="true"><span class="lvl-num"><svg class="lvl-lock" width="18" height="18" aria-hidden="true"><use href="#i-lock"/></svg></span><span class="letter-char topic-name">جسمي</span><span class="visually-hidden">(مقفل)</span></li>
+                <li class="letter-item is-locked" data-level-id="8" data-state="locked" aria-disabled="true"><span class="lvl-num"><svg class="lvl-lock" width="18" height="18" aria-hidden="true"><use href="#i-lock"/></svg></span><span class="letter-char topic-name">الأرقام</span><span class="visually-hidden">(مقفل)</span></li>
+            </ol>
+        </aside>
+
+        <!-- ===== بطاقة الدرس الرئيسية ===== -->
+        <section class="lesson-card" aria-labelledby="lesson-title">
+
+            <div class="lesson-top">
+                <div class="lesson-head">
+                    <h1 id="lesson-title" class="letter-title">الحيوانات <span class="topic-emoji" aria-hidden="true">🐾</span></h1>
+                </div>
+
+                <!-- التقدم داخل المستوى: الكلمة 1 من 4 + الرجوع -->
+                <div class="lesson-side">
+                    <div class="level-track-wrap">
+                        <progress class="progress-bar" value="1" max="4" aria-label="الكلمة 1 من 4">1 / 4</progress>
+                        <p class="level-track-text"><span class="ltr-eq">1 / 4</span></p>
+                    </div>
+                    <a href="arabic.html" class="back-btn" aria-label="العودة إلى اللغة العربية">
+                        <span aria-hidden="true">&larr;</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- كلمات هذا المستوى: الحالية مميّزة والباقي ينتظر -->
+            <ol class="word-steps" aria-label="كلمات مستوى الحيوانات">
+                <li class="word-step is-current" aria-current="step">أرنب</li>
+                <li class="word-step">بطة</li>
+                <li class="word-step">قطة</li>
+                <li class="word-step">أسد</li>
+            </ol>
+
+            <div class="lesson-body">
+
+                <!-- بطاقة الكلمة: الصورة + الكلمة + الصوت -->
+                <figure class="word-card">
+                    <svg class="word-img" width="170" height="187" role="img" aria-label="صورة أرنب"><use href="#i-rabbit"/></svg>
+                    <figcaption class="word-with-sound">
+                        <span class="word-text">أرنب</span>
+                        <button type="button" class="sound-btn sound-btn-sm" data-audio="audio/words/arnab.mp3" aria-label="استمع إلى كلمة أرنب">
+                            <svg width="28" height="28" aria-hidden="true"><use href="#i-speaker"/></svg>
+                        </button>
+                    </figcaption>
+                </figure>
+
+                <!-- بطاقة التهجئة: الحروف مفصولة ثم موصولة -->
+                <section class="letter-panel spell-panel" aria-labelledby="spell-title">
+                    <h2 id="spell-title" class="spell-title">لنتهجّى الكلمة</h2>
+
+                    <!-- كل حرف زر ينطق صوته (يُبرمج في JavaScript) -->
+                    <ul class="spell-row" aria-label="حروف كلمة أرنب">
+                        <li><button type="button" class="haraka-btn spell-letter is-first" data-audio="audio/alef.mp3">أ</button></li>
+                        <li><button type="button" class="haraka-btn spell-letter" data-audio="audio/ra.mp3">ر</button></li>
+                        <li><button type="button" class="haraka-btn spell-letter" data-audio="audio/nun.mp3">ن</button></li>
+                        <li><button type="button" class="haraka-btn spell-letter" data-audio="audio/ba.mp3">ب</button></li>
+                    </ul>
+
+                    <p class="spell-arrow" aria-hidden="true">&darr;</p>
+                    <p class="spell-joined"><span class="letter-hl">أ</span>رنب</p>
+                </section>
+            </div>
+
+            <p class="coach-line">
+                <img class="coach-avatar" src="rec/Glossy Kawaii Chick Head Sticker.png" alt="" width="32" height="32">
+                <span>كلمة أرنب تبدأ بحرف أ الذي تعلّمناه! اضغط على كل حرف لتسمعه.</span>
+            </p>
+
+            <!-- ===== السؤال: ما الحرف الناقص؟ ===== -->
+            <section class="question-panel" aria-labelledby="q-title">
+                <h2 id="q-title" class="question-title">ما الحرف الناقص؟</h2>
+
+                <p class="missing-word" aria-label="كلمة أرنب ينقصها الحرف الأول">
+                    <span class="blank-box" aria-hidden="true">؟</span><span>ـرنب</span>
+                </p>
+
+                <fieldset class="answer-options text-options">
+                    <legend class="visually-hidden">اختر الحرف الناقص</legend>
+
+                    <label class="picture-option text-option">
+                        <input type="radio" name="selected_answer" value="ba">
+                        <span class="option-check" aria-hidden="true"><svg width="20" height="20"><use href="#i-check"/></svg></span>
+                        <span class="option-letter">ب</span>
+                    </label>
+
+                    <label class="picture-option text-option">
+                        <input type="radio" name="selected_answer" value="ta">
+                        <span class="option-check" aria-hidden="true"><svg width="20" height="20"><use href="#i-check"/></svg></span>
+                        <span class="option-letter">ت</span>
+                    </label>
+
+                    <label class="picture-option text-option">
+                        <input type="radio" name="selected_answer" value="alef">
+                        <span class="option-check" aria-hidden="true"><svg width="20" height="20"><use href="#i-check"/></svg></span>
+                        <span class="option-letter">أ</span>
+                    </label>
+                </fieldset>
+            </section>
+
+            <!-- ===== أزرار التنقل =====
+                 "السابق" معطّل لأنها أول كلمة في أول مستوى،
+                 و"التالي" سيتحقق من الإجابة وينتقل إلى كلمة "بطة" في مرحلة JavaScript -->
+            <div class="lesson-actions">
+                <button type="button" class="btn-next btn-confirm check-btn">
+                    التالي
+                    <span aria-hidden="true">&larr;</span>
+                </button>
+                <button type="button" class="btn-edit btn-prev" disabled>
+                    <span aria-hidden="true">&rarr;</span>
+                    السابق
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 بطبوط - تعلّم والعب</p>
+    </footer>
+
+</body>
+</html>

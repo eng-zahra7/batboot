@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="دروس اللغة العربية للأطفال في بطبوط: الحروف والكلمات والجمل">
+    <title>بطبوط | اللغة العربية</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;700;800&display=swap">
+    <link rel="stylesheet" href="main-style.css">
+    <link rel="stylesheet" href="arabic.css">
+</head>
+<body class="arabic-page">
+
+    <!-- مجموعة الأيقونات (SVG) -->
+    <svg class="svg-sprite" width="0" height="0" aria-hidden="true" focusable="false">
+        <defs>
+            <!-- أيقونة العنوان: كتاب مفتوح عليه حرف -->
+            <symbol id="i-book" viewBox="0 0 64 64">
+                <rect x="3" y="3" width="58" height="58" rx="14" fill="#fff" stroke="#cdeedb" stroke-width="2"/>
+                <path d="M32 18c-6-5-14-6-22-4v32c8-2 16-1 22 4z" fill="#ffc727"/>
+                <path d="M32 18c6-5 14-6 22-4v32c-8-2-16-1-22 4z" fill="#ff8a1f"/>
+                <path d="M32 18v32" stroke="#fff" stroke-width="3"/>
+                <path d="M15 24h11M15 31h11M15 38h8M38 24h11M38 31h11M38 38h8" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+            </symbol>
+            <!-- أيقونة الكلمات: بطاقة خضراء عليها كلمة -->
+            <symbol id="i-word-tile" viewBox="0 0 120 100">
+                <rect x="4" y="4" width="112" height="92" rx="30" fill="#fff"/>
+                <rect x="10" y="10" width="100" height="80" rx="26" fill="#2fb36b"/>
+                <text x="60" y="64" text-anchor="middle" font-family="Baloo Bhaijaan 2, Tahoma, sans-serif" font-size="40" font-weight="800" fill="#fff">كلمة</text>
+            </symbol>
+            <!-- أيقونة الجمل: فقاعة كلام فيها أسطر -->
+            <symbol id="i-sentence-tile" viewBox="0 0 120 100">
+                <rect x="4" y="4" width="112" height="92" rx="30" fill="#fff"/>
+                <rect x="10" y="10" width="100" height="80" rx="26" fill="#ff8a1f"/>
+                <path d="M30 26h60a8 8 0 0 1 8 8v24a8 8 0 0 1-8 8H58l-12 10v-10H30a8 8 0 0 1-8-8V34a8 8 0 0 1 8-8z" fill="#fff"/>
+                <path d="M36 40h48M36 52h32" stroke="#ff8a1f" stroke-width="6" stroke-linecap="round"/>
+            </symbol>
+        </defs>
+    </svg>
+
+    <!-- ===== الترويسة: الشعار + القائمة + البحث والحساب ===== -->
+    <header class="site-header">
+        <a href="main-page.html" class="logo" aria-label="الصفحة الرئيسية لبطبوط">
+            <img src="rec/Glossy Duckling Blue Badge.png" alt="" width="48" height="48">
+            <span class="logo-text">بطبوط</span>
+        </a>
+
+        <nav class="main-nav" aria-label="القائمة الرئيسية">
+            <ul>
+                <li><a href="main-page.html">الرئيسية</a></li>
+                <li><a href="achievements.html">إنجازاتي</a></li>
+            </ul>
+        </nav>
+
+        <div class="header-actions">
+            <button type="button" class="icon-btn" aria-label="بحث">
+                <span aria-hidden="true">🔍</span>
+            </button>
+            <a href="profile.html" class="avatar" aria-label="حسابي">
+                <span aria-hidden="true">🧒</span>
+            </a>
+        </div>
+    </header>
+
+    <main class="arabic-main">
+        <section class="arabic-card" aria-labelledby="arabic-title">
+
+            <!-- زر الرجوع -->
+            <a href="main-page.html" class="subject-btn back-btn" aria-label="الرجوع إلى الصفحة الرئيسية"><span aria-hidden="true">&larr;</span></a>
+
+            <header class="arabic-head">
+                <h1 id="arabic-title" class="arabic-title">اللغة العربية
+                    <svg class="arabic-title-icon" width="76" height="76" aria-hidden="true"><use href="#i-book"/></svg>
+                </h1>
+                <p class="subtitle">اختر درسًا لتبدأ التعلم</p>
+            </header>
+
+            <!--
+                كل بطاقة درس مستقلة. لاحقًا يملأ PHP السمات التالية من قاعدة البيانات:
+                data-lesson-id, data-subject-id, data-child-id, data-completion-status,
+                data-progress-percentage, data-stars-earned
+                الروابط الحالية مؤقتة.
+            -->
+            <ul class="lesson-grid" id="arabic_lessons">
+                <li>
+                    <a href="A-letter-1.html" class="lesson-card lesson-letters" data-lesson-id="letters" data-subject-id="arabic">
+                        <span class="lesson-icon letters" aria-hidden="true"><span class="l1">أ</span><span class="l2">ب</span><span class="l3">ت</span></span>
+                        <h2 class="lesson-name">الحروف</h2>
+                    </a>
+                </li>
+                <li>
+                    <a href="words-1.html" class="lesson-card lesson-words" data-lesson-id="words" data-subject-id="arabic">
+                        <svg class="lesson-icon" width="130" height="108" aria-hidden="true"><use href="#i-word-tile"/></svg>
+                        <h2 class="lesson-name">الكلمات</h2>
+                    </a>
+                </li>
+                <li>
+                    <a href="sentences.html" class="lesson-card lesson-sentences" data-lesson-id="sentences" data-subject-id="arabic">
+                        <svg class="lesson-icon" width="130" height="108" aria-hidden="true"><use href="#i-sentence-tile"/></svg>
+                        <h2 class="lesson-name">الجمل</h2>
+                    </a>
+                </li>
+            </ul>
+
+            <figure class="arabic-mascot">
+                <img src="rec/Cheerful Duckling Sticker with Pencil.png" alt="بطبوط يحمل قلمًا ومستعد للكتابة" width="320" height="400">
+            </figure>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 بطبوط - تعلّم والعب</p>
+    </footer>
+
+</body>
+</html>
