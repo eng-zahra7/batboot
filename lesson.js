@@ -2,6 +2,7 @@
    بطبوط - محرّك الدروس التفاعلية (lesson.js)
    ملف واحد يعمل مع:
    - مجموعات الحروف (letters-1.html ...)   kind = "letters"
+     والحروف الإنجليزية (english-letters-1.html) بنفس النوع مع lang = "en"
    - مستويات الكلمات (words-1.html ...)    kind = "words"
    - مستويات الجمل   (sentences-1.html ...) kind = "sentences"
    يقرأ بيانات المستوى من الصفحة، ويعرض الأنشطة واحدًا تلو الآخر،
@@ -19,6 +20,16 @@
 const LEVEL = JSON.parse(document.getElementById('level-data').textContent);
 const ITEMS = LEVEL.items;
 const KIND = LEVEL.kind;   // "letters" أو "words" أو "sentences"
+const LANG = LEVEL.lang || 'ar';   // لغة محتوى الدرس: "ar" أو "en"
+
+// محتوى الدروس الإنجليزية يُكتب من اليسار لليمين داخل الصفحة العربية
+function markLang(node) {
+    if (LANG === 'en' && node) {
+        node.lang = 'en';
+        node.dir = 'ltr';
+    }
+    return node;
+}
 
 /* ---------- 2) عناصر الصفحة ---------- */
 const $ = (selector) => document.querySelector(selector);
@@ -128,15 +139,15 @@ function shuffle(list) {
     return copy;
 }
 
-// نطق النص بالعربية بصوت المتصفح (Web Speech API)
-function speak(text) {
+// نطق النص بصوت المتصفح (Web Speech API) بلغة الدرس
+function speak(text, lang = LANG) {
     if (!('speechSynthesis' in window)) return;
     window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'ar-SA';
+    utterance.lang = lang === 'en' ? 'en-US' : 'ar-SA';
     utterance.rate = 0.8;
-    const arabicVoice = window.speechSynthesis.getVoices().find((v) => v.lang.startsWith('ar'));
-    if (arabicVoice) utterance.voice = arabicVoice;
+    const voice = window.speechSynthesis.getVoices().find((v) => v.lang.startsWith(lang));
+    if (voice) utterance.voice = voice;
     window.speechSynthesis.speak(utterance);
 }
 
@@ -180,6 +191,7 @@ function renderItem() {
         ui.text.replaceChildren(el('span', { class: 'letter-hl' }, item.word[0]), item.word.slice(1));
     }
     if (ui.titleLetter) ui.titleLetter.textContent = item.letter;
+    [ui.text, ui.bigLetter, ui.titleLetter, ui.parts, ui.steps].forEach(markLang);
     ui.coach.textContent = item.coach;
 
     renderParts(item);
@@ -198,8 +210,8 @@ function renderItem() {
 // بطاقة التفكيك: الحرف وحركاته، أو حروف الكلمة، أو كلمات الجملة مع دورها
 function renderParts(item) {
     if (KIND === 'letters') {
-        ui.bigLetter.textContent = item.letter;
-        ui.parts.setAttribute('aria-label', `حرف ${item.letter} مع الحركات`);
+        ui.bigLetter.textContent = item.big || item.letter;   // مثل: Aa في الإنجليزية
+        ui.parts.setAttribute('aria-label', LANG === 'en' ? `أشكال حرف ${item.letter}` : `حرف ${item.letter} مع الحركات`);
         ui.parts.replaceChildren(...item.harakat.map((h) => {
             const btn = el('button', { type: 'button', class: 'haraka-btn', 'aria-label': `استمع إلى ${h}` }, h);
             btn.addEventListener('click', () => speak(h));
@@ -291,6 +303,8 @@ function buildArrange(q) {
         updateArrangeAnswer();
     });
 
+    markLang(slots);
+    markLang(tiles);
     ui.qBody.append(slots, tiles, reset);
 }
 
@@ -335,7 +349,7 @@ function updateArrangeAnswer() {
 
 // خيارات نصية: لاختيار جملة أو كلمة أو حرف
 function buildTextOptions(q, onPick) {
-    const fieldset = el('fieldset', { class: 'answer-options text-options' });
+    const fieldset = markLang(el('fieldset', { class: 'answer-options text-options' }));
     if (q.type === 'sentence-choice') fieldset.classList.add('sentence-options');
     fieldset.append(el('legend', { class: 'visually-hidden' }, 'اختر الإجابة'));
     const textClass = (q.type === 'missing-letter' || q.type === 'find-letter') ? 'option-letter' : 'option-word';
@@ -363,7 +377,7 @@ function buildImageChoice(q) {
 
 // (ج) الفراغ: "أكمل الجملة" (الفراغ بعد النص) أو "الحرف الناقص" (الفراغ قبل النص)
 function buildFillBlank(q) {
-    const line = el('p', { class: 'missing-word' + (q.before ? ' complete-line' : '') });
+    const line = markLang(el('p', { class: 'missing-word' + (q.before ? ' complete-line' : '') }));
     const blank = el('span', { class: 'blank-box', id: 'blank-box' }, '؟');
     if (q.before) line.append(el('span', {}, q.before));
     line.append(blank);
@@ -388,10 +402,10 @@ function buildPictureChoice(q) {
         const check = el('span', { class: 'option-check', 'aria-hidden': 'true' });
         check.append(svgIcon('i-check', 20, 20));
         label.append(input, check, svgIcon(option.image, 96, 96, 'option-img'));
-        if (q.showLabels) label.append(el('span', { class: 'option-word' }, option.label));
+        if (q.showLabels) label.append(markLang(el('span', { class: 'option-word' }, option.label)));
         fieldset.append(label);
     });
-    if (q.text) ui.qBody.append(el('p', { class: 'read-word' }, q.text));
+    if (q.text) ui.qBody.append(markLang(el('p', { class: 'read-word' }, q.text)));
     ui.qBody.append(fieldset);
 }
 
@@ -550,7 +564,7 @@ function finishLevel() {
 
     ui.content.hidden = true;
     ui.result.hidden = false;
-    speak('أحسنت يا بطل');
+    speak('أحسنت يا بطل', 'ar');
 }
 
 // فتح المستوى التالي في القائمة الجانبية

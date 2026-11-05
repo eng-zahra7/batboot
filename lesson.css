@@ -327,3 +327,30 @@
 .letters-lesson .question-body > .text-options:first-child {
     margin-top: 0.4rem;
 }
+
+/* ---------- الدروس الإنجليزية: نفس القالب باللون الأزرق ----------
+   letters.css يستخدم متغيرات --ar-* للون الأخضر، فنغيّر قيمها هنا فقط */
+.letters-body.english-lesson {
+    --ar-green: #2f8cf0;
+    --ar-green-dark: #1a6fd1;
+    --ar-mint: #e3f0ff;
+    --ar-mint-border: #b9d7f8;
+}
+
+.english-lesson .sidebar-head {
+    background: linear-gradient(to bottom, #5aa8f5, #2f8cf0);
+}
+
+/* شكلا الحرف (الكبير والصغير) في عمودين بدل ثلاث حركات */
+.english-lesson .case-list {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 280px;
+}
+
+.english-lesson .progress-bar::-webkit-progress-value {
+    background: linear-gradient(to left, #7cc0ff, var(--ar-green));
+}
+
+.english-lesson .progress-bar::-moz-progress-bar {
+    background: linear-gradient(to left, #7cc0ff, var(--ar-green));
+}
