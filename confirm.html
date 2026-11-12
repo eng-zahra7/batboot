@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="بطبوط - تطبيق تعليمي تفاعلي للأطفال لتعلم العربية والإنجليزية والرياضيات">
     <title>بطبوط | تأكيد التسجيل</title>
-    <!-- خط Baloo Bhaijaan 2: خط دائري مرح يدعم العربية والإنجليزية -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;700;800&display=swap">
-    <link rel="stylesheet" href="css/confirm-style.css">
+    <link rel="stylesheet" href="css/main-style.css">
+    <!-- ملف JavaScript واحد لصفحات التسجيل الثلاث: defer = يعمل بعد تحميل الصفحة -->
+    <script src="JS/registration.js" defer></script>
 </head>
 <body>
 
@@ -41,8 +42,9 @@
             <h1 id="confirm-title">تأكد من بياناتك</h1>
             <p class="subtitle">راجع المعلومات التالية قبل إتمام التسجيل</p>
 
-            <!-- ملاحظة: البيانات هنا أمثلة ثابتة لمرحلة HTML،
-                 وفي مرحلة PHP ستُعرض البيانات الحقيقية من الجلسة (Session) -->
+            <!-- البيانات هنا أمثلة تظهر فقط بدون JavaScript.
+                 registration.js يستبدلها ببيانات المستخدم الحقيقية،
+                 وفي مرحلة PHP تُعرض من الجلسة ($_SESSION) -->
 
             <!-- ===== بيانات ولي الأمر: جدول من عمودين (العنوان | القيمة) ===== -->
             <section class="summary-card parent-summary" aria-labelledby="parent-summary-title">
@@ -84,7 +86,7 @@
                         <span aria-hidden="true">🧒</span> بيانات الأطفال
                         <span class="count-badge">2</span>
                     </h2>
-                    <a href="register-childe.html" class="edit-link">
+                    <a href="register-children.html" class="edit-link">
                         <span aria-hidden="true">✎</span> تعديل
                     </a>
                 </div>
@@ -122,14 +124,11 @@
                 </div>
             </section>
 
-            <!-- ===== أزرار التأكيد والتعديل ===== -->
+            <!-- ===== زر التأكيد (التعديل من روابط "تعديل" بجانب كل قسم) ===== -->
             <form id="confirm-form" class="confirm-actions" action="confirm.php" method="post">
                 <button type="submit" name="action" value="confirm" class="btn-next btn-confirm">
                     <span aria-hidden="true">✔</span> تأكيد التسجيل
                 </button>
-                <a href="register-childe.html" class="btn-edit">
-                    <span aria-hidden="true">✎</span> تعديل البيانات
-                </a>
             </form>
 
         </section>
@@ -139,7 +138,5 @@
         <p>&copy; 2026 بطبوط - تعلّم والعب</p>
     </footer>
 
-    <!-- مرحلة JavaScript: سيتم ربط ملف السكربت هنا -->
-    <!-- <script src="js/confirm.js"></script> -->
 </body>
 </html>

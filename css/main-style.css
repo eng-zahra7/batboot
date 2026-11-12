@@ -1278,3 +1278,94 @@ select:focus {
         font-size: 1.8rem;
     }
 }
+
+/* =========================================================
+   16) التحقق من نماذج التسجيل (يعمل مع registration.js)
+   ========================================================= */
+
+/* العناصر المخفية تبقى مخفية رغم display: flex على .form-group */
+.register-form [hidden],
+.confirm-box [hidden] {
+    display: none !important;
+}
+
+/* رسالة الخطأ تحت الحقل */
+.field-error {
+    margin: -0.5rem 0 0;
+    padding-inline-start: 0.6rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--error);
+    animation: card-in 0.25s ease;
+}
+
+.field-error::before {
+    content: "⚠ ";
+}
+
+/* الحقل الخاطئ بإطار أحمر */
+.form-group.is-invalid input,
+.form-group.is-invalid select {
+    border-color: var(--error);
+    background: #fff6f6;
+}
+
+.form-group.is-invalid input:focus {
+    box-shadow: 0 0 0 4px rgba(229, 72, 77, 0.2);
+}
+
+.choice-group.is-invalid .choice {
+    border-color: #f3a5a8;
+}
+
+/* زر التالي باهت حتى تكتمل البيانات (يبقى قابلًا للضغط ليُظهر الأخطاء) */
+.btn-next.is-waiting {
+    opacity: 0.6;
+    filter: saturate(0.6);
+}
+
+.btn-confirm:disabled {
+    opacity: 0.7;
+    cursor: wait;
+}
+
+/* ظهور بطاقة طفل جديدة */
+.child-card.is-new {
+    animation: card-in 0.35s ease;
+}
+
+@keyframes card-in {
+    from { opacity: 0; transform: translateY(-10px); }
+    to   { opacity: 1; transform: none; }
+}
+
+/* رسائل صفحة التأكيد: لا توجد بيانات / تم التسجيل */
+.form-notice {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 1.4rem;
+    text-align: center;
+    font-weight: 700;
+    background: #fff8e1;
+    border: 3px dashed var(--yellow);
+    border-radius: var(--radius-md);
+}
+
+.form-notice h2 {
+    font-size: 1.6rem;
+    color: #1f8a50;
+}
+
+.form-notice .btn-next {
+    margin-top: 0;
+    text-decoration: none;
+}
+
+.form-notice.is-success {
+    background: #eafaf1;
+    border-style: solid;
+    border-color: #8fd6ad;
+    animation: card-in 0.4s ease;
+}
