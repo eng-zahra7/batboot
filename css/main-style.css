@@ -640,7 +640,7 @@ select:focus {
 /* ---------- أزرار التأكيد والتعديل ---------- */
 .confirm-actions {
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 1fr;   /* زر التأكيد وحده بعرض كامل */
     gap: 1rem;
     margin-top: 0.5rem;
 }
@@ -1368,4 +1368,129 @@ select:focus {
     border-style: solid;
     border-color: #8fd6ad;
     animation: card-in 0.4s ease;
+}
+
+/* =========================================================
+   17) كلمة السر وتسجيل الدخول (يعمل مع registration.js)
+   ========================================================= */
+
+/* حقول كلمة السر بنفس شكل باقي الحقول (لم تكن موجودة في القسم 9) */
+input[type="password"] {
+    width: 100%;
+    padding: 0.85rem 1.1rem;
+    font: inherit;
+    color: var(--text);
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: var(--radius-md);
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input[type="password"]:focus {
+    outline: none;
+    border-color: var(--blue);
+    box-shadow: 0 0 0 4px rgba(47, 140, 240, 0.2);
+}
+
+/* الحقول المكتوبة من اليسار (الجوال والبريد): الأيقونة على اليسار،
+   فنجعل الفراغ على اليسار أيضًا حتى لا يغطي النصُّ الأيقونة */
+.input-icon input[dir="ltr"] {
+    padding-inline-start: 3rem;
+    padding-inline-end: 1.1rem;
+}
+
+/* زر العين داخل حقل كلمة السر */
+.password-field input {
+    padding-inline-end: 3.2rem;
+}
+
+.toggle-password {
+    position: absolute;
+    bottom: 0.45rem;
+    inset-inline-end: 0.5rem;
+    display: grid;
+    place-items: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    padding: 0;
+    font-size: 1.25rem;
+    background: transparent;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.toggle-password:hover {
+    background: #e8f3ff;
+}
+
+/* قائمة شروط كلمة السر */
+.password-rules {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1rem;
+    margin: -0.6rem 0 0;
+    padding: 0;
+    list-style: none;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-soft);
+}
+
+.password-rules li::before {
+    content: "○ ";
+}
+
+.password-rules li.is-met {
+    color: var(--green);
+}
+
+.password-rules li.is-met::before {
+    content: "✓ ";
+}
+
+/* رسالة عامة أعلى نموذج الدخول */
+.form-alert {
+    margin: 0 0 1rem;
+    padding: 0.7rem 1rem;
+    font-weight: 700;
+    border-radius: var(--radius-md);
+    animation: card-in 0.25s ease;
+}
+
+.form-alert[hidden] {
+    display: none;
+}
+
+.form-alert.is-error {
+    color: #b3262b;
+    background: #fff0f0;
+    border: 2px solid #ffc9cb;
+}
+
+.form-alert.is-success {
+    color: #1f8a50;
+    background: #eafaf1;
+    border: 2px solid #b8e6cb;
+}
+
+/* زر معطّل أثناء القفل المؤقت أو بعد نجاح الدخول */
+.btn-next:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* رابط التبديل بين التسجيل والدخول */
+.auth-switch {
+    margin-top: 1.2rem;
+    text-align: center;
+    font-weight: 700;
+    color: var(--text-soft);
+}
+
+.auth-switch a {
+    color: var(--blue);
+    font-weight: 800;
 }

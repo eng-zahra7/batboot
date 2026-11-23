@@ -5,15 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="بطبوط - تطبيق تعليمي تفاعلي للأطفال لتعلم العربية والإنجليزية والرياضيات">
     <title>بطبوط | بيانات ولي الأمر</title>
-     <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;700;800&display=swap">
     <link rel="stylesheet" href="css/main-style.css">
-     <script src="JS/registration.js" defer></script>
+    <!-- ملف JavaScript واحد لصفحات التسجيل الثلاث: defer = يعمل بعد تحميل الصفحة -->
+    <script src="JS/registration.js" defer></script>
 </head>
 <body>
 
     <!-- ===== الترويسة: الشعار + مؤشر خطوات التسجيل ===== -->
     <header class="site-header">
-        <link rel="stylesheet" href="css/style.css">
         <a href="main-page.html" class="logo" aria-label="الصفحة الرئيسية لبطبوط">
             <img src="rec/Glossy Kawaii Chick Head Sticker.png" alt="" width="48" height="48">
             <span class="logo-text">بطبوط</span>
@@ -41,7 +43,7 @@
             <h1 id="parent-title">مرحباً بك في بطبوط!</h1>
             <p class="subtitle">قبل أن نبدأ، نحتاج بعض المعلومات عن ولي الأمر</p>
 
-            <form id="parent-form" class="register-form" action="parent.php" method="post">
+            <form id="parent-form" class="register-form" action="register-parent.php" method="post">
 
                 <!-- اسم ولي الأمر -->
                 <div class="form-group input-icon">
@@ -57,7 +59,7 @@
                     <label for="parent-phone" class="visually-hidden">رقم الجوال</label>
                     <input type="tel" id="parent-phone" name="parent_phone"
                            placeholder="رقم الجوال (05xxxxxxxx)" pattern="05[0-9]{8}"
-                           inputmode="numeric" maxlength="10" dir="rtl"
+                           inputmode="numeric" maxlength="10" dir="ltr"
                            autocomplete="tel" required
                            title="أدخل رقم جوال من 10 أرقام يبدأ بـ 05">
                     <span class="icon" aria-hidden="true">📱</span>
@@ -67,9 +69,36 @@
                 <div class="form-group input-icon">
                     <label for="parent-email" class="visually-hidden">البريد الإلكتروني</label>
                     <input type="email" id="parent-email" name="parent_email"
-                           placeholder="البريد الإلكتروني" maxlength="100" dir="rtl"
+                           placeholder="البريد الإلكتروني" maxlength="100" dir="ltr"
                            autocomplete="email" required>
                     <span class="icon" aria-hidden="true">✉️</span>
+                </div>
+
+                <!-- كلمة السر: نوع password يخفي الأحرف، وزر العين يُظهرها -->
+                <div class="form-group input-icon password-field">
+                    <label for="parent-password" class="visually-hidden">كلمة السر</label>
+                    <input type="password" id="parent-password" name="parent_password"
+                           placeholder="كلمة السر" minlength="8" maxlength="64"
+                           autocomplete="new-password" aria-describedby="password-rules" required>
+                    <button type="button" class="toggle-password" aria-controls="parent-password"
+                            aria-pressed="false" aria-label="إظهار كلمة السر">👁</button>
+                </div>
+
+                <!-- شروط كلمة السر: registration.js يضع علامة ✓ على كل شرط يتحقق أثناء الكتابة -->
+                <ul class="password-rules" id="password-rules" aria-label="شروط كلمة السر">
+                    <li data-rule="length">8 أحرف على الأقل</li>
+                    <li data-rule="letter">حرف واحد على الأقل</li>
+                    <li data-rule="number">رقم واحد على الأقل</li>
+                </ul>
+
+                <!-- تأكيد كلمة السر: للتأكد من عدم وجود خطأ في الكتابة -->
+                <div class="form-group input-icon password-field">
+                    <label for="parent-password-confirm" class="visually-hidden">تأكيد كلمة السر</label>
+                    <input type="password" id="parent-password-confirm" name="parent_password_confirm"
+                           placeholder="أعد كتابة كلمة السر" maxlength="64"
+                           autocomplete="new-password" required>
+                    <button type="button" class="toggle-password" aria-controls="parent-password-confirm"
+                            aria-pressed="false" aria-label="إظهار كلمة السر">👁</button>
                 </div>
 
                 <!-- صلة القرابة -->
@@ -97,8 +126,7 @@
                         <span>أخرى</span>
                     </label>
 
-                    <!-- يظهر هذا الحقل عند اختيار "أخرى"
-                         (في مرحلة JavaScript سيُخفى افتراضياً ويظهر عند الحاجة) -->
+                    <!-- يظهر هذا الحقل فقط عند اختيار "أخرى" (يتحكم به registration.js) -->
                     <div class="form-group other-relation">
                         <label for="relation-other-text">حدّد صلة القرابة</label>
                         <input type="text" id="relation-other-text" name="relation_other"
@@ -107,12 +135,15 @@
                 </fieldset>
 
                 <!-- زر التالي -->
-                <button type="submit" class="btn-next" action="register-childe.html">
+                <button type="submit" class="btn-next">
                     التالي
                     <span aria-hidden="true">&larr;</span>
                 </button>
 
             </form>
+
+            <!-- لمن لديه حساب مسبقًا -->
+            <p class="auth-switch">لديك حساب؟ <a href="login.html">سجّل الدخول</a></p>
         </section>
     </main>
 
