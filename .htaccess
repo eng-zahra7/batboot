@@ -1,0 +1,8 @@
+# بطبوط - حماية الصفحات التي تعرض بيانات الطفل
+# الصفحات الثلاث تمر عبر php/page.php: بدون جلسة دخول => تحويل إلى login.html.
+# إن كان mod_rewrite غير مفعّل أو AllowOverride مغلقًا، تبقى الحماية في
+# js/child-data.js (لا بيانات تُعرض بدون جلسة صالحة) ولا يتعطل الموقع.
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^(profile|main-page|edit-profile)\.html$ php/page.php?page=$1 [L,QSA,NC]
+</IfModule>

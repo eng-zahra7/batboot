@@ -425,6 +425,44 @@ function pick(value, extra) {
 }
 
 /* ---------- 8) التحقق من الإجابة ---------- */
+
+// حفظ النشاط المكتمل في قاعدة البيانات مرة واحدة لكل حرف/كلمة/جملة.
+function saveCurrentActivity() {
+    if (!window.BatbootProgress || typeof window.BatbootProgress.save !== 'function') {
+        console.error('[Batboot] progress client is not loaded.');
+        showFeedback(false, 'تعذر الاتصال بنظام حفظ التقدم. حدّث الصفحة وحاول مرة أخرى.');
+        return;
+    }
+
+    const subject = KIND === 'letters'
+        ? (LANG === 'en' ? 'english-letters' : 'arabic-letters')
+        : (KIND === 'words'
+            ? (LANG === 'en' ? 'english-words' : 'arabic-words')
+            : (LANG === 'en' ? 'english-sentences' : 'arabic-sentences'));
+    const lessonCode = (KIND === 'letters' ? (LANG === 'en' ? 'english-letters' : 'arabic-letters')
+         : (KIND === 'words'
+            ? (LANG === 'en' ? 'english-words' : 'arabic-words')
+            : (LANG === 'en' ? 'english-sentences' : 'arabic-sentences'))) + '-' + LEVEL.levelId;
+    const item = current();
+    const unitKey = String(item.id != null ? item.id : (state.index + 1));
+
+    window.BatbootProgress.save({
+        subject_code: subject,
+        lesson_code: lessonCode,
+        unit_key: unitKey,
+        correct_answers: 1,
+        attempts: Math.max(1, state.attempts),
+        first_try_correct: state.attempts === 1 ? 1 : 0,
+        retry_correct: state.attempts > 1 ? 1 : 0,
+        is_completed: 1
+    }).then(function (result) {
+        console.info('[Batboot] activity progress saved', result);
+    }).catch(function (error) {
+        console.error('[Batboot] progress save failed:', error);
+        showFeedback(false, 'تم حل النشاط، لكن تعذر حفظ التقدم. تحقق من الاتصال ثم أعد المحاولة.');
+    });
+}
+
 function checkAnswer() {
     const q = current().question;
     if (!state.selected) return;
@@ -439,6 +477,7 @@ function checkAnswer() {
         state.solved = true;
         if (!state.results[state.index]?.solved) {
             state.results[state.index] = { solved: true, firstTry: state.attempts === 1 };
+            saveCurrentActivity();
         }
         showSolved();
         showFeedback(true, state.attempts === 1 ? 'ممتاز! إجابة صحيحة من أول مرة ⭐' : 'أحسنت! إجابة صحيحة');
@@ -538,7 +577,7 @@ function goPrev() {
 
 /* ---------- 10) نهاية المستوى ---------- */
 function finishLevel() {
-    const stars = state.results.filter((r) => r?.firstTry).length;
+    const stars = state.results.filter((r) => r?.solved).length;
     const total = ITEMS.length;
 
     // بيانات الربط مع PHP

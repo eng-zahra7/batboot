@@ -429,12 +429,6 @@
         celebrate(res.fresh);
     }
 
-    // تقدّم جديد من صفحة أخرى (تبويب آخر) أو العودة إلى هذه الصفحة
-    window.addEventListener('storage', function (e) {
-        if (!e.key || e.key.indexOf('batboot:') === 0) { refresh(); }
-    });
-    window.addEventListener('pageshow', refresh);
-    document.addEventListener('visibilitychange', function () { if (!document.hidden) { refresh(); } });
-
-    refresh();
+    // لا تُحمّل الإحصائيات أو الشارات من localStorage.
+    // js/progress-dashboard.js يقرأها من php/me.php وقاعدة MySQL.
 })();

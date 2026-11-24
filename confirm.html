@@ -10,13 +10,13 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;700;800&display=swap">
     <link rel="stylesheet" href="css/main-style.css">
     <!-- ملف JavaScript واحد لصفحات التسجيل الثلاث: defer = يعمل بعد تحميل الصفحة -->
-    <script src="JS/registration.js" defer></script>
+    <script src="js/registration.js" defer></script>
 </head>
 <body>
 
     <!-- ===== الترويسة: الشعار + مؤشر خطوات التسجيل ===== -->
     <header class="site-header">
-        <a href="index.html" class="logo" aria-label="الصفحة الرئيسية لبطبوط">
+        <a href="main-page.html" class="logo" aria-label="الصفحة الرئيسية لبطبوط">
             <img src="rec/Glossy Kawaii Chick Head Sticker.png" alt="" width="48" height="48">
             <span class="logo-text">بطبوط</span>
         </a>
@@ -86,7 +86,7 @@
                         <span aria-hidden="true">🧒</span> بيانات الأطفال
                         <span class="count-badge">2</span>
                     </h2>
-                    <a href="register-children.html" class="edit-link">
+                    <a href="register-childe.html" class="edit-link">
                         <span aria-hidden="true">✎</span> تعديل
                     </a>
                 </div>
@@ -125,7 +125,7 @@
             </section>
 
             <!-- ===== زر التأكيد (التعديل من روابط "تعديل" بجانب كل قسم) ===== -->
-            <form id="confirm-form" class="confirm-actions" action="confirm.php" method="post">
+            <form id="confirm-form" class="confirm-actions" action="php/confirm.php" method="post">
                 <button type="submit" name="action" value="confirm" class="btn-next btn-confirm">
                     <span aria-hidden="true">✔</span> تأكيد التسجيل
                 </button>

@@ -630,6 +630,26 @@
             return numbers[state.index];
         }
 
+        // استعادة الأرقام المكتملة من MySQL؛ لا نعتمد على localStorage.
+        if (window.BatbootProgress && window.BatbootProgress.ready) {
+            window.BatbootProgress.ready.then(function (data) {
+                var rows = (data.lessonProgress || []).filter(function (r) {
+                    return r.subject_code === 'numbers' && r.is_completed == 1;
+                });
+                var completed = {};
+                rows.forEach(function (r) { completed[String(r.unit_key)] = true; });
+                state.done = numbers.map(function (n) { return !!completed[String(n.value)]; });
+                state.stars = state.done.filter(Boolean).length;
+                state.completed = state.done.every(Boolean);
+                var firstPending = state.done.indexOf(false);
+                state.index = firstPending < 0 ? lastIndex : firstPending;
+                state.stage = 1;
+                renderNumber(); renderJourney(); renderStage();
+            }).catch(function (error) {
+                console.error('[Batboot numbers] database progress load failed:', error);
+            });
+        }
+
         function doneCount() {
             return state.done.filter(Boolean).length;
         }
@@ -919,8 +939,22 @@
 
         function onCorrect() {
             var isLast = state.index === lastIndex;
-
-            // نجمة واحدة لكل رقم يُكمل بنجاح
+            var numberValue = current().value;
+            if (!window.BatbootProgress || typeof window.BatbootProgress.save !== 'function') {
+                ui.successTitle.textContent = 'تعذر الاتصال بنظام حفظ التقدم. حدّث الصفحة وحاول مرة أخرى.';
+                return;
+            }
+            window.BatbootProgress.save({
+                subject_code: 'numbers',
+                lesson_code: 'numbers',
+                unit_key: String(numberValue),
+                correct_answers: 1,
+                attempts: Math.max(1, state.attempts),
+                first_try_correct: state.attempts === 1 ? 1 : 0,
+                retry_correct: state.attempts > 1 ? 1 : 0,
+                is_completed: 1
+            }).then(function () {
+            // لا نعرض الإكمال ولا نضيف النجمة محليًا إلا بعد تأكيد الحفظ من الخادم.
             state.done[state.index] = true;
             state.stars += 1;
             state.completed = state.done.every(Boolean);
@@ -938,6 +972,10 @@
             renderJourney();
             renderStage();
             scrollToActive();
+            }).catch(function (error) {
+                console.error('[Batboot numbers] progress save failed:', error);
+                ui.successTitle.textContent = 'لم يُحفظ تقدم هذا الرقم. تحقق من الاتصال ثم أعد المحاولة.';
+            });
         }
 
         function onWrong() {

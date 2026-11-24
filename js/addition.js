@@ -12,9 +12,9 @@
        --------------------------------------------------------- */
     var QUESTIONS_PER_LEVEL = 3;   // عدد أسئلة كل مستوى (كما في «السؤال 1 من 3»)
     var OPTIONS_COUNT       = 4;   // عدد الخيارات أمام الطفل
-    var STARS_FIRST_TRY     = 2;   // نجوم الإجابة الصحيحة من أول محاولة
-    var STARS_RETRY         = 1;   // نجوم الإجابة الصحيحة بعد محاولة خاطئة
-    var STARS_LEVEL_BONUS   = 3;   // مكافأة إكمال المستوى
+    var STARS_FIRST_TRY     = 1;   // نجمة واحدة لكل سؤال مكتمل
+    var STARS_RETRY         = 1;   // نجمة واحدة لكل سؤال مكتمل
+    var STARS_LEVEL_BONUS   = 0;   // لا توجد مكافأة إضافية للمستوى
     var NEXT_DELAY          = 1800; // مهلة عرض التشجيع قبل السؤال التالي (مللي ثانية)
     var LEVEL_DONE_DELAY    = 1100; // مهلة قبل نافذة التهنئة
     var STORAGE_PREFIX      = 'batboot:addition:v1:';
@@ -218,6 +218,31 @@
     function saveState() {
         state.last = lastKey;
         try { window.localStorage.setItem(storageKey(), JSON.stringify(state)); } catch (e) { /* التخزين غير متاح */ }
+    }
+
+    function saveLevelToDatabase(levelNumber, levelState) {
+        // التقدم الرياضي يُحفظ سؤالًا بسؤال في قاعدة البيانات، وليس كمكافأة مستوى.
+        return Promise.resolve();
+    }
+
+    function saveQuestionToDatabase(levelNumber, question, mistakes) {
+        if (!window.BatbootProgress || typeof window.BatbootProgress.save !== 'function') {
+            setBubble('تعذر الاتصال بنظام حفظ التقدم. حدّث الصفحة وحاول مرة أخرى.', 'retry');
+            return;
+        }
+        window.BatbootProgress.save({
+            subject_code: 'addition',
+            lesson_code: 'addition-level-' + levelNumber,
+            unit_key: 'question-' + pairKey(question),
+            correct_answers: 1,
+            attempts: Math.max(1, mistakes + 1),
+            first_try_correct: mistakes === 0 ? 1 : 0,
+            retry_correct: mistakes > 0 ? 1 : 0,
+            is_completed: 1
+        }).catch(function (error) {
+            console.error('[Batboot addition] question progress save failed:', error);
+            setBubble('أُجيبت المسألة، لكن لم يُحفظ تقدمها. تحقق من الاتصال ثم أعد المحاولة.', 'retry');
+        });
     }
 
     /* أعلى مستوى مفتوح: أول مستوى غير مكتمل، أو الأخير إذا اكتملت كلها */
@@ -658,6 +683,7 @@
 
         setBusy(true);
         view.solved = true;
+        if (!view.practice) { saveQuestionToDatabase(L, q, view.mistakes); }
         $$('input[name="selected_answer"]', fieldset).forEach(function (i) { i.disabled = true; });
         showAnswer(q.a + q.b, 'ok');
 
@@ -677,6 +703,7 @@
             }
             lastKey = pairKey(q);
             saveState();
+            if (levelDone) { saveLevelToDatabase(L, lv); }
         }
 
         main.dataset.isCorrect = 'true';
@@ -765,5 +792,41 @@
         if (e.key === 'Enter') { e.preventDefault(); onCheck(); }
     });
 
-    startLevel(frontier());
+    function hydrateFromDatabase(data) {
+        var rows = (data.lessonProgress || []).filter(function (r) {
+            return r.subject_code === 'addition' && r.is_completed == 1;
+        });
+        for (var level = 1; level <= LEVEL_COUNT; level++) {
+            var code = 'addition-level-' + level;
+            var levelRows = rows.filter(function (r) { return r.lesson_code === code; });
+            var questionRows = levelRows.filter(function (r) { return String(r.unit_key).indexOf('question-') === 0; });
+            var legacyLevel = levelRows.some(function (r) { return r.unit_key === 'level-' + level; });
+            var completedCount = Math.min(QUESTIONS_PER_LEVEL, questionRows.length);
+            var lv = state.levels[level];
+            lv.correct = legacyLevel ? QUESTIONS_PER_LEVEL : completedCount;
+            lv.completed = legacyLevel || completedCount >= QUESTIONS_PER_LEVEL;
+            lv.stars = legacyLevel ? 1 : completedCount;
+            if (lv.completed && levelRows.length) {
+                lv.completedAt = levelRows[levelRows.length - 1].completed_at || lv.completedAt || new Date().toISOString();
+            }
+            if (lv.completed && level < LEVEL_COUNT && !state.levels[level + 1].questions) {
+                state.levels[level + 1].questions = makeSet(level + 1, lastKey);
+            }
+        }
+        saveState();
+    }
+
+    if (window.BatbootProgress && window.BatbootProgress.ready) {
+        window.BatbootProgress.ready.then(function (data) {
+            hydrateFromDatabase(data);
+            startLevel(frontier());
+        }).catch(function (error) {
+            console.error('[Batboot addition] database progress load failed:', error);
+            setBubble('تعذر تحميل تقدمك المحفوظ من قاعدة البيانات.', 'retry');
+            startLevel(frontier());
+        });
+    } else {
+        setBubble('تعذر الاتصال بنظام حفظ التقدم. حدّث الصفحة وحاول مرة أخرى.', 'retry');
+        startLevel(frontier());
+    }
 })();
