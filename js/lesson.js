@@ -239,7 +239,9 @@ function renderParts(item) {
             const li = el('li', { class: 'sentence-part' });
             const btn = el('button', { type: 'button', class: 'haraka-btn word-chip', 'aria-label': `استمع إلى كلمة ${word}` }, word);
             btn.addEventListener('click', () => speak(word));
-            li.append(btn, el('span', { class: 'word-role' }, item.roles[i]));
+            // تحت كل كلمة: دورها في الجملة (عربي) أو معناها بالعربية (إنجليزي)
+            const role = el('span', { class: 'word-role', lang: 'ar', dir: 'rtl' }, item.roles[i]);
+            li.append(btn, role);
             return li;
         }));
     }
@@ -425,44 +427,6 @@ function pick(value, extra) {
 }
 
 /* ---------- 8) التحقق من الإجابة ---------- */
-
-// حفظ النشاط المكتمل في قاعدة البيانات مرة واحدة لكل حرف/كلمة/جملة.
-function saveCurrentActivity() {
-    if (!window.BatbootProgress || typeof window.BatbootProgress.save !== 'function') {
-        console.error('[Batboot] progress client is not loaded.');
-        showFeedback(false, 'تعذر الاتصال بنظام حفظ التقدم. حدّث الصفحة وحاول مرة أخرى.');
-        return;
-    }
-
-    const subject = KIND === 'letters'
-        ? (LANG === 'en' ? 'english-letters' : 'arabic-letters')
-        : (KIND === 'words'
-            ? (LANG === 'en' ? 'english-words' : 'arabic-words')
-            : (LANG === 'en' ? 'english-sentences' : 'arabic-sentences'));
-    const lessonCode = (KIND === 'letters' ? (LANG === 'en' ? 'english-letters' : 'arabic-letters')
-         : (KIND === 'words'
-            ? (LANG === 'en' ? 'english-words' : 'arabic-words')
-            : (LANG === 'en' ? 'english-sentences' : 'arabic-sentences'))) + '-' + LEVEL.levelId;
-    const item = current();
-    const unitKey = String(item.id != null ? item.id : (state.index + 1));
-
-    window.BatbootProgress.save({
-        subject_code: subject,
-        lesson_code: lessonCode,
-        unit_key: unitKey,
-        correct_answers: 1,
-        attempts: Math.max(1, state.attempts),
-        first_try_correct: state.attempts === 1 ? 1 : 0,
-        retry_correct: state.attempts > 1 ? 1 : 0,
-        is_completed: 1
-    }).then(function (result) {
-        console.info('[Batboot] activity progress saved', result);
-    }).catch(function (error) {
-        console.error('[Batboot] progress save failed:', error);
-        showFeedback(false, 'تم حل النشاط، لكن تعذر حفظ التقدم. تحقق من الاتصال ثم أعد المحاولة.');
-    });
-}
-
 function checkAnswer() {
     const q = current().question;
     if (!state.selected) return;
@@ -477,7 +441,6 @@ function checkAnswer() {
         state.solved = true;
         if (!state.results[state.index]?.solved) {
             state.results[state.index] = { solved: true, firstTry: state.attempts === 1 };
-            saveCurrentActivity();
         }
         showSolved();
         showFeedback(true, state.attempts === 1 ? 'ممتاز! إجابة صحيحة من أول مرة ⭐' : 'أحسنت! إجابة صحيحة');
@@ -577,7 +540,7 @@ function goPrev() {
 
 /* ---------- 10) نهاية المستوى ---------- */
 function finishLevel() {
-    const stars = state.results.filter((r) => r?.solved).length;
+    const stars = state.results.filter((r) => r?.firstTry).length;
     const total = ITEMS.length;
 
     // بيانات الربط مع PHP
@@ -600,6 +563,8 @@ function finishLevel() {
 
     ui.levelItem.classList.replace('is-current', 'is-done');
     unlockNextLevel();
+    saveLevelDone(stars);
+    addNextLevelButton();
 
     ui.content.hidden = true;
     ui.result.hidden = false;
@@ -607,17 +572,86 @@ function finishLevel() {
 }
 
 // فتح المستوى التالي في القائمة الجانبية
-function unlockNextLevel() {
-    const item = ui.nextItem;
-    if (!item || !LEVEL.nextUrl || item.dataset.state === 'open') return;
+// فتح مستوى في القائمة الجانبية: نحوّل العنصر المقفل إلى رابط
+function unlockLevel(item, levelId) {
+    if (!item || item.dataset.state !== 'locked') return;
     item.classList.remove('is-locked');
     item.dataset.state = 'open';
     item.removeAttribute('aria-disabled');
-    const name = item.querySelector('.topic-name').textContent;
-    const link = el('a', { href: LEVEL.nextUrl });
-    link.append(el('span', { class: 'lvl-num' }, String(LEVEL.levelId + 1)), el('span', { class: 'letter-char topic-name' }, name));
+    // ننسخ اسم المستوى كما هو حتى تبقى خصائصه (مثل lang="en")
+    const name = item.querySelector('.topic-name').cloneNode(true);
+    const link = el('a', { href: levelUrl(levelId) });
+    link.append(el('span', { class: 'lvl-num' }, String(levelId)), name);
     item.replaceChildren(link);
     item.classList.add('is-unlocked');
+}
+
+function unlockNextLevel() {
+    if (LEVEL.nextUrl) unlockLevel(ui.nextItem, LEVEL.levelId + 1);
+}
+
+// رابط أي مستوى من اسم الصفحة الحالية: words-1.html → words-3.html
+function levelUrl(levelId) {
+    if (levelId === LEVEL.levelId + 1 && LEVEL.nextUrl) return LEVEL.nextUrl;
+    const page = window.location.pathname.split('/').pop();
+    return page.replace(/-\d+\.html$/, `-${levelId}.html`);
+}
+
+/* ---------- حفظ التقدّم ----------
+   بدون حفظ، يعود كل شيء مقفلًا عند فتح الصفحة من جديد.
+   نحفظ المستويات المكتملة لكل درس في localStorage (يبقى بعد إغلاق المتصفح).
+   في مرحلة PHP يُحفظ التقدّم في قاعدة البيانات بدلًا من ذلك. */
+const PROGRESS_KEY = 'batbout-progress';
+// مفتاح الدرس من الصفحة، مثل: arabic-words أو english-sentences
+const SUBJECT = ui.page.dataset.subjectId || LEVEL.kind;
+
+function loadProgress() {
+    try {
+        return JSON.parse(localStorage.getItem(PROGRESS_KEY)) || {};
+    } catch (error) {
+        return {};
+    }
+}
+
+function saveLevelDone(stars) {
+    const all = loadProgress();
+    const mine = all[SUBJECT] || { done: [], stars: {} };
+    if (!mine.done.includes(LEVEL.levelId)) mine.done.push(LEVEL.levelId);
+    // نحتفظ بأفضل عدد نجوم حصل عليه الطفل في هذا المستوى
+    mine.stars[LEVEL.levelId] = Math.max(stars, mine.stars[LEVEL.levelId] || 0);
+    all[SUBJECT] = mine;
+    try {
+        localStorage.setItem(PROGRESS_KEY, JSON.stringify(all));
+    } catch (error) { /* التخزين معطّل: يعمل الدرس بدون حفظ */ }
+}
+
+// عند فتح الصفحة: نعلّم المستويات المكتملة ونفتح ما بعدها
+function applySavedProgress() {
+    const mine = loadProgress()[SUBJECT];
+    if (!mine) return;
+    mine.done.forEach((id) => {
+        const item = document.querySelector(`.letters-list [data-level-id="${id}"]`);
+        if (item && item !== ui.levelItem) {
+            unlockLevel(item, id);
+            item.classList.remove('is-unlocked');
+            item.classList.add('is-done');
+            item.dataset.state = 'done';
+        }
+        unlockLevel(document.querySelector(`.letters-list [data-level-id="${id + 1}"]`), id + 1);
+    });
+    document.querySelectorAll('.letters-list .is-unlocked').forEach((n) => n.classList.remove('is-unlocked'));
+}
+
+// زر "المستوى التالي" في بطاقة النتيجة
+function addNextLevelButton() {
+    if (!LEVEL.nextUrl || ui.result.querySelector('.next-level-btn')) return;
+    const link = el('a', { href: LEVEL.nextUrl, class: 'btn-next btn-confirm next-level-btn' }, 'المستوى التالي ');
+    link.append(el('span', { 'aria-hidden': 'true' }, '←'));
+    const actions = ui.result.querySelector('.result-actions');
+    // زر العودة يصبح ثانويًا بجانب زر المستوى التالي
+    const back = actions.querySelector('a.btn-next');
+    if (back) back.className = 'btn-edit';
+    actions.prepend(link);
 }
 
 function restartLevel() {
@@ -643,5 +677,6 @@ if ('speechSynthesis' in window) {
     window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
 }
 
+applySavedProgress();
 readStepFromUrl();
 renderItem();
