@@ -28,5 +28,5 @@ JOIN (
   GROUP BY child_id
 ) p ON p.child_id = cp.child_id
 SET cp.total_stars = p.total_stars,
-    cp.current_level = FLOOR(p.total_stars / 15) + 1,
+    cp.current_level = FLOOR(p.total_stars / 200) + 1,
     cp.completed_lessons = p.completed_lessons;

@@ -104,6 +104,9 @@ try {
             GROUP BY lesson_code HAVING COUNT(DISTINCT unit_key) >= 3 OR MAX(unit_key LIKE 'level-%') = 1
         ) completed_sub) AS sub_done,
         SUM(subject_code = 'numbers' AND is_completed = 1) AS numbers_done,
+        SUM(subject_code IN ('arabic-letters','arabic-words','arabic-sentences') AND is_completed = 1) AS arabic_done,
+        SUM(subject_code IN ('english-letters','english-words','english-sentences') AND is_completed = 1) AS english_done,
+        SUM(subject_code IN ('addition','subtraction','numbers') AND is_completed = 1) AS math_done,
         SUM(is_completed = 1) AS all_done
         FROM child_lesson_progress WHERE child_id = :child_all");
     $countsStmt->execute([':child_add' => $childId, ':child_sub' => $childId, ':child_all' => $childId]);
@@ -111,6 +114,9 @@ try {
     $addDone = (int) ($counts['add_done'] ?? 0);
     $subDone = (int) ($counts['sub_done'] ?? 0);
     $numbersDone = (int) ($counts['numbers_done'] ?? 0);
+    $arabicDone = (int) ($counts['arabic_done'] ?? 0);
+    $englishDone = (int) ($counts['english_done'] ?? 0);
+    $mathDone = (int) ($counts['math_done'] ?? 0);
     $allDone = (int) ($counts['all_done'] ?? 0);
 
     $badgeConditions = [
@@ -121,6 +127,10 @@ try {
         'master-learner' => $addDone >= 5 && $subDone >= 5 && $numbersDone >= 10,
         'star-collector' => $totalStars >= 30,
         'active-learner' => ($addDone + $subDone) >= 5,
+        'arabic' => $arabicDone >= 1,
+        'english' => $englishDone >= 1,
+        'math' => $mathDone >= 1,
+        'all-rounder' => $arabicDone >= 1 && $englishDone >= 1 && $mathDone >= 1,
     ];
     $badgeStmt = $pdo->prepare('SELECT achievement_id, achievement_code FROM achievements');
     $badgeStmt->execute();

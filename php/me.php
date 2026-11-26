@@ -61,6 +61,16 @@ foreach ($lessonRows as $r) {
     $summary['bySubject'][$subjectCode]['correctAnswers'] += (int)$r['correct_answers'];
     $summary['bySubject'][$subjectCode]['attempts'] += (int)$r['attempts'];
 }
+$achievementStmt = $pdo->prepare(
+    'SELECT a.achievement_code, a.title, a.description, a.icon, ca.earned_at
+     FROM child_achievements ca
+     INNER JOIN achievements a ON a.achievement_id = ca.achievement_id
+     WHERE ca.child_id = :child
+     ORDER BY ca.earned_at DESC, ca.child_achievement_id DESC'
+);
+$achievementStmt->execute([':child' => $childId]);
+$earnedAchievements = $achievementStmt->fetchAll();
+
 json_out([
     'ok' => true,
     'csrf' => csrf_token(),
@@ -69,4 +79,5 @@ json_out([
     'progress' => child_progress($pdo, $childId),
     'lessonProgress' => $lessonRows,
     'statistics' => $summary,
+    'achievements' => $earnedAchievements,
 ]);

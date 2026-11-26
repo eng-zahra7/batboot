@@ -444,6 +444,7 @@ function checkAnswer() {
         }
         showSolved();
         showFeedback(true, state.attempts === 1 ? 'ممتاز! إجابة صحيحة من أول مرة ⭐' : 'أحسنت! إجابة صحيحة');
+        persistQuestionProgress(state.index).catch(() => {});
         speak(itemText(current()));
         ui.steps.children[state.index].classList.add('is-done');
     } else {
@@ -540,7 +541,7 @@ function goPrev() {
 
 /* ---------- 10) نهاية المستوى ---------- */
 function finishLevel() {
-    const stars = state.results.filter((r) => r?.firstTry).length;
+    const stars = state.results.filter((r) => r?.solved).length;
     const total = ITEMS.length;
 
     // بيانات الربط مع PHP
@@ -559,7 +560,7 @@ function finishLevel() {
 
     ui.resultText.textContent = stars === total
         ? 'كل الإجابات صحيحة من أول مرة! أنت بطل حقيقي.'
-        : `حصلت على ${stars} من ${total} نجوم. يمكنك إعادة المستوى لتجمع كل النجوم!`;
+        : `حصلت على ${stars} من ${total} نجوم. أحسنت! كل إجابة صحيحة تضيف نجمة إلى رصيدك.`;
 
     ui.levelItem.classList.replace('is-current', 'is-done');
     unlockNextLevel();
@@ -597,10 +598,63 @@ function levelUrl(levelId) {
     return page.replace(/-\d+\.html$/, `-${levelId}.html`);
 }
 
-/* ---------- حفظ التقدّم ----------
-   بدون حفظ، يعود كل شيء مقفلًا عند فتح الصفحة من جديد.
-   نحفظ المستويات المكتملة لكل درس في localStorage (يبقى بعد إغلاق المتصفح).
-   في مرحلة PHP يُحفظ التقدّم في قاعدة البيانات بدلًا من ذلك. */
+/* ---------- حفظ كل نشاط صحيح في MySQL ---------- */
+const pendingQuestionSaves = new Map();
+
+function persistQuestionProgress(index) {
+    const result = state.results[index];
+    const item = ITEMS[index];
+    if (!result || !result.solved || !item) return Promise.resolve(false);
+    const key = String(item.id);
+    if (pendingQuestionSaves.has(key)) return pendingQuestionSaves.get(key);
+    if (!window.BatbootProgress || typeof window.BatbootProgress.save !== 'function') {
+        showQuestionSaveError(index);
+        return Promise.reject(new Error('BatbootProgress unavailable'));
+    }
+
+    const subject = ui.page.dataset.subjectId || LEVEL.kind;
+    const promise = window.BatbootProgress.save({
+        subject_code: subject,
+        lesson_code: subject + '-level-' + LEVEL.levelId,
+        unit_key: 'question-' + key,
+        correct_answers: 1,
+        attempts: Math.max(1, state.attempts),
+        first_try_correct: result.firstTry ? 1 : 0,
+        retry_correct: result.firstTry ? 0 : 1,
+        is_completed: 1
+    }).then(() => {
+        const retry = ui.panel.querySelector('[data-db-save-retry]');
+        if (retry) retry.remove();
+        pendingQuestionSaves.delete(key);
+        return true;
+    }).catch((error) => {
+        pendingQuestionSaves.delete(key);
+        console.error('[Batboot] activity progress save failed:', error);
+        showQuestionSaveError(index);
+        throw error;
+    });
+    pendingQuestionSaves.set(key, promise);
+    return promise;
+}
+
+function showQuestionSaveError(index) {
+    let retry = ui.panel.querySelector('[data-db-save-retry]');
+    if (retry) return;
+    retry = el('button', { type: 'button', class: 'btn-next btn-confirm', 'data-db-save-retry': 'true' },
+        'تعذّر الحفظ — أعد المحاولة');
+    retry.style.cssText = 'display:block;margin:12px auto;background:#fff0f0;color:#b42318;border:1px solid #f2b8b5';
+    retry.addEventListener('click', () => {
+        retry.disabled = true;
+        persistQuestionProgress(index).then(() => {
+            retry.remove();
+            showFeedback(true, 'تم حفظ تقدمك بنجاح ⭐');
+        }).catch(() => { retry.disabled = false; });
+    });
+    ui.panel.append(retry);
+}
+
+/* ---------- حفظ التقدّم محليًا لفتح المستوى التالي في الواجهة ----------
+   قاعدة البيانات هي المصدر الأساسي، ويُستخدم localStorage كذاكرة واجهة مساعدة فقط. */
 const PROGRESS_KEY = 'batbout-progress';
 // مفتاح الدرس من الصفحة، مثل: arabic-words أو english-sentences
 const SUBJECT = ui.page.dataset.subjectId || LEVEL.kind;
@@ -678,5 +732,33 @@ if ('speechSynthesis' in window) {
 }
 
 applySavedProgress();
+if (window.BatbootProgress && window.BatbootProgress.ready) {
+    window.BatbootProgress.ready.then((data) => {
+        const rows = (data.lessonProgress || []).filter((r) =>
+            r.subject_code === SUBJECT && r.lesson_code === SUBJECT + '-level-' + LEVEL.levelId &&
+            Number(r.is_completed) === 1 && String(r.unit_key).indexOf('question-') === 0
+        );
+        rows.forEach((r) => {
+            const id = String(r.unit_key).slice('question-'.length);
+            const index = ITEMS.findIndex((item) => String(item.id) === id);
+            if (index >= 0 && !state.results[index]?.solved) {
+                state.results[index] = { solved: true, firstTry: Number(r.attempts) === 1 };
+            }
+        });
+        if (rows.length >= ITEMS.length) {
+            const all = loadProgress();
+            const mine = all[SUBJECT] || { done: [], stars: {} };
+            if (!mine.done.includes(LEVEL.levelId)) mine.done.push(LEVEL.levelId);
+            mine.stars[LEVEL.levelId] = rows.length;
+            all[SUBJECT] = mine;
+            try { localStorage.setItem(PROGRESS_KEY, JSON.stringify(all)); } catch (e) {}
+            applySavedProgress();
+        }
+        renderItem();
+        if (rows.length >= ITEMS.length && state.results.filter((r) => r && r.solved).length >= ITEMS.length) {
+            finishLevel();
+        }
+    }).catch((error) => console.error('[Batboot] could not restore lesson progress:', error));
+}
 readStepFromUrl();
 renderItem();

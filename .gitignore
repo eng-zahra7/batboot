@@ -15,3 +15,6 @@ config.local.php
 # Operating system
 .DS_Store
 Thumbs.db
+!progress-migration.sql
+!DB/
+!DB/*.sql
